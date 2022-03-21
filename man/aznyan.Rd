@@ -4,9 +4,9 @@
 \name{aznyan}
 \alias{aznyan}
 \alias{aznyan-package}
-\title{aznyan: An Annict GraphQL API Client}
+\title{aznyan: An 'Utanet' Scraper}
 \description{
-Annict GraphQL API client for R.
+Scrape lyrics from 'Utanet' website.
 }
 \seealso{
 Useful links:
@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kato Akiru \email{paithiov909@gmail.com}
+\strong{Maintainer}: Akiru Kato \email{paithiov909@gmail.com}
 
 }
 \keyword{internal}

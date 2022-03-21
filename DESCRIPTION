@@ -1,20 +1,24 @@
-Package: aznyan
 Type: Package
-Title: An Annict GraphQL API Client
-Version: 0.0.0.100
-Authors@R: person("Kato", "Akiru", email = "paithiov909@gmail.com", role = c("aut", "cre"))
-Author: paithiov909 [aut, cre]
-Maintainer: Kato Akiru <paithiov909@gmail.com>
-Description: Annict GraphQL API client for R.
-Encoding: UTF-8
-LazyData: true
-Depends:
-    R (>= 3.2.0)
+Package: aznyan
+Title: An 'Utanet' Scraper
+Version: 0.0.1
+Authors@R: 
+    person("Akiru", "Kato", ,"paithiov909@gmail.com", role = c("aut", "cre"))
+Maintainer: Akiru Kato <paithiov909@gmail.com>
+Description: Scrape lyrics from 'Utanet' website.
 License: MIT + file LICENSE
 URL: https://github.com/paithiov909/aznyan
 BugReports: https://github.com/paithiov909/aznyan/issues
-RoxygenNote: 7.1.1
-Suggests: 
-    testthat,
-    spelling
+Depends:
+    R (>= 3.2.0)
+Imports:
+    dplyr,
+    polite,
+    purrr,
+    rlang,
+    rvest,
+    stringr
+Encoding: UTF-8
 Language: en-US
+LazyData: true
+RoxygenNote: 7.1.2
