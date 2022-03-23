@@ -15,7 +15,7 @@ remotes::install_github("paithiov909/aznyan")
 library(aznyan)
 
 tbl <-
-  aznyan::get_lyrics_list("23729") %>% 
+  aznyan::get_lyrics_list("23729") |> 
   aznyan::get_lyrics()
 ```
 
