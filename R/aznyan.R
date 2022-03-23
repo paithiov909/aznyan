@@ -79,7 +79,7 @@ get_lyrics <- function(df, links = "link") {
         polite::scrape()
       html %>%
         rvest::html_element("#kashi_area") %>%
-        rvest::html_text(trim = FALSE)
+        rvest::html_text2()
     })
   df %>%
     dplyr::mutate(
