@@ -73,16 +73,33 @@ get_lyrics <- function(df, links = "link") {
 
   session <- polite::bow(base_url, force = FALSE)
   lyrics <-
-    purrr::map_chr(url, function(q) {
+    purrr::map_dfr(url, function(q) {
       html <- session %>%
         polite::nod(q) %>%
         polite::scrape()
-      html %>%
+      lyric_body <- html %>%
         rvest::html_element("#kashi_area") %>%
         rvest::html_text2()
-    })
-  df %>%
+      info <- html %>%
+        rvest::html_element(".song-infoboard") %>%
+        rvest::html_element(".detail") %>%
+        rvest::html_text() %>%
+        stringr::str_split("\\n") %>%
+        unlist() %>%
+        purrr::pluck(4) %>%
+        stringr::str_extract_all(pattern = "[\\d,/]+") %>%
+        unlist()
+      data.frame(
+        lyric = lyric_body,
+        released = info[1],
+        page_viewed = info[2]
+      )
+    }) %>%
     dplyr::mutate(
-      lyric = lyrics
+      released = lubridate::as_date(.data$released),
+      page_viewed = stringr::str_remove_all(.data$page_viewed, ",") %>%
+        unlist() %>%
+        as.numeric()
     )
+  data.frame(df, lyrics)
 }
