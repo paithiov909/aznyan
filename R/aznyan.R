@@ -25,8 +25,8 @@ get_lyrics_list <- function(id,
     polite::scrape()
 
   page_list <- html %>%
-    rvest::html_element(".upper_page_list") %>%
-    rvest::html_element("span.pa") %>%
+    rvest::html_element(".songlist-table-block") %>%
+    rvest::html_element("tfoot") %>%
     rvest::html_text() %>%
     stringr::str_extract("([:number:]+)")
 
@@ -35,27 +35,33 @@ get_lyrics_list <- function(id,
       polite::nod(path = paste(url, "0", as.character(i), "", sep = "/")) %>%
       polite::scrape()
     tables <- html %>%
-      rvest::html_elements(".result_table") %>%
+      rvest::html_elements(".songlist-table-block") %>%
       rvest::html_elements("table")
     df <- tables %>%
       rvest::html_table() %>%
       purrr::map_dfr(~.)
+    titles <- html %>%
+      rvest::html_elements(".songlist-table-block") %>%
+      rvest::html_elements(".songlist-title") %>%
+      rvest::html_text()
     links <- tables %>%
-      rvest::html_elements(".td1") %>%
+      rvest::html_elements(".sp-w-100") %>%
       rvest::html_elements("a") %>%
       rvest::html_attr("href") %>%
       purrr::discard(~ . %in% c("https://www.uta-net.com/user/poplist.html"))
     df %>%
+      dplyr::slice_head(n = nrow(df) - 1) %>%
       dplyr::rename(
-        title = "\u66f2\u540d",
+        text_lab = "\u66f2\u540d",
         artist = "\u6b4c\u624b\u540d",
         lyricist = "\u4f5c\u8a5e\u8005\u540d",
         composer = "\u4f5c\u66f2\u8005\u540d",
         leading = "\u6b4c\u3044\u51fa\u3057"
       ) %>%
       dplyr::bind_cols(
-        data.frame(link = links, source_page = i)
-      )
+        data.frame(title = titles, link = links, source_page = i)
+      ) %>%
+      dplyr::select(title, artist, lyricist, composer, leading, link, source_page)
   })
 }
 

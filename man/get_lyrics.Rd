@@ -4,15 +4,17 @@
 \alias{get_lyrics}
 \title{Scrape lyrics from list}
 \usage{
-get_lyrics(df, links = "link")
+get_lyrics(df, file, links = "link")
 }
 \arguments{
 \item{df}{A tibble that comes of \code{get_lyrics_list}.}
 
+\item{file}{String; file name to append lyrircs.}
+
 \item{links}{String; column name of lyrics links.}
 }
 \value{
-tibble.
+`file` is returned invisibly.
 }
 \description{
 Scrape lyrics from list
