@@ -48,7 +48,7 @@ get_lyrics_list <- function(id,
       rvest::html_elements(".sp-w-100") %>%
       rvest::html_elements("a") %>%
       rvest::html_attr("href") %>%
-      purrr::discard(~ . %in% c("https://www.uta-net.com/user/poplist.html"))
+      purrr::discard(~ . %in% c("https://www.uta-net.com/ranking/total.html"))
     df %>%
       dplyr::slice_head(n = nrow(df) - 1) %>%
       dplyr::rename(
