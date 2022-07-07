@@ -2,4 +2,5 @@
 
 export(get_lyrics)
 export(get_lyrics_list)
+export(search_lyrics_list)
 importFrom(dplyr,"%>%")
