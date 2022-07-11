@@ -32,7 +32,7 @@ get_lyrics_list <- function(id,
       rvest::html_elements("table")
     df <- tables %>%
       rvest::html_table() %>%
-      purrr::map_dfr(~.)
+      purrr::map_dfr(~ na.omit(.))
     titles <- html %>%
       rvest::html_elements(".songlist-table-block") %>%
       rvest::html_elements(".songlist-title") %>%
@@ -41,7 +41,7 @@ get_lyrics_list <- function(id,
       rvest::html_elements(".sp-w-100") %>%
       rvest::html_elements("a") %>%
       rvest::html_attr("href") %>%
-      purrr::discard(~ . %in% c("https://www.uta-net.com/ranking/total.html"))
+      purrr::discard(~ . %in% c("https://www.uta-net.com/ranking/total/"))
     df %>%
       dplyr::slice_head(n = nrow(df) - 1) %>%
       dplyr::rename(
@@ -54,7 +54,15 @@ get_lyrics_list <- function(id,
       dplyr::bind_cols(
         data.frame(title = titles, link = links, source_page = i)
       ) %>%
-      dplyr::select(title, artist, lyricist, composer, leading, link, source_page)
+      dplyr::select(
+        .data$title,
+        .data$artist,
+        .data$lyricist,
+        .data$composer,
+        .data$leading,
+        .data$link,
+        .data$source_page
+      )
   })
 }
 
@@ -107,7 +115,7 @@ search_lyrics_list <- function(keyword,
       rvest::html_elements("table")
     df <- tables %>%
       rvest::html_table() %>%
-      purrr::map_dfr(~.)
+      purrr::map_dfr(~ na.omit(.))
     titles <- html %>%
       rvest::html_elements(".songlist-table-block") %>%
       rvest::html_elements(".songlist-title") %>%
@@ -116,7 +124,7 @@ search_lyrics_list <- function(keyword,
       rvest::html_elements(".sp-w-100") %>%
       rvest::html_elements("a") %>%
       rvest::html_attr("href") %>%
-      purrr::discard(~ . %in% c("https://www.uta-net.com/ranking/total.html"))
+      purrr::discard(~ . %in% c("https://www.uta-net.com/ranking/total/"))
     df %>%
       dplyr::slice_head(n = nrow(df) - 1) %>%
       dplyr::rename(
@@ -129,6 +137,14 @@ search_lyrics_list <- function(keyword,
       dplyr::bind_cols(
         data.frame(title = titles, link = links, source_page = i)
       ) %>%
-      dplyr::select(title, artist, lyricist, composer, leading, link, source_page)
+      dplyr::select(
+        .data$title,
+        .data$artist,
+        .data$lyricist,
+        .data$composer,
+        .data$leading,
+        .data$link,
+        .data$source_page
+      )
   })
 }
