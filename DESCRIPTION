@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: An 'Utanet' Scraper
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre"))
 Maintainer: Akiru Kato <paithiov909@gmail.com>
@@ -14,12 +14,17 @@ Depends:
 Imports:
     dplyr,
     lubridate,
+    openssl,
     polite,
     purrr,
     readr,
     rlang,
     rvest,
-    stringr
+    stats,
+    stringi,
+    stringr,
+    tidyselect
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.0
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1

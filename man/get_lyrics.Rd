@@ -14,7 +14,7 @@ get_lyrics(df, file, links = "link")
 \item{links}{String; column name of lyrics links.}
 }
 \value{
-`file` is returned invisibly.
+\code{file} is returned invisibly.
 }
 \description{
 Scrape lyrics from list
