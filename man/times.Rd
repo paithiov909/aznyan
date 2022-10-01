@@ -11,7 +11,7 @@ times(fn, n = 2L, ..., .walk = FALSE)
 
 \item{n}{Integer.}
 
-\item{...}{Other arguments are passed to function f.}
+\item{...}{Other arguments are passed to function fn.}
 
 \item{.walk}{If supplied \code{TRUE}, executes the function
 inside \code{purrr::walk} rather than \code{purrr::map}.}

@@ -70,7 +70,7 @@ parse_to_jdate <- function(date,
 #'
 #' @param fn A function.
 #' @param n Integer.
-#' @param ... Other arguments are passed to function f.
+#' @param ... Other arguments are passed to function fn.
 #' @param .walk If supplied `TRUE`, executes the function
 #' inside `purrr::walk` rather than `purrr::map`.
 #'
