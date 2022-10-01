@@ -4,7 +4,7 @@
 \name{aznyan}
 \alias{aznyan}
 \alias{aznyan-package}
-\title{aznyan: An 'Utanet' Scraper}
+\title{aznyan: An 'Utanet' Scraper and Utilities}
 \description{
 Scrape lyrics from 'Utanet' website.
 }

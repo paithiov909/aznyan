@@ -4,7 +4,7 @@
 \alias{parse_to_jdate}
 \title{Parse dates to Japanese dates}
 \usage{
-parse_to_jdate(date, format = enc2utf8("Gy年M月d日"))
+parse_to_jdate(date, format = NULL)
 }
 \arguments{
 \item{date}{Dates.}

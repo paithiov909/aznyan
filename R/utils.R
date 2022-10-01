@@ -53,7 +53,10 @@ nano <- function(size = 21L,
 #'
 #' @export
 parse_to_jdate <- function(date,
-                           format = enc2utf8("Gy\u5e74M\u6708d\u65e5")) {
+                           format = NULL) {
+  if (missing(format)) {
+    format <- enc2utf8("Gy\u5e74M\u6708d\u65e5")
+  }
   stringi::stri_datetime_format(
     as.Date(date),
     format = format,

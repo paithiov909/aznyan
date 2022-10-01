@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
-Title: An 'Utanet' Scraper
-Version: 0.2.0
+Title: An 'Utanet' Scraper and Utilities
+Version: 0.2.1
 Authors@R: 
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre"))
 Maintainer: Akiru Kato <paithiov909@gmail.com>
