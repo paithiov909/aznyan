@@ -2,8 +2,6 @@
 
 export(get_lyrics)
 export(get_lyrics_list)
-export(is_within_era)
-export(parse_to_jdate)
 export(search_lyrics_list)
 importFrom(dplyr,"%>%")
 importFrom(rlang,.data)
