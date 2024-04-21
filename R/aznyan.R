@@ -1,7 +1,6 @@
 #' aznyan: An 'Utanet' Scraper and Utilities
-#' @docType package
-#' @name aznyan
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
+#' @useDynLib aznyan, .registration = TRUE
 #' @keywords internal
 "_PACKAGE"

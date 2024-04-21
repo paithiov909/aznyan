@@ -40,3 +40,5 @@ Meta
 
 *.log
 *.csv
+
+.vscode/

@@ -2,6 +2,8 @@
 
 export(get_lyrics)
 export(get_lyrics_list)
+export(read_srt)
 export(search_lyrics_list)
 importFrom(dplyr,"%>%")
 importFrom(rlang,.data)
+useDynLib(aznyan, .registration = TRUE)

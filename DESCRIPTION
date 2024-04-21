@@ -1,9 +1,10 @@
 Type: Package
 Package: aznyan
 Title: An 'Utanet' Scraper and Utilities
-Version: 0.3.0
-Authors@R:
-    person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre"))
+Version: 0.4.0
+Authors@R: c(
+    person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
+    person("Saurabh", "Shrivastava", role = "ctb"))
 Maintainer: Akiru Kato <paithiov909@gmail.com>
 Description: Scrape lyrics from 'Utanet' website.
 License: MIT + file LICENSE
@@ -19,9 +20,11 @@ Imports:
     readr,
     rlang,
     rvest,
-    stringi,
+    stats,
     stringr
+LinkingTo:
+    Rcpp
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1

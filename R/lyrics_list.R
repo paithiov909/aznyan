@@ -2,7 +2,7 @@
 #'
 #' @param id String; substring xxx of 'https://www.uta-net.com/:type:/xxx/'.
 #' @param type String; one of "artist", "lyricist", or "composer".
-#' @return tibble.
+#' @returns tibble.
 #' @export
 get_lyrics_list <- function(id,
                             type = c("artist", "lyricist", "composer")) {
@@ -32,7 +32,7 @@ get_lyrics_list <- function(id,
       rvest::html_elements("table")
     df <- tables %>%
       rvest::html_table() %>%
-      purrr::map_dfr(~ na.omit(.))
+      purrr::map_dfr(~ stats::na.omit(.))
     titles <- html %>%
       rvest::html_elements(".songlist-table-block") %>%
       rvest::html_elements(".songlist-title") %>%

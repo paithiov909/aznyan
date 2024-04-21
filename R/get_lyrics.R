@@ -3,7 +3,7 @@
 #' @param df A tibble that comes of \code{get_lyrics_list}.
 #' @param file String; file name to append lyrircs.
 #' @param links String; column name of lyrics links.
-#' @return `file` is returned invisibly.
+#' @returns `file` is returned invisibly.
 #' @export
 get_lyrics <- function(df, file, links = "link") {
   base_url <- "https://www.uta-net.com"
@@ -41,7 +41,7 @@ get_lyrics <- function(df, file, links = "link") {
           unlist() %>%
           as.numeric()
       ) %>%
-      readr::write_csv(file, append = TRUE)
+      readr::write_csv(file, append = TRUE, progress = FALSE)
   })
-  return(invisible(file))
+  invisible(file)
 }
