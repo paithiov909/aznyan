@@ -3,4 +3,5 @@
 ^\.devcontainer$
 ^\.vscode$
 ^LICENSE\.md$
+^README\.qmd$
 ^renovate\.json$

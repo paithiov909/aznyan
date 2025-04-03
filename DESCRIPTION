@@ -27,3 +27,4 @@ Language: en-US
 OS_type: unix
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+SystemRequirements: OpenCV 3 or newer: libopencv-dev (Debian, Ubuntu) or opencv-devel (Fedora)
