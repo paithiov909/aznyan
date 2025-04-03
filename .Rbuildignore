@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.devcontainer$
+^\.vscode$
+^LICENSE\.md$
+^renovate\.json$
