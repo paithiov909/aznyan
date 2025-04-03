@@ -3,7 +3,7 @@
 
 namespace aznyan {
 
-static std::vector<int> params = {cv::IMWRITE_PNG_COMPRESSION, 9};
+static const std::vector<int> params = {cv::IMWRITE_PNG_COMPRESSION, 1};
 
 };
 

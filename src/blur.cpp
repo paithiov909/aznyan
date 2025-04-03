@@ -6,55 +6,85 @@ cpp11::raws azny_medianblur(cpp11::raws png, int ksize) {
   std::vector<unsigned char> png_data(png.begin(), png.end());
   cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
   if (img.empty()) {
-    cpp11::stop("cv::Mat array is empty!");
+    cpp11::stop("Cannot decode image.");
   }
-  cv::Mat tmp;
-  cv::medianBlur(img, tmp, 2 * ksize + 1);
+  cv::Mat out;
+  cv::medianBlur(img, out, 2 * ksize + 1);
 
-  std::vector<unsigned char> out;
-  cv::imencode(".png", tmp, out, aznyan::params);
-  return cpp11::writable::raws{std::move(out)};
+  std::vector<unsigned char> ret;
+  cv::imencode(".png", out, ret, aznyan::params);
+  return cpp11::writable::raws{std::move(ret)};
 }
 
 [[cpp11::register]]
-cpp11::raws azny_boxblur(cpp11::raws png, int box_w, int box_h, bool normalize,
+cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize,
                          int border) {
   std::vector<unsigned char> png_data(png.begin(), png.end());
   cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
   if (img.empty()) {
-    cpp11::stop("cv::Mat array is empty!");
+    cpp11::stop("Cannot decode image.");
   }
-  std::vector<int> mode{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
-                        cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
-                        cv::BORDER_ISOLATED};
-  cv::Mat tmp;
-  cv::boxFilter(img, tmp, -1, cv::Size(box_w, box_h), cv::Point(-1, -1),
+  std::vector<int32_t> mode{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
+                            cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
+                            cv::BORDER_ISOLATED};
+  cv::Mat out;
+  cv::boxFilter(img, out, -1, cv::Size(boxW, boxH), cv::Point(-1, -1),
                 normalize, mode[border]);
-
-  std::vector<unsigned char> out;
-  cv::imencode(".png", tmp, out, aznyan::params);
-  return cpp11::writable::raws{std::move(out)};
+  std::vector<unsigned char> ret;
+  cv::imencode(".png", out, ret, aznyan::params);
+  return cpp11::writable::raws{std::move(ret)};
 }
 
 [[cpp11::register]]
-cpp11::raws azny_gaussianblur(cpp11::raws png, int box_w, int box_h,
-                              double sigma_x, double sigma_y, int border) {
+cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH,
+                              double sigmaX, double sigmaY, int border) {
   std::vector<unsigned char> png_data(png.begin(), png.end());
   cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
   if (img.empty()) {
-    cpp11::stop("cv::Mat array is empty!");
+    cpp11::stop("Cannot decode image.");
   }
-  std::vector<int> mode{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
-                        cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
-                        cv::BORDER_ISOLATED};
-  int kx = std::max(2 * box_w - 1, 0);
-  int ky = std::max(2 * box_h - 1, 0);
-  cv::Mat tmp;
-  cv::GaussianBlur(img, tmp, cv::Size(kx, ky), sigma_x, sigma_y, mode[border]);
+  std::vector<int32_t> mode{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
+                            cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
+                            cv::BORDER_ISOLATED};
+  int32_t kx = std::max(2 * boxW - 1, 0);
+  int32_t ky = std::max(2 * boxH - 1, 0);
 
-  std::vector<unsigned char> out;
-  cv::imencode(".png", tmp, out, aznyan::params);
-  return cpp11::writable::raws{std::move(out)};
+  cv::Mat out;
+  cv::GaussianBlur(img, out, cv::Size(kx, ky), sigmaX, sigmaY, mode[border]);
+  std::vector<unsigned char> ret;
+  cv::imencode(".png", out, ret, aznyan::params);
+  return cpp11::writable::raws{std::move(ret)};
 }
 
-// TODO: bilateralblur?
+[[cpp11::register]]
+cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor,
+                               double sigmaspace, int border, bool alphasync) {
+  std::vector<unsigned char> png_data(png.begin(), png.end());
+  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  if (img.empty()) {
+    cpp11::stop("Cannot decode image.");
+  }
+  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
+  std::vector<cv::Mat> bgra{bgr, alpha};
+  std::vector<int32_t> ch{0, 0, 1, 1, 2, 2, 3, 3};
+  cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
+
+  std::vector<int32_t> mode{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
+                            cv::BORDER_REFLECT, cv::BORDER_WRAP,
+                            cv::BORDER_REFLECT_101};
+
+  cv::Mat tmpB, tmpC;
+  cv::bilateralFilter(bgra[0], tmpB, d, sigmacolor, sigmaspace, mode[border]);
+  bgra[0] = tmpB.clone();
+  if (alphasync) {
+    cv::bilateralFilter(bgra[1], tmpC, d, sigmacolor, sigmaspace, mode[border]);
+    bgra[1] = tmpC.clone();
+  }
+
+  cv::Mat out(img.size(), img.type());
+  cv::mixChannels(bgra.data(), 2, &out, 1, ch.data(), 4);
+
+  std::vector<unsigned char> ret;
+  cv::imencode(".png", out, ret, aznyan::params);
+  return cpp11::writable::raws{std::move(ret)};
+}

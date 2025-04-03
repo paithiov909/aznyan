@@ -4,10 +4,22 @@ azny_medianblur <- function(png, ksize) {
   .Call(`_aznyan_azny_medianblur`, png, ksize)
 }
 
-azny_boxblur <- function(png, box_w, box_h, normalize, border) {
-  .Call(`_aznyan_azny_boxblur`, png, box_w, box_h, normalize, border)
+azny_boxblur <- function(png, boxW, boxH, normalize, border) {
+  .Call(`_aznyan_azny_boxblur`, png, boxW, boxH, normalize, border)
 }
 
-azny_gaussianblur <- function(png, box_w, box_h, sigma_x, sigma_y, border) {
-  .Call(`_aznyan_azny_gaussianblur`, png, box_w, box_h, sigma_x, sigma_y, border)
+azny_gaussianblur <- function(png, boxW, boxH, sigmaX, sigmaY, border) {
+  .Call(`_aznyan_azny_gaussianblur`, png, boxW, boxH, sigmaX, sigmaY, border)
+}
+
+azny_bilateralblur <- function(png, d, sigmacolor, sigmaspace, border, alphasync) {
+  .Call(`_aznyan_azny_bilateralblur`, png, d, sigmacolor, sigmaspace, border, alphasync)
+}
+
+azny_sobelfilter <- function(png, ksize, balp, dx, dy, border, scale, delta) {
+  .Call(`_aznyan_azny_sobelfilter`, png, ksize, balp, dx, dy, border, scale, delta)
+}
+
+azny_sobelrgb <- function(png, ksize, balp, dx, dy, border, scale, delta) {
+  .Call(`_aznyan_azny_sobelrgb`, png, ksize, balp, dx, dy, border, scale, delta)
 }

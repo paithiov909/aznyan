@@ -13,25 +13,49 @@ extern "C" SEXP _aznyan_azny_medianblur(SEXP png, SEXP ksize) {
   END_CPP11
 }
 // blur.cpp
-cpp11::raws azny_boxblur(cpp11::raws png, int box_w, int box_h, bool normalize, int border);
-extern "C" SEXP _aznyan_azny_boxblur(SEXP png, SEXP box_w, SEXP box_h, SEXP normalize, SEXP border) {
+cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize, int border);
+extern "C" SEXP _aznyan_azny_boxblur(SEXP png, SEXP boxW, SEXP boxH, SEXP normalize, SEXP border) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_boxblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(box_w), cpp11::as_cpp<cpp11::decay_t<int>>(box_h), cpp11::as_cpp<cpp11::decay_t<bool>>(normalize), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+    return cpp11::as_sexp(azny_boxblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<bool>>(normalize), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
   END_CPP11
 }
 // blur.cpp
-cpp11::raws azny_gaussianblur(cpp11::raws png, int box_w, int box_h, double sigma_x, double sigma_y, int border);
-extern "C" SEXP _aznyan_azny_gaussianblur(SEXP png, SEXP box_w, SEXP box_h, SEXP sigma_x, SEXP sigma_y, SEXP border) {
+cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH, double sigmaX, double sigmaY, int border);
+extern "C" SEXP _aznyan_azny_gaussianblur(SEXP png, SEXP boxW, SEXP boxH, SEXP sigmaX, SEXP sigmaY, SEXP border) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_gaussianblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(box_w), cpp11::as_cpp<cpp11::decay_t<int>>(box_h), cpp11::as_cpp<cpp11::decay_t<double>>(sigma_x), cpp11::as_cpp<cpp11::decay_t<double>>(sigma_y), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+    return cpp11::as_sexp(azny_gaussianblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaX), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaY), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+  END_CPP11
+}
+// blur.cpp
+cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor, double sigmaspace, int border, bool alphasync);
+extern "C" SEXP _aznyan_azny_bilateralblur(SEXP png, SEXP d, SEXP sigmacolor, SEXP sigmaspace, SEXP border, SEXP alphasync) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
+  END_CPP11
+}
+// edge.cpp
+cpp11::raws azny_sobelfilter(cpp11::raws png, int ksize, bool balp, int dx, int dy, int border, double scale, double delta);
+extern "C" SEXP _aznyan_azny_sobelfilter(SEXP png, SEXP ksize, SEXP balp, SEXP dx, SEXP dy, SEXP border, SEXP scale, SEXP delta) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_sobelfilter(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
+  END_CPP11
+}
+// edge.cpp
+cpp11::raws azny_sobelrgb(cpp11::raws png, int ksize, bool balp, int dx, int dy, int border, double scale, double delta);
+extern "C" SEXP _aznyan_azny_sobelrgb(SEXP png, SEXP ksize, SEXP balp, SEXP dx, SEXP dy, SEXP border, SEXP scale, SEXP delta) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
   END_CPP11
 }
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_aznyan_azny_boxblur",      (DL_FUNC) &_aznyan_azny_boxblur,      5},
-    {"_aznyan_azny_gaussianblur", (DL_FUNC) &_aznyan_azny_gaussianblur, 6},
-    {"_aznyan_azny_medianblur",   (DL_FUNC) &_aznyan_azny_medianblur,   2},
+    {"_aznyan_azny_bilateralblur", (DL_FUNC) &_aznyan_azny_bilateralblur, 6},
+    {"_aznyan_azny_boxblur",       (DL_FUNC) &_aznyan_azny_boxblur,       5},
+    {"_aznyan_azny_gaussianblur",  (DL_FUNC) &_aznyan_azny_gaussianblur,  6},
+    {"_aznyan_azny_medianblur",    (DL_FUNC) &_aznyan_azny_medianblur,    2},
+    {"_aznyan_azny_sobelfilter",   (DL_FUNC) &_aznyan_azny_sobelfilter,   8},
+    {"_aznyan_azny_sobelrgb",      (DL_FUNC) &_aznyan_azny_sobelrgb,      8},
     {NULL, NULL, 0}
 };
 }

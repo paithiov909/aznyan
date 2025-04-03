@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Effects With 'OpenCV'
-Version: 25.04.03
+Version: 25.04.03.9000
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph")
@@ -16,9 +16,13 @@ Depends:
     R (>= 4.2)
 Imports:
     glue,
+    grDevices,
+    grid,
     rlang
 Suggests:
-    testthat (>= 3.0.0)
+    png,
+    testthat (>= 3.0.0),
+    vdiffr
 LinkingTo:
     cpp11
 Config/testthat/edition: 3

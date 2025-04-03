@@ -18,7 +18,7 @@ Still in development…
 ## Usage
 
 aznyan provides functions that take a `raw` vector of image data as
-their first argument and return a `raw` vector of PNG format after
+their first argument and return a `raw` vector of PNG format image after
 applying the effect.
 
 You can simply read a PNG image into a raw vector using `readBin()` and
