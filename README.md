@@ -5,11 +5,15 @@
 
 <!-- badges: start -->
 
+[![aznyan status
+badge](https://paithiov909.r-universe.dev/aznyan/badges/version.png)](https://paithiov909.r-universe.dev/aznyan)
 <!-- badges: end -->
 
 aznyan is a collection of image effects for R that wraps
 [OpenCV](https://opencv.org/), ported from
 [5PB-3-4/AviUtl_OpenCV_Scripts](https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts).
+
+Still in development…
 
 ## Usage
 
@@ -17,8 +21,8 @@ aznyan provides functions that take a `raw` vector of image data as
 their first argument and return a `raw` vector of PNG format after
 applying the effect.
 
-You can read a PNG image into a raw vector using `readBin()` and save
-those return values as a PNG image using `writeBin()`.
+You can simply read a PNG image into a raw vector using `readBin()` and
+save those return values as a PNG image using `writeBin()`.
 
 ``` r
 pkgload::load_all(export_all = FALSE)
@@ -31,7 +35,7 @@ png <- readBin(
 )
 ```
 
-The original image looks like this:
+The original image `png` above looks like this:
 
 ![original image](inst/images/sample-256x256.png)
 
@@ -43,4 +47,4 @@ median_blur(png, ksize = 8) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
-<img src="man/figures/README-median-blur-1.png" style="width:100.0%" />
+<img src="man/figures/README-median-blur-1.png" style="width:30.0%" />

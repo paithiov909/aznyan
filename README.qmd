@@ -1,15 +1,15 @@
 ---
 title: aznyan
 format: gfm
-fig-width: 8
-fig-height: 8
+fig-width: 2.66
+fig-height: 2.66
 knitr:
   opts_chunk:
     dev: "ragg_png"
     collapse: true
     comment: "#>"
     fig.path: "man/figures/README-"
-    out.width: "100%"
+    out.width: "30%"
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->

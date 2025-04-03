@@ -42,3 +42,5 @@ Meta
 *.csv
 
 .vscode/
+
+/.quarto/
