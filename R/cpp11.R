@@ -16,6 +16,10 @@ azny_bilateralblur <- function(png, d, sigmacolor, sigmaspace, border, alphasync
   .Call(`_aznyan_azny_bilateralblur`, png, d, sigmacolor, sigmaspace, border, alphasync)
 }
 
+azny_diffusion <- function(png, iter, decay_factor, decay_offset, gamma, sigma) {
+  .Call(`_aznyan_azny_diffusion`, png, iter, decay_factor, decay_offset, gamma, sigma)
+}
+
 azny_sobelfilter <- function(png, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelfilter`, png, ksize, balp, dx, dy, border, scale, delta)
 }

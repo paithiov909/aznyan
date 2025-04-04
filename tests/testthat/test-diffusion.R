@@ -7,15 +7,10 @@ png <- readBin(
   n = file.info(system.file("images/sample-361x241.png", package = "aznyan"))$size
 )
 
-test_that("sobel_filter works", {
+test_that("diffusion works", {
   vdiffr::expect_doppelganger(
-    "sobel_filter",
-    sobel_filter(png, ksize = 3, use_rgb = FALSE) |>
-      as_recordedplot()
-  )
-  vdiffr::expect_doppelganger(
-    "sobel_rgb",
-    sobel_filter(png, ksize = 3, use_rgb = TRUE) |>
+    "diffusion",
+    diffusion_filter(png, factor = 5) |>
       as_recordedplot()
   )
 })

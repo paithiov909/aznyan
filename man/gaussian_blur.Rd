@@ -6,11 +6,11 @@
 \usage{
 gaussian_blur(
   png,
-  box_w,
+  box_w = 1,
   box_h = box_w,
-  sigma_x,
+  sigma_x = 0,
   sigma_y = sigma_x,
-  border = c(4, 0, 1, 2, 3)
+  border = c(3, 4, 0, 1, 2)
 )
 }
 \arguments{

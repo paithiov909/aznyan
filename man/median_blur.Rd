@@ -4,7 +4,7 @@
 \alias{median_blur}
 \title{Median blur}
 \usage{
-median_blur(png, ksize)
+median_blur(png, ksize = 1)
 }
 \arguments{
 \item{png}{A raw vector of PNG image.}

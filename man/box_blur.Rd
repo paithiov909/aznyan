@@ -6,10 +6,10 @@
 \usage{
 box_blur(
   png,
-  box_w,
+  box_w = 1,
   box_h = box_w,
   normalize = TRUE,
-  border = c(4, 0, 1, 2, 3)
+  border = c(3, 4, 0, 1, 2)
 )
 }
 \arguments{
