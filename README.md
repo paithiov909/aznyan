@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![aznyan status
-badge](https://paithiov909.r-universe.dev/aznyan/badges/version.png)](https://paithiov909.r-universe.dev/aznyan)
+badge](https://paithiov909.r-universe.dev/aznyan/badges/version)](https://paithiov909.r-universe.dev/aznyan)
 <!-- badges: end -->
 
 aznyan is a collection of image effects for R that wraps
