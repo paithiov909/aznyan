@@ -43,3 +43,11 @@ azny_sobelfilter <- function(png, ksize, balp, dx, dy, border, scale, delta) {
 azny_sobelrgb <- function(png, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelrgb`, png, ksize, balp, dx, dy, border, scale, delta)
 }
+
+azny_morphologyfilter <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
+  .Call(`_aznyan_azny_morphologyfilter`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
+}
+
+azny_morphologyrgb <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
+  .Call(`_aznyan_azny_morphologyrgb`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
+}

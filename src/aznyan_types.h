@@ -6,13 +6,30 @@ namespace aznyan {
 
 static const std::vector<int> params = {cv::IMWRITE_PNG_COMPRESSION, 1};
 
+/**
+ * 0-4
+ */
 static const std::vector<int> mode_a{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
                                      cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
                                      cv::BORDER_ISOLATED};
-
+/**
+ * 0-4
+ */
 static const std::vector<int> mode_b{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
                                      cv::BORDER_REFLECT, cv::BORDER_WRAP,
                                      cv::BORDER_REFLECT_101};
+/**
+ * 0-2
+ */
+static const std::vector<int> kshape{cv::MORPH_RECT, cv::MORPH_CROSS,
+                                     cv::MORPH_ELLIPSE};
+/**
+ * 0-7
+ */
+static const std::vector<int> opmode{cv::MORPH_ERODE,    cv::MORPH_DILATE,
+                                     cv::MORPH_OPEN,     cv::MORPH_CLOSE,
+                                     cv::MORPH_GRADIENT, cv::MORPH_TOPHAT,
+                                     cv::MORPH_BLACKHAT, cv::MORPH_HITMISS};
 
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {

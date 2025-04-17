@@ -82,20 +82,36 @@ extern "C" SEXP _aznyan_azny_sobelrgb(SEXP png, SEXP ksize, SEXP balp, SEXP dx, 
     return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
   END_CPP11
 }
+// morph.cpp
+cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype, int mode, int iterations, int border, bool alphasync, cpp11::integers pt);
+extern "C" SEXP _aznyan_azny_morphologyfilter(SEXP png, SEXP ksize, SEXP ktype, SEXP mode, SEXP iterations, SEXP border, SEXP alphasync, SEXP pt) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_morphologyfilter(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<int>>(ktype), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<int>>(iterations), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(pt)));
+  END_CPP11
+}
+// morph.cpp
+cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize, int ktype, int mode, int iterations, int border, bool alphasync, cpp11::integers pt);
+extern "C" SEXP _aznyan_azny_morphologyrgb(SEXP png, SEXP ksize, SEXP ktype, SEXP mode, SEXP iterations, SEXP border, SEXP alphasync, SEXP pt) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_morphologyrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(ksize), cpp11::as_cpp<cpp11::decay_t<int>>(ktype), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<int>>(iterations), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(pt)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_aznyan_azny_bilateralblur",   (DL_FUNC) &_aznyan_azny_bilateralblur,   6},
-    {"_aznyan_azny_boxblur",         (DL_FUNC) &_aznyan_azny_boxblur,         5},
-    {"_aznyan_azny_cannyfilter",     (DL_FUNC) &_aznyan_azny_cannyfilter,     6},
-    {"_aznyan_azny_cannyrgb",        (DL_FUNC) &_aznyan_azny_cannyrgb,        6},
-    {"_aznyan_azny_diffusion",       (DL_FUNC) &_aznyan_azny_diffusion,       6},
-    {"_aznyan_azny_gaussianblur",    (DL_FUNC) &_aznyan_azny_gaussianblur,    6},
-    {"_aznyan_azny_laplacianfilter", (DL_FUNC) &_aznyan_azny_laplacianfilter, 6},
-    {"_aznyan_azny_laplacianrgb",    (DL_FUNC) &_aznyan_azny_laplacianrgb,    6},
-    {"_aznyan_azny_medianblur",      (DL_FUNC) &_aznyan_azny_medianblur,      2},
-    {"_aznyan_azny_sobelfilter",     (DL_FUNC) &_aznyan_azny_sobelfilter,     8},
-    {"_aznyan_azny_sobelrgb",        (DL_FUNC) &_aznyan_azny_sobelrgb,        8},
+    {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,    6},
+    {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,          5},
+    {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,      6},
+    {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,         6},
+    {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,        6},
+    {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,     6},
+    {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,  6},
+    {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,     6},
+    {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,       2},
+    {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 8},
+    {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    8},
+    {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      8},
+    {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         8},
     {NULL, NULL, 0}
 };
 }
