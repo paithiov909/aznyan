@@ -5,7 +5,7 @@
 cpp11::raws azny_cannyfilter(cpp11::raws png, int asize, bool balp,
                              bool gradient, double thres1, double thres2) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
@@ -37,7 +37,7 @@ cpp11::raws azny_cannyfilter(cpp11::raws png, int asize, bool balp,
 cpp11::raws azny_cannyrgb(cpp11::raws png, int asize, bool balp, bool gradient,
                           double thres1, double thres2) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }

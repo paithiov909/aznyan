@@ -4,7 +4,7 @@
 [[cpp11::register]]
 cpp11::raws azny_medianblur(cpp11::raws png, int ksize) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
@@ -20,7 +20,7 @@ cpp11::raws azny_medianblur(cpp11::raws png, int ksize) {
 cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize,
                          int border) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
@@ -36,7 +36,7 @@ cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize,
 cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH,
                               double sigmaX, double sigmaY, int border) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
@@ -55,7 +55,7 @@ cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH,
 cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor,
                                double sigmaspace, int border, bool alphasync) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }

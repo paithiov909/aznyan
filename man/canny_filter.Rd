@@ -6,12 +6,12 @@
 \usage{
 canny_filter(
   png,
-  asize = 3,
-  balp = TRUE,
+  asize = 2,
+  balp = FALSE,
   use_rgb = TRUE,
-  grad = FALSE,
-  thres1 = 5,
-  thres2 = 5
+  grad = TRUE,
+  thres1 = 100,
+  thres2 = 200
 )
 }
 \arguments{

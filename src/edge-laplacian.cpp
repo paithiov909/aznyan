@@ -5,7 +5,7 @@
 cpp11::raws azny_laplacianfilter(cpp11::raws png, int ksize, bool balp,
                                  int border, double scale, double delta) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
@@ -41,7 +41,7 @@ cpp11::raws azny_laplacianfilter(cpp11::raws png, int ksize, bool balp,
 cpp11::raws azny_laplacianrgb(cpp11::raws png, int ksize, bool balp, int border,
                               double scale, double delta) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }

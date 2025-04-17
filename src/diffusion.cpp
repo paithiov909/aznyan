@@ -1,12 +1,12 @@
 #include "aznyan_types.h"
 #include <cpp11.hpp>
 
-// ディフュージョン（拡散フィルター）
+// ディフュージョン（拡散フィルタ）
 [[cpp11::register]]
 cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
                            float decay_offset, float gamma, int sigma) {
   const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
   }
