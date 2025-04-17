@@ -43,7 +43,7 @@ The original image `png` above looks like this:
 
 ``` r
 median_blur(png, ksize = 8) |>
-  png::readPNG(native = TRUE) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
@@ -53,8 +53,18 @@ median_blur(png, ksize = 8) |>
 
 ``` r
 diffusion_filter(png, factor = 8) |>
-  png::readPNG(native = TRUE) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
 <img src="man/figures/README-diffusion-1.png" style="width:30.0%" />
+
+### Morphological Transformation （モルフォロジー変換）
+
+``` r
+morphology(png, ksize = c(4, 4, 4)) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
+  grid::grid.raster(interpolate = FALSE)
+```
+
+<img src="man/figures/README-morph-erosion-1.png" style="width:30.0%" />

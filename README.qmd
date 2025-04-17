@@ -52,7 +52,7 @@ The original image `png` above looks like this:
 ```{r}
 #| label: median-blur
 median_blur(png, ksize = 8) |>
-  png::readPNG(native = TRUE) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
@@ -61,6 +61,15 @@ median_blur(png, ksize = 8) |>
 ```{r}
 #| label: diffusion
 diffusion_filter(png, factor = 8) |>
-  png::readPNG(native = TRUE) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
+  grid::grid.raster(interpolate = FALSE)
+```
+
+### Morphological Transformation （モルフォロジー変換）
+
+```{r}
+#| label: morph-erosion
+morphology(png, ksize = c(4, 4, 4)) |>
+  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
