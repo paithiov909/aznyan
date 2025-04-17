@@ -19,3 +19,29 @@ test_that("sobel_filter works", {
       as_recordedplot()
   )
 })
+
+test_that("laplacian_filter works", {
+  vdiffr::expect_doppelganger(
+    "laplacian_filter",
+    laplacian_filter(png, ksize = 2, use_rgb = FALSE) |>
+      as_recordedplot()
+  )
+  vdiffr::expect_doppelganger(
+    "laplacian_rgb",
+    laplacian_filter(png, ksize = 2, use_rgb = TRUE) |>
+      as_recordedplot()
+  )
+})
+
+test_that("canny_filter works", {
+  vdiffr::expect_doppelganger(
+    "canny_filter",
+    canny_filter(png, use_rgb = FALSE) |>
+      as_recordedplot()
+  )
+  vdiffr::expect_doppelganger(
+    "canny_rgb",
+    canny_filter(png, use_rgb = TRUE) |>
+      as_recordedplot()
+  )
+})

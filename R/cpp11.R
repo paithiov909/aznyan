@@ -20,6 +20,22 @@ azny_diffusion <- function(png, iter, decay_factor, decay_offset, gamma, sigma) 
   .Call(`_aznyan_azny_diffusion`, png, iter, decay_factor, decay_offset, gamma, sigma)
 }
 
+azny_cannyfilter <- function(png, asize, balp, gradient, thres1, thres2) {
+  .Call(`_aznyan_azny_cannyfilter`, png, asize, balp, gradient, thres1, thres2)
+}
+
+azny_cannyrgb <- function(png, asize, balp, gradient, thres1, thres2) {
+  .Call(`_aznyan_azny_cannyrgb`, png, asize, balp, gradient, thres1, thres2)
+}
+
+azny_laplacianfilter <- function(png, ksize, balp, border, scale, delta) {
+  .Call(`_aznyan_azny_laplacianfilter`, png, ksize, balp, border, scale, delta)
+}
+
+azny_laplacianrgb <- function(png, ksize, balp, border, scale, delta) {
+  .Call(`_aznyan_azny_laplacianrgb`, png, ksize, balp, border, scale, delta)
+}
+
 azny_sobelfilter <- function(png, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelfilter`, png, ksize, balp, dx, dy, border, scale, delta)
 }

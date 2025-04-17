@@ -12,11 +12,12 @@ NULL
 #' @returns A recorded plot.
 #' @export
 as_recordedplot <- function(png) {
-  if (!requireNamespace("png", quietly = TRUE)) {
-    rlang::abort("png package is required.")
+  if (!requireNamespace("fastpng", quietly = TRUE)) {
+    rlang::abort("fastpng package is required.")
   }
-  graphics::plot.new()
-  grid::grid.raster(png::readPNG(png, native = TRUE))
+  png <- fastpng::read_png(png, type = "nativeraster", rgba = TRUE)
+  grid::grid.newpage(recording = FALSE)
+  grid::grid.raster(png)
   grDevices::recordPlot(load = "aznyan")
 }
 

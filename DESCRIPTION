@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Effects With 'OpenCV'
-Version: 25.04.03.9000
+Version: 25.04.17
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph")
@@ -20,7 +20,7 @@ Imports:
     grid,
     rlang
 Suggests:
-    png,
+    fastpng,
     testthat (>= 3.0.0),
     vdiffr
 LinkingTo:

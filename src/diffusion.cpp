@@ -5,7 +5,7 @@
 [[cpp11::register]]
 cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
                            float decay_offset, float gamma, int sigma) {
-  std::vector<unsigned char> png_data(png.begin(), png.end());
+  const std::vector<unsigned char> png_data{png.begin(), png.end()};
   cv::Mat img = cv::imdecode(png_data, cv::IMREAD_UNCHANGED);
   if (img.empty()) {
     cpp11::stop("Cannot decode image.");
@@ -48,15 +48,14 @@ cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
       }
     });
     tmpD.release();
+
+    cpp11::check_user_interrupt();
   }
 
   float gm_inv = 1.0 / gamma;
   cv::Mat tmpF = cv::Mat::zeros(tmpB.size(), tmpB.type());
   aznyan::parallel_for(
-      0, height,
-      [&tmpE, &tmpF, &tmpB, gm_inv, width](int32_t y)
-
-      {
+      0, height, [&tmpE, &tmpF, &tmpB, gm_inv, width](int32_t y) {
         auto pIN3 = tmpE.ptr<cv::Vec3f>(y);
         auto pIN4 = tmpB.ptr<cv::Vec4f>(y);
         auto pOUT = tmpF.ptr<cv::Vec4f>(y);

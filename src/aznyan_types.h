@@ -6,6 +6,14 @@ namespace aznyan {
 
 static const std::vector<int> params = {cv::IMWRITE_PNG_COMPRESSION, 1};
 
+static const std::vector<int> mode_a{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
+                                     cv::BORDER_REFLECT, cv::BORDER_REFLECT_101,
+                                     cv::BORDER_ISOLATED};
+
+static const std::vector<int> mode_b{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
+                                     cv::BORDER_REFLECT, cv::BORDER_WRAP,
+                                     cv::BORDER_REFLECT_101};
+
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {
   int num_cpu = std::thread::hardware_concurrency();
