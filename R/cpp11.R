@@ -44,6 +44,18 @@ azny_sobelrgb <- function(png, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelrgb`, png, ksize, balp, dx, dy, border, scale, delta)
 }
 
+azny_swap_channels <- function(png, mapping) {
+  .Call(`_aznyan_azny_swap_channels`, png, mapping)
+}
+
+azny_resize <- function(png, wh, resize_mode, set_size) {
+  .Call(`_aznyan_azny_resize`, png, wh, resize_mode, set_size)
+}
+
+azny_resample <- function(png, wh, resize_red, resize_exp) {
+  .Call(`_aznyan_azny_resample`, png, wh, resize_red, resize_exp)
+}
+
 azny_morphologyfilter <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
   .Call(`_aznyan_azny_morphologyfilter`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
 }

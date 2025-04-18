@@ -30,6 +30,13 @@ static const std::vector<int> opmode{cv::MORPH_ERODE,    cv::MORPH_DILATE,
                                      cv::MORPH_OPEN,     cv::MORPH_CLOSE,
                                      cv::MORPH_GRADIENT, cv::MORPH_TOPHAT,
                                      cv::MORPH_BLACKHAT, cv::MORPH_HITMISS};
+/**
+ * 0-6
+ */
+static const std::vector<int> rsmode{
+    cv::INTER_NEAREST,      cv::INTER_LINEAR,   cv::INTER_CUBIC,
+    cv::INTER_AREA,         cv::INTER_LANCZOS4, cv::INTER_LINEAR_EXACT,
+    cv::INTER_NEAREST_EXACT};
 
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {

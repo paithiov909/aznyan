@@ -82,6 +82,27 @@ extern "C" SEXP _aznyan_azny_sobelrgb(SEXP png, SEXP ksize, SEXP balp, SEXP dx, 
     return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
   END_CPP11
 }
+// misc.cpp
+cpp11::raws azny_swap_channels(cpp11::raws png, cpp11::integers mapping);
+extern "C" SEXP _aznyan_azny_swap_channels(SEXP png, SEXP mapping) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_swap_channels(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(mapping)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::raws azny_resize(cpp11::raws png, cpp11::doubles wh, int resize_mode, bool set_size);
+extern "C" SEXP _aznyan_azny_resize(SEXP png, SEXP wh, SEXP resize_mode, SEXP set_size) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_resize(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_mode), cpp11::as_cpp<cpp11::decay_t<bool>>(set_size)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::raws azny_resample(cpp11::raws png, cpp11::doubles wh, int resize_red, int resize_exp);
+extern "C" SEXP _aznyan_azny_resample(SEXP png, SEXP wh, SEXP resize_red, SEXP resize_exp) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_resample(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_red), cpp11::as_cpp<cpp11::decay_t<int>>(resize_exp)));
+  END_CPP11
+}
 // morph.cpp
 cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype, int mode, int iterations, int border, bool alphasync, cpp11::integers pt);
 extern "C" SEXP _aznyan_azny_morphologyfilter(SEXP png, SEXP ksize, SEXP ktype, SEXP mode, SEXP iterations, SEXP border, SEXP alphasync, SEXP pt) {
@@ -110,8 +131,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,       2},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 8},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    8},
+    {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,         4},
+    {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,           4},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      8},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         8},
+    {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,    2},
     {NULL, NULL, 0}
 };
 }
