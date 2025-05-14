@@ -82,6 +82,34 @@ extern "C" SEXP _aznyan_azny_sobelrgb(SEXP png, SEXP ksize, SEXP balp, SEXP dx, 
     return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
   END_CPP11
 }
+// lut.cpp
+cpp11::doubles azny_read_cube(const std::string& file_path, bool verbose);
+extern "C" SEXP _aznyan_azny_read_cube(SEXP file_path, SEXP verbose) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_read_cube(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(file_path), cpp11::as_cpp<cpp11::decay_t<bool>>(verbose)));
+  END_CPP11
+}
+// lut.cpp
+cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data, int cube_size, double intensity, bool is_r_fastest);
+extern "C" SEXP _aznyan_azny_apply_cube(SEXP png, SEXP lut_data, SEXP cube_size, SEXP intensity, SEXP is_r_fastest) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_apply_cube(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles_matrix<>>>(lut_data), cpp11::as_cpp<cpp11::decay_t<int>>(cube_size), cpp11::as_cpp<cpp11::decay_t<double>>(intensity), cpp11::as_cpp<cpp11::decay_t<bool>>(is_r_fastest)));
+  END_CPP11
+}
+// lut.cpp
+cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec);
+extern "C" SEXP _aznyan_azny_decode_rec709(SEXP in_vec) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_decode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
+  END_CPP11
+}
+// lut.cpp
+cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec);
+extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_encode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
+  END_CPP11
+}
 // misc.cpp
 cpp11::raws azny_swap_channels(cpp11::raws png, cpp11::integers mapping);
 extern "C" SEXP _aznyan_azny_swap_channels(SEXP png, SEXP mapping) {
@@ -120,17 +148,21 @@ extern "C" SEXP _aznyan_azny_morphologyrgb(SEXP png, SEXP ksize, SEXP ktype, SEX
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,       5},
     {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,    6},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,          5},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,      6},
     {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,         6},
+    {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,    1},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,        6},
+    {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,    1},
     {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,     6},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,  6},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,     6},
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,       2},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 8},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    8},
+    {"_aznyan_azny_read_cube",        (DL_FUNC) &_aznyan_azny_read_cube,        2},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,         4},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,           4},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      8},

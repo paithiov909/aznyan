@@ -1,13 +1,14 @@
 Type: Package
 Package: aznyan
-Title: Image Effects With 'OpenCV'
-Version: 25.04.18
+Title: Image Filters With 'OpenCV'
+Version: 25.05.14
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
+    person("Aras", "Pranckevičius", role = "cph"),
     person("Jeroen", "Ooms", role = "cph")
   )
 Maintainer: Akiru Kato <paithiov909@gmail.com>
-Description: Offers image effects wrapping 'OpenCV' <https://opencv.org/>,
+Description: Offers image filters wrapping 'OpenCV' <https://opencv.org/>,
     ported from <https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts>.
 License: MIT + file LICENSE
 URL: https://github.com/paithiov909/aznyan

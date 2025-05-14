@@ -40,6 +40,7 @@ Meta
 
 *.log
 *.csv
+*.cube
 
 .vscode/
 

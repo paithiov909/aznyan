@@ -1,4 +1,48 @@
 #!/bin/sh
+
+# SIMD detection for smol-cube
+echo "Running SIMD detection"
+
+CXX=${CXX:-g++}
+echo "Using compiler: $CXX"
+
+ARCH=$(uname -m)
+SIMD_FLAGS=""
+
+if [ "$ARCH" = "x86_64" ]; then
+  echo "Detected x86_64 architecture"
+
+  TMPFILE=$(mktemp --suffix=".cpp")
+
+  cat <<EOF > $TMPFILE
+#include <smmintrin.h>
+
+int main() {
+  __m128i a = _mm_set1_epi32(42);  // SSE4.1 intrinsic
+  return 0;
+}
+EOF
+
+  if $CXX -msse4.1 $TMPFILE -o /dev/null 2>/dev/null; then
+    SIMD_FLAGS="-msse4.1"
+    echo "Compiler supports SSE4.1"
+  else
+    echo "Error: SSE4.1 support not available; cannot proceed"
+    rm -f $TMPFILE
+    exit 1
+  fi
+
+  rm -f $TMPFILE
+
+elif [ "$ARCH" = "aarch64" ]; then
+  SIMD_FLAGS="-march=armv8-a"
+  echo "Detected ARM64 architecture; using $SIMD_FLAGS"
+else
+  echo "Unsupported architecture: $ARCH"
+  exit 1
+fi
+
+
 # Anticonf (tm) script by Jeroen Ooms (2020)
 PKG_CONFIG_NAME="opencv4"
 PKG_CONFIG_NAME_ALT="opencv"
@@ -61,8 +105,8 @@ if [ "$CXX17" ]; then
 echo "Found C++17 compiler: $CXX17"
 CXXVER=CXX17
 else
-echo "Using C++11 compiler"
-CXXVER=CXX11
+echo "Using default compiler"
+CXXVER=CXX
 fi
 
 CXX=$($R_HOME/bin/R CMD config ${CXXVER})
@@ -96,7 +140,7 @@ else
 fi
 
 # Write to Makevars
-sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" -e "s|CXX11|${CXXVER}|" src/Makevars.in > src/Makevars
+sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" -e "s|@simdflags@|$SIMD_FLAGS|" src/Makevars.in > src/Makevars
 
 # Success
 exit 0

@@ -4,9 +4,9 @@
 \name{aznyan-package}
 \alias{aznyan}
 \alias{aznyan-package}
-\title{aznyan: Image Effects With 'OpenCV'}
+\title{aznyan: Image Filters With 'OpenCV'}
 \description{
-Offers image effects wrapping 'OpenCV' \url{https://opencv.org/}, ported from \url{https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts}.
+Offers image filters wrapping 'OpenCV' \url{https://opencv.org/}, ported from \url{https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts}.
 }
 \seealso{
 Useful links:
@@ -21,6 +21,7 @@ Useful links:
 
 Other contributors:
 \itemize{
+  \item Aras Pranckevičius [copyright holder]
   \item Jeroen Ooms [copyright holder]
 }
 
