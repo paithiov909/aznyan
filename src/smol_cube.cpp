@@ -769,7 +769,13 @@ smcube_luts* smcube_load_from_file_smcube(const char* path)
     smcube_luts* luts = new smcube_luts();
     luts->file_data_size = file_size;
     luts->file_data = new uint8_t[file_size];
-    fread(luts->file_data, 1, file_size, f);
+    size_t ret = fread(luts->file_data, 1, file_size, f);
+    if (ret != file_size)
+    {
+        fclose(f);
+        smcube_free(luts);
+        throw std::runtime_error("Failed to read file");
+    }
     fclose(f);
 
     if (memcmp(luts->file_data, "SML1", 4) != 0)
