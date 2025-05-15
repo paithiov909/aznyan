@@ -15,7 +15,6 @@ knitr:
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
 <!-- badges: start -->
-[![aznyan status badge](https://paithiov909.r-universe.dev/aznyan/badges/version)](https://paithiov909.r-universe.dev/aznyan)
 [![R-CMD-check](https://github.com/paithiov909/aznyan/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paithiov909/aznyan/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
