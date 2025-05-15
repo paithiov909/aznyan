@@ -6,6 +6,7 @@ echo "Running SIMD detection"
 CXX=${CXX:-g++}
 echo "Using compiler: $CXX"
 
+OS_TYPE=$(uname -s)
 ARCH=$(uname -m)
 SIMD_FLAGS=""
 
@@ -35,7 +36,7 @@ EOF
   rm -f $TMPFILE
 
 elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ "$OS_TYPE" == "Darwin" ]]; then
     SIMD_FLAGS=""  # Clang on macOS enables NEON by default
     echo "Detected Apple Silicon (arm64 macOS); using default flags"
   else

@@ -7,5 +7,5 @@ ifneq ($(findstring xfeatures2d,$(PKG_LIBS)),)
 $(info using $(PKG_CONFIG_NAME) from Rtools)
 endif
 
-PKG_CPPFLAGS := $(shell $(PKG_CONFIG) --cflags $(PKG_CONFIG_NAME)) $(STATIC_CFLAGS)
+PKG_CPPFLAGS := $(shell $(PKG_CONFIG) --cflags $(PKG_CONFIG_NAME)) $(STATIC_CFLAGS) -msse4.1
 OPENCVDATA := $(shell $(PKG_CONFIG) --variable=prefix $(PKG_CONFIG_NAME))/share/opencv4
