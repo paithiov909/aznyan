@@ -7,6 +7,7 @@
 
 [![aznyan status
 badge](https://paithiov909.r-universe.dev/aznyan/badges/version)](https://paithiov909.r-universe.dev/aznyan)
+[![R-CMD-check](https://github.com/paithiov909/aznyan/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paithiov909/aznyan/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 aznyan is a collection of image filters for R that wraps [OpenCV](https://opencv.org/),

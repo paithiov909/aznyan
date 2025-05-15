@@ -12,7 +12,7 @@ SIMD_FLAGS=""
 if [ "$ARCH" = "x86_64" ]; then
   echo "Detected x86_64 architecture"
 
-  TMPFILE=$(mktemp --suffix=".cpp")
+  TMPFILE=tmp_simd_check.cpp
 
   cat <<EOF > $TMPFILE
 #include <smmintrin.h>
@@ -34,9 +34,14 @@ EOF
 
   rm -f $TMPFILE
 
-elif [ "$ARCH" = "aarch64" ]; then
-  SIMD_FLAGS="-march=armv8-a"
-  echo "Detected ARM64 architecture; using $SIMD_FLAGS"
+elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    SIMD_FLAGS=""  # Clang on macOS enables NEON by default
+    echo "Detected Apple Silicon (arm64 macOS); using default flags"
+  else
+    SIMD_FLAGS="-march=armv8-a"
+    echo "Detected ARM64 architecture; using $SIMD_FLAGS"
+  fi
 else
   echo "Unsupported architecture: $ARCH"
   exit 1

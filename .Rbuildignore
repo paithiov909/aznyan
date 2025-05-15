@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.devcontainer$
+^\.github$
 ^\.vscode$
 ^LICENSE\.md$
 ^README\.qmd$
