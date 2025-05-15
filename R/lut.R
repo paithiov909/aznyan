@@ -1,18 +1,3 @@
-#' Read a 3D LUT file
-#'
-#' @param lut The path to cube LUT file.
-#' @param verbose Whether to print debug messages.
-#' @returns A data frame with columns `x`, `y` and `z`.
-#' @export
-read_cube <- function(lut, verbose = TRUE) {
-  # Assuming it's a 3-channel, 3D cube
-  d <- matrix(azny_read_cube(lut, verbose), ncol = 3, byrow = TRUE)
-  ret <- as.data.frame(d)
-  colnames(ret) <- c("x", "y", "z")
-  class(ret) <- c("tbl_df", "tbl", class(ret))
-  ret
-}
-
 #' Apply a 3D LUT to a PNG image
 #'
 #' @note
@@ -28,10 +13,9 @@ read_cube <- function(lut, verbose = TRUE) {
 #' @returns A raw vector of PNG image.
 #' @export
 apply_cube <- function(png, lut, is_r_fastest = TRUE, intensity = 1.0) {
-  stopifnot(
-    intensity >= 0.0,
-    intensity <= 1.0
-  )
+  if (intensity < 0.0 || intensity > 1.0) {
+    rlang::abort("`intensity` must be between 0.0 and 1.0")
+  }
   lut <- as.matrix(lut)
   cube_size <- nrow(lut)^(1 / 3)
   azny_apply_cube(png, lut, as.integer(cube_size), intensity, is_r_fastest)

@@ -60,6 +60,17 @@ cv::Mat linear_to_sRGB(const cv::Mat& img) {
 }  // namespace aznyan
 
 [[cpp11::register]]
+bool azny_write_smcube(const std::string& input_path, const std::string& output_path) {
+  auto luts = smcube_load_from_file(input_path.c_str());
+  if (luts == nullptr) {
+    cpp11::stop("Incompatible file format.");
+  }
+  auto ok = smcube_save_to_file_smcube(output_path.c_str(), luts, smcube_save_flag_FilterData);
+  smcube_free(luts);
+  return ok;
+}
+
+[[cpp11::register]]
 cpp11::doubles azny_read_cube(const std::string& file_path, bool verbose) {
   auto luts = smcube_load_from_file(file_path.c_str());
   if (luts == nullptr) {

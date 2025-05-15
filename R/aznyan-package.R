@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @useDynLib aznyan, .registration = TRUE
+#' @importFrom utils write.table
 ## usethis namespace: end
 NULL
 
@@ -22,12 +23,12 @@ as_recordedplot <- function(png) {
 }
 
 int_match <- function(x, arg, values) {
-  x <- match(x[1], values) - 1L
-  if (is.na(x)) {
+  tmp <- match(x[1], values) - 1L
+  if (is.na(tmp)) {
     msg <- glue::glue(
       "`{arg}` must be one of {paste0(values, collapse = ', ')}. Got {x}."
     )
     rlang::abort(msg)
   }
-  x
+  tmp
 }

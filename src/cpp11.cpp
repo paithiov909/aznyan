@@ -83,6 +83,13 @@ extern "C" SEXP _aznyan_azny_sobelrgb(SEXP png, SEXP ksize, SEXP balp, SEXP dx, 
   END_CPP11
 }
 // lut.cpp
+bool azny_write_smcube(const std::string& input_path, const std::string& output_path);
+extern "C" SEXP _aznyan_azny_write_smcube(SEXP input_path, SEXP output_path) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_write_smcube(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(input_path), cpp11::as_cpp<cpp11::decay_t<const std::string&>>(output_path)));
+  END_CPP11
+}
+// lut.cpp
 cpp11::doubles azny_read_cube(const std::string& file_path, bool verbose);
 extern "C" SEXP _aznyan_azny_read_cube(SEXP file_path, SEXP verbose) {
   BEGIN_CPP11
@@ -168,6 +175,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      8},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         8},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,    2},
+    {"_aznyan_azny_write_smcube",     (DL_FUNC) &_aznyan_azny_write_smcube,     2},
     {NULL, NULL, 0}
 };
 }

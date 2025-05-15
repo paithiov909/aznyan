@@ -9,11 +9,10 @@
 badge](https://paithiov909.r-universe.dev/aznyan/badges/version)](https://paithiov909.r-universe.dev/aznyan)
 <!-- badges: end -->
 
-aznyan is a collection of image effects for R that wraps
-[OpenCV](https://opencv.org/), ported from
-[5PB-3-4/AviUtl_OpenCV_Scripts](https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts).
+aznyan is a collection of image filters for R that wraps [OpenCV](https://opencv.org/),
+ported from [5PB-3-4/AviUtl_OpenCV_Scripts](https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts).
 
-Still in development. It will probably work, but documentation is scant.
+Still in development. It will probably work, but documentation is scant. Also, note that this package requires some SIMD extensions to work on your system.
 
 ## Usage
 

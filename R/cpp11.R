@@ -44,6 +44,10 @@ azny_sobelrgb <- function(png, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelrgb`, png, ksize, balp, dx, dy, border, scale, delta)
 }
 
+azny_write_smcube <- function(input_path, output_path) {
+  .Call(`_aznyan_azny_write_smcube`, input_path, output_path)
+}
+
 azny_read_cube <- function(file_path, verbose) {
   .Call(`_aznyan_azny_read_cube`, file_path, verbose)
 }
