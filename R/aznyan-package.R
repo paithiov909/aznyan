@@ -10,7 +10,7 @@ NULL
 #' Convert PNG image data into recorded plot
 #'
 #' @param png A raw vector of PNG image.
-#' @returns A recorded plot.
+#' @returns A recorded plot is invisibly returned.
 #' @export
 as_recordedplot <- function(png) {
   if (!requireNamespace("fastpng", quietly = TRUE)) {
@@ -19,7 +19,7 @@ as_recordedplot <- function(png) {
   png <- fastpng::read_png(png, type = "nativeraster", rgba = TRUE)
   grid::grid.newpage(recording = FALSE)
   grid::grid.raster(png)
-  grDevices::recordPlot(load = "aznyan")
+  invisible(grDevices::recordPlot(load = "aznyan"))
 }
 
 int_match <- function(x, arg, values) {

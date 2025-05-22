@@ -10,7 +10,7 @@ as_recordedplot(png)
 \item{png}{A raw vector of PNG image.}
 }
 \value{
-A recorded plot.
+A recorded plot is invisibly returned.
 }
 \description{
 Convert PNG image data into recorded plot
