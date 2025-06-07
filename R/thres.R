@@ -45,5 +45,5 @@ adpthres <- function(png,
     rlang::abort("`bsize` must be in range [1, 50]")
   }
   mode <- int_match(mode, "mode", c(0, 1))
-  azny_adpthres(png, mode, maxv, bsize, as.integer(invert), C)
+  azny_adpthres(png, as.logical(mode), maxv, bsize, invert, C)
 }

@@ -42,21 +42,10 @@ static const std::vector<int> rsmode{
 /**
  * 0-6
  */
-static const std::vector<int> tmode_a{
+static const std::vector<int> thresmode{
     cv::THRESH_BINARY,  cv::THRESH_BINARY_INV, cv::THRESH_TRUNC,
     cv::THRESH_TOZERO,  cv::THRESH_TOZERO_INV, cv::THRESH_OTSU,
     cv::THRESH_TRIANGLE};
-
-/**
- * 0-1
- */
-static const std::vector<int> tmode_b{cv::THRESH_BINARY_INV, cv::THRESH_BINARY};
-
-/**
- * 0-1
- */
-static const std::vector<int> adp_mode{cv::ADAPTIVE_THRESH_MEAN_C,
-                                       cv::ADAPTIVE_THRESH_GAUSSIAN_C};
 
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {

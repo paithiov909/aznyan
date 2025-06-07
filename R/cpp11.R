@@ -84,6 +84,14 @@ azny_morphologyrgb <- function(png, ksize, ktype, mode, iterations, border, alph
   .Call(`_aznyan_azny_morphologyrgb`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
 
+azny_meanshift <- function(png, sp, sr, maxl) {
+  .Call(`_aznyan_azny_meanshift`, png, sp, sr, maxl)
+}
+
+azny_preserve_edges <- function(png, sgmS, sgmR, mode) {
+  .Call(`_aznyan_azny_preserve_edges`, png, sgmS, sgmR, mode)
+}
+
 azny_thres <- function(png, thres, maxv, mode) {
   .Call(`_aznyan_azny_thres`, png, thres, maxv, mode)
 }
