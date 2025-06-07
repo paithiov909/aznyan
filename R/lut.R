@@ -36,22 +36,3 @@ decode_rec709 <- function(x) azny_decode_rec709(x)
 #' @rdname rec709
 #' @export
 encode_rec709 <- function(x) azny_encode_rec709(x)
-
-#' Matrices to convert between color spaces
-#' @rdname conversion-mat
-#' @name conversion-mat
-NULL
-
-#' @rdname conversion-mat
-#' @export
-M_Rec709_to_sRGB <- matrix( # nolint
-  c(0.9154, 0.0762, 0.0000, 0.0414, 0.9586, 0.0000, 0.0115, 0.1188, 0.8697),
-  ncol = 3, byrow = TRUE
-)
-
-#' @rdname conversion-mat
-#' @export
-M_sRGB_to_Rec709 <- matrix( # nolint
-  c(1.2249, -0.2247, 0.0000, -0.0420, 1.0420, 0.0000, -0.0197, -0.0786, 1.0983),
-  ncol = 3, byrow = TRUE
-)

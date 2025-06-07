@@ -1,6 +1,7 @@
 #pragma once
 #include <thread>
 #include <opencv2/opencv.hpp>
+#include <cpp11.hpp>
 
 namespace aznyan {
 
@@ -38,6 +39,25 @@ static const std::vector<int> rsmode{
     cv::INTER_AREA,         cv::INTER_LANCZOS4, cv::INTER_LINEAR_EXACT,
     cv::INTER_NEAREST_EXACT};
 
+/**
+ * 0-6
+ */
+static const std::vector<int> tmode_a{
+    cv::THRESH_BINARY,  cv::THRESH_BINARY_INV, cv::THRESH_TRUNC,
+    cv::THRESH_TOZERO,  cv::THRESH_TOZERO_INV, cv::THRESH_OTSU,
+    cv::THRESH_TRIANGLE};
+
+/**
+ * 0-1
+ */
+static const std::vector<int> tmode_b{cv::THRESH_BINARY_INV, cv::THRESH_BINARY};
+
+/**
+ * 0-1
+ */
+static const std::vector<int> adp_mode{cv::ADAPTIVE_THRESH_MEAN_C,
+                                       cv::ADAPTIVE_THRESH_GAUSSIAN_C};
+
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {
   int num_cpu = std::thread::hardware_concurrency();
@@ -67,6 +87,33 @@ inline void parallel_for(int st, int ed, FUNC func) {
 //       },
 //       nstripes);
 // }
+
+// Decode raws to cv::Mat using 'cv::IMREAD_UNCHANGED'
+inline cv::Mat decode_raws(const cpp11::raws& png) {
+  const std::vector<unsigned char> png_data{png.begin(), png.end()};
+  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
+  if (img.empty()) {
+    cpp11::stop("Cannot decode image.");
+  }
+  return img;
+}
+
+inline cpp11::raws encode_raws(const cv::Mat& img) {
+  std::vector<unsigned char> ret;
+  cv::imencode(".png", img, ret, aznyan::params);
+  return cpp11::writable::raws{std::move(ret)};
+}
+
+inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(const cv::Mat& img) {
+  if (img.channels() != 4) {
+    cpp11::stop("Image must have 4 channels.");
+  }
+  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
+  std::vector<cv::Mat> bgra{bgr, alpha};
+  std::vector<int> ch{0, 0, 1, 1, 2, 2, 3, 3};
+  cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
+  return std::make_tuple(bgra, ch);
+}
 
 };  // namespace aznyan
 

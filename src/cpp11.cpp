@@ -152,9 +152,24 @@ extern "C" SEXP _aznyan_azny_morphologyrgb(SEXP png, SEXP ksize, SEXP ktype, SEX
     return cpp11::as_sexp(azny_morphologyrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(ksize), cpp11::as_cpp<cpp11::decay_t<int>>(ktype), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<int>>(iterations), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(pt)));
   END_CPP11
 }
+// threshold.cpp
+cpp11::raws azny_thres(cpp11::raws png, double thres, double maxv, int mode);
+extern "C" SEXP _aznyan_azny_thres(SEXP png, SEXP thres, SEXP maxv, SEXP mode) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_thres(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<double>>(thres), cpp11::as_cpp<cpp11::decay_t<double>>(maxv), cpp11::as_cpp<cpp11::decay_t<int>>(mode)));
+  END_CPP11
+}
+// threshold.cpp
+cpp11::raws azny_adpthres(cpp11::raws png, int adpthres, double maxv, int bsize, int mode, double valC);
+extern "C" SEXP _aznyan_azny_adpthres(SEXP png, SEXP adpthres, SEXP maxv, SEXP bsize, SEXP mode, SEXP valC) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_adpthres(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(adpthres), cpp11::as_cpp<cpp11::decay_t<double>>(maxv), cpp11::as_cpp<cpp11::decay_t<int>>(bsize), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<double>>(valC)));
+  END_CPP11
+}
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
+    {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,         6},
     {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,       5},
     {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,    6},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,          5},
@@ -175,6 +190,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      8},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         8},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,    2},
+    {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,            4},
     {"_aznyan_azny_write_smcube",     (DL_FUNC) &_aznyan_azny_write_smcube,     2},
     {NULL, NULL, 0}
 };

@@ -1,5 +1,4 @@
 #include "aznyan_types.h"
-#include <cpp11.hpp>
 
 // チャンネル入替 (ch_chg)
 [[cpp11::register]]
@@ -19,21 +18,15 @@ cpp11::raws azny_swap_channels(cpp11::raws png, cpp11::integers mapping) {
                 " channels, but mapping has ", npairs, " pairs.");
   }
   cv::mixChannels(&img, 1, &out, 2, ch.data(), npairs);
-
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", out, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(out);
 }
 
 // リサイズ (resizefilter)
 [[cpp11::register]]
 cpp11::raws azny_resize(cpp11::raws png, cpp11::doubles wh, int resize_mode,
                         bool set_size) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
+  cv::Mat img = aznyan::decode_raws(png);
+
   int wt = img.size().width;
   int ht = img.size().height;
 
@@ -49,21 +42,15 @@ cpp11::raws azny_resize(cpp11::raws png, cpp11::doubles wh, int resize_mode,
     cv::resize(img, out, cv::Size(), coef_w, coef_h,
                aznyan::rsmode[resize_mode]);
   }
-
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", out, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(out);
 }
 
 // リサンプル (resample)
 [[cpp11::register]]
 cpp11::raws azny_resample(cpp11::raws png, cpp11::doubles wh, int resize_red,
                           int resize_exp) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
+  cv::Mat img = aznyan::decode_raws(png);
+
   int wt = img.size().width;
   int ht = img.size().height;
   auto coef_w = wh[0]; // std::clamp(wh[0], 0.0, 1.0);
@@ -77,7 +64,5 @@ cpp11::raws azny_resample(cpp11::raws png, cpp11::doubles wh, int resize_red,
   auto cy = static_cast<double>(ht) / rdimg.size().height;
   cv::resize(rdimg, eximg, cv::Size(), cx, cy, aznyan::rsmode[resize_exp]);
 
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", eximg, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(eximg);
 }

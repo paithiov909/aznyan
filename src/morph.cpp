@@ -1,24 +1,12 @@
 #include "aznyan_types.h"
-#include <cpp11.hpp>
 
 [[cpp11::register]]
 cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype,
                                   int mode, int iterations, int border,
                                   bool alphasync, cpp11::integers pt) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
-  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
-  std::vector<cv::Mat> bgra{bgr, alpha};
+  cv::Mat img = aznyan::decode_raws(png);
+  auto [bgra, ch] = aznyan::split_bgra(img);
 
-  if (img.channels() == 4) {
-    const std::vector<int32_t> ch{0, 0, 1, 1, 2, 2, 3, 3};
-    cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
-  } else {
-    cpp11::stop("Image must have 4 channels.");
-  }
   cv::Mat tmpB = cv::Mat::zeros(img.size(), CV_8UC3);
   cv::Mat tmpC, tmpD;
 
@@ -44,30 +32,16 @@ cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype,
   cv::Mat out;
   std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC, tmpD};
   cv::merge(ch_out, out);
-
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", out, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(out);
 }
 
 [[cpp11::register]]
 cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize,
                                int ktype, int mode, int iterations, int border,
                                bool alphasync, cpp11::integers pt) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
-  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
-  std::vector<cv::Mat> bgra{bgr, alpha};
+  cv::Mat img = aznyan::decode_raws(png);
+  auto [bgra, ch] = aznyan::split_bgra(img);
 
-  if (img.channels() == 4) {
-    const std::vector<int32_t> ch{0, 0, 1, 1, 2, 2, 3, 3};
-    cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
-  } else {
-    cpp11::stop("Image must have 4 channels.");
-  }
   cv::Mat tmpB = cv::Mat::zeros(img.size(), CV_8UC3);
   bgra[0].copyTo(tmpB, bgra[1]);
 
@@ -111,8 +85,5 @@ cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize,
   cv::Mat out;
   std::vector ch_out{tmpD[0], tmpD[1], tmpD[2], tmpC};
   cv::merge(ch_out, out);
-
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", out, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(out);
 }

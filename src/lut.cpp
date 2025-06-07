@@ -1,6 +1,5 @@
 #include "smol_cube.h"
 #include "aznyan_types.h"
-#include <cpp11.hpp>
 
 namespace aznyan {
 
@@ -133,18 +132,8 @@ cpp11::doubles azny_read_cube(const std::string& file_path, bool verbose) {
 cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data,
                             int cube_size, double intensity,
                             bool is_r_fastest) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
-  if (img.channels() != 4) {
-    cpp11::stop("Image must have 4 channels.");
-  }
-  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
-  std::vector<cv::Mat> bgra{bgr, alpha};
-  std::vector<int32_t> ch{0, 0, 1, 1, 2, 2, 3, 3};
-  cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
+  cv::Mat img = aznyan::decode_raws(png);
+  auto [bgra, ch] = aznyan::split_bgra(img);
 
   // sRGB -> linear
   cv::Mat tmpA;
@@ -176,13 +165,10 @@ cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data,
   cv::Mat img_u8;
   img_srgb.convertTo(img_u8, CV_8UC3, 255.0);
 
-  std::vector<cv::Mat> tmpC{img_u8, alpha};
+  std::vector<cv::Mat> tmpC{img_u8, bgra[1]};
   cv::Mat final_img;
   cv::merge(tmpC, final_img);
-
-  std::vector<unsigned char> buf;
-  cv::imencode(".png", final_img, buf);
-  return cpp11::writable::raws(buf.begin(), buf.end());
+  return aznyan::encode_raws(final_img);
 }
 
 [[cpp11::register]]

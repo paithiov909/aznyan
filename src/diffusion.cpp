@@ -1,15 +1,10 @@
 #include "aznyan_types.h"
-#include <cpp11.hpp>
 
 // ディフュージョン（拡散フィルタ）
 [[cpp11::register]]
 cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
                            float decay_offset, float gamma, int sigma) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
+  cv::Mat img = aznyan::decode_raws(png);
   if (img.channels() != 4) {
     cpp11::stop("Image must have 4 channels.");
   }
@@ -70,8 +65,5 @@ cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
 
   cv::Mat out;
   convertScaleAbs(tmpF, out, 255.0, 0.0);
-
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", out, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
+  return aznyan::encode_raws(out);
 }

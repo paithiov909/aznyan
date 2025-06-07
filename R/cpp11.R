@@ -83,3 +83,11 @@ azny_morphologyfilter <- function(png, ksize, ktype, mode, iterations, border, a
 azny_morphologyrgb <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
   .Call(`_aznyan_azny_morphologyrgb`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
+
+azny_thres <- function(png, thres, maxv, mode) {
+  .Call(`_aznyan_azny_thres`, png, thres, maxv, mode)
+}
+
+azny_adpthres <- function(png, adpthres, maxv, bsize, mode, valC) {
+  .Call(`_aznyan_azny_adpthres`, png, adpthres, maxv, bsize, mode, valC)
+}
