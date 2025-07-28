@@ -1,13 +1,13 @@
 #include "aznyan_types.h"
 
 [[cpp11::register]]
-cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype,
-                                  int mode, int iterations, int border,
-                                  bool alphasync, cpp11::integers pt) {
-  cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_morphologyfilter(const cpp11::integers& nr, int height,
+                                      int width, int ksize, int ktype, int mode,
+                                      int iterations, int border,
+                                      bool alphasync, cpp11::integers pt) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
-  cv::Mat tmpB = cv::Mat::zeros(img.size(), CV_8UC3);
+  cv::Mat tmpB = cv::Mat::zeros(bgra[0].size(), CV_8UC3);
   cv::Mat tmpC, tmpD;
 
   bgra[0].copyTo(tmpB, bgra[1]);
@@ -30,19 +30,19 @@ cpp11::raws azny_morphologyfilter(cpp11::raws png, int ksize, int ktype,
     tmpD = bgra[1].clone();
 
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC, tmpD};
+  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
   cv::merge(ch_out, out);
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, tmpD);
 }
 
 [[cpp11::register]]
-cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize,
-                               int ktype, int mode, int iterations, int border,
-                               bool alphasync, cpp11::integers pt) {
-  cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_morphologyrgb(const cpp11::integers& nr, int height,
+                                   int width, cpp11::integers ksize, int ktype,
+                                   int mode, int iterations, int border,
+                                   bool alphasync, cpp11::integers pt) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
-  cv::Mat tmpB = cv::Mat::zeros(img.size(), CV_8UC3);
+  cv::Mat tmpB = cv::Mat::zeros(bgra[0].size(), CV_8UC3);
   bgra[0].copyTo(tmpB, bgra[1]);
 
   std::vector<cv::Mat> col_ch;
@@ -65,7 +65,7 @@ cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize,
     col_ch.emplace_back(bgra[1]);
   }
 
-  cv::Mat tmpC = cv::Mat::zeros(img.size(), CV_8U);
+  cv::Mat tmpC = cv::Mat::zeros(bgra[0].size(), CV_8UC1);
   std::vector<cv::Mat> tmpD(6, tmpC);
   iterations = std::max(iterations, 1);
   aznyan::parallel_for(0, 6, [&](int32_t j) {
@@ -83,7 +83,7 @@ cpp11::raws azny_morphologyrgb(cpp11::raws png, cpp11::integers ksize,
   }
 
   cv::Mat out;
-  std::vector ch_out{tmpD[0], tmpD[1], tmpD[2], tmpC};
+  std::vector ch_out{tmpD[0], tmpD[1], tmpD[2]};
   cv::merge(ch_out, out);
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, tmpC);
 }

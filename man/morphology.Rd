@@ -5,7 +5,7 @@
 \title{Morphology}
 \usage{
 morphology(
-  png,
+  nr,
   ksize = c(2, 2, 2),
   ktype = c(0, 1, 2),
   mode = c(0, 1, 2, 3, 4, 5, 6, 7),
@@ -17,7 +17,7 @@ morphology(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{ksize}{The size of kernel.}
 
@@ -36,7 +36,7 @@ morphology(
 \item{anchor}{The anchor of morphology.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Morphology

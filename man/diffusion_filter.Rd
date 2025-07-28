@@ -5,7 +5,7 @@
 \title{Diffusion filter}
 \usage{
 diffusion_filter(
-  png,
+  nr,
   factor = 5,
   offset = 0.1,
   iter = 3,
@@ -14,7 +14,7 @@ diffusion_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{factor}{The factor of diffusion.}
 
@@ -27,7 +27,7 @@ diffusion_filter(
 \item{sigma}{The sigma of diffusion.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Diffusion filter

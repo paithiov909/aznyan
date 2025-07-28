@@ -5,12 +5,12 @@
 \alias{adpthres}
 \title{Image thresholding}
 \usage{
-thres(png, threshold = 100, maxv = 255, mode = c(0, 1, 2, 3, 4, 5, 6))
+thres(nr, threshold = 100, maxv = 255, mode = c(0, 1, 2, 3, 4, 5, 6))
 
-adpthres(png, maxv = 255, bsize = 1, C = 5, mode = c(0, 1), invert = FALSE)
+adpthres(nr, maxv = 255, bsize = 1, C = 5, mode = c(0, 1), invert = FALSE)
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{threshold}{The threshold value.}
 
@@ -25,7 +25,7 @@ adpthres(png, maxv = 255, bsize = 1, C = 5, mode = c(0, 1), invert = FALSE)
 \item{invert}{Whether to invert the result in adaptive thresholding.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Image thresholding

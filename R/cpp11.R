@@ -16,8 +16,8 @@ azny_bilateralblur <- function(nr, height, width, d, sigmacolor, sigmaspace, bor
   .Call(`_aznyan_azny_bilateralblur`, nr, height, width, d, sigmacolor, sigmaspace, border, alphasync)
 }
 
-azny_diffusion <- function(png, iter, decay_factor, decay_offset, gamma, sigma) {
-  .Call(`_aznyan_azny_diffusion`, png, iter, decay_factor, decay_offset, gamma, sigma)
+azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
+  .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
 }
 
 azny_cannyfilter <- function(png, asize, balp, gradient, thres1, thres2) {
@@ -76,26 +76,26 @@ azny_resample <- function(png, wh, resize_red, resize_exp) {
   .Call(`_aznyan_azny_resample`, png, wh, resize_red, resize_exp)
 }
 
-azny_morphologyfilter <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
-  .Call(`_aznyan_azny_morphologyfilter`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
+azny_morphologyfilter <- function(nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt) {
+  .Call(`_aznyan_azny_morphologyfilter`, nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
 
-azny_morphologyrgb <- function(png, ksize, ktype, mode, iterations, border, alphasync, pt) {
-  .Call(`_aznyan_azny_morphologyrgb`, png, ksize, ktype, mode, iterations, border, alphasync, pt)
+azny_morphologyrgb <- function(nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt) {
+  .Call(`_aznyan_azny_morphologyrgb`, nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
 
-azny_meanshift <- function(png, sp, sr, maxl) {
-  .Call(`_aznyan_azny_meanshift`, png, sp, sr, maxl)
+azny_meanshift <- function(nr, height, width, sp, sr, maxl) {
+  .Call(`_aznyan_azny_meanshift`, nr, height, width, sp, sr, maxl)
 }
 
-azny_preserve_edges <- function(png, sgmS, sgmR, mode) {
-  .Call(`_aznyan_azny_preserve_edges`, png, sgmS, sgmR, mode)
+azny_preserve_edges <- function(nr, height, width, sgmS, sgmR, mode) {
+  .Call(`_aznyan_azny_preserve_edges`, nr, height, width, sgmS, sgmR, mode)
 }
 
-azny_thres <- function(png, thres, maxv, mode) {
-  .Call(`_aznyan_azny_thres`, png, thres, maxv, mode)
+azny_thres <- function(nr, height, width, thres, maxv, mode) {
+  .Call(`_aznyan_azny_thres`, nr, height, width, thres, maxv, mode)
 }
 
-azny_adpthres <- function(png, adpthres, maxv, bsize, mode, valC) {
-  .Call(`_aznyan_azny_adpthres`, png, adpthres, maxv, bsize, mode, valC)
+azny_adpthres <- function(nr, height, width, adpthres, maxv, bsize, mode, valC) {
+  .Call(`_aznyan_azny_adpthres`, nr, height, width, adpthres, maxv, bsize, mode, valC)
 }

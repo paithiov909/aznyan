@@ -2,20 +2,16 @@
 
 // ディフュージョン（拡散フィルタ）
 [[cpp11::register]]
-cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
-                           float decay_offset, float gamma, int sigma) {
-  cv::Mat img = aznyan::decode_raws(png);
-  if (img.channels() != 4) {
-    cpp11::stop("Image must have 4 channels.");
-  }
+cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width,
+                               int iter, float decay_factor, float decay_offset,
+                               float gamma, int sigma) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat tmpB;
-  img.convertTo(tmpB, CV_32FC4, 1.0 / 255.0);
-  const auto width = img.cols;
-  const auto height = img.rows;
+  bgra[0].convertTo(tmpB, CV_32FC3, 1.0 / 255.0);
 
   cv::Mat tmpC = cv::Mat::zeros(tmpB.size(), CV_32FC3);
   aznyan::parallel_for(0, height, [&](int32_t y) {
-    auto pIN = tmpB.ptr<cv::Vec4f>(y);
+    auto pIN = tmpB.ptr<cv::Vec3f>(y);
     auto pPOW = tmpC.ptr<cv::Vec3f>(y);
 
     for (auto x = 0; x < width; ++x) {
@@ -48,22 +44,19 @@ cpp11::raws azny_diffusion(cpp11::raws png, int iter, float decay_factor,
   }
 
   float gm_inv = 1.0 / gamma;
-  cv::Mat tmpF = cv::Mat::zeros(tmpB.size(), tmpB.type());
-  aznyan::parallel_for(
-      0, height, [&tmpE, &tmpF, &tmpB, gm_inv, width](int32_t y) {
-        auto pIN3 = tmpE.ptr<cv::Vec3f>(y);
-        auto pIN4 = tmpB.ptr<cv::Vec4f>(y);
-        auto pOUT = tmpF.ptr<cv::Vec4f>(y);
+  cv::Mat tmpF = cv::Mat::zeros(tmpB.size(), CV_32FC3);
+  aznyan::parallel_for(0, height, [&tmpE, &tmpF, gm_inv, width](int32_t y) {
+    auto pIN3 = tmpE.ptr<cv::Vec3f>(y);
+    auto pOUT = tmpF.ptr<cv::Vec3f>(y);
 
-        for (auto x = 0; x < width; ++x) {
-          pOUT[x][0] = std::clamp(std::pow(pIN3[x][0], gm_inv), 0.f, 1.f);
-          pOUT[x][1] = std::clamp(std::pow(pIN3[x][1], gm_inv), 0.f, 1.f);
-          pOUT[x][2] = std::clamp(std::pow(pIN3[x][2], gm_inv), 0.f, 1.f);
-          pOUT[x][3] = pIN4[x][3];
-        }
-      });
+    for (auto x = 0; x < width; ++x) {
+      pOUT[x][0] = std::clamp(std::pow(pIN3[x][0], gm_inv), 0.f, 1.f);
+      pOUT[x][1] = std::clamp(std::pow(pIN3[x][1], gm_inv), 0.f, 1.f);
+      pOUT[x][2] = std::clamp(std::pow(pIN3[x][2], gm_inv), 0.f, 1.f);
+    }
+  });
 
   cv::Mat out;
   convertScaleAbs(tmpF, out, 255.0, 0.0);
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, bgra[1]);
 }
