@@ -6,10 +6,10 @@
 #include <R_ext/Visibility.h>
 
 // blur.cpp
-cpp11::raws azny_medianblur(cpp11::raws png, int ksize);
-extern "C" SEXP _aznyan_azny_medianblur(SEXP png, SEXP ksize) {
+cpp11::integers azny_medianblur(const cpp11::integers& nara, int height, int width, int ksize);
+extern "C" SEXP _aznyan_azny_medianblur(SEXP nara, SEXP height, SEXP width, SEXP ksize) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_medianblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(ksize)));
+    return cpp11::as_sexp(azny_medianblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nara), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(ksize)));
   END_CPP11
 }
 // blur.cpp
@@ -196,7 +196,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,  6},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,     6},
     {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,        4},
-    {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,       2},
+    {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,       4},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 8},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    8},
     {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,   4},

@@ -93,7 +93,8 @@ inline cpp11::raws encode_raws(const cv::Mat& img) {
   return cpp11::writable::raws{std::move(ret)};
 }
 
-inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(const cv::Mat& img) {
+inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
+    const cv::Mat& img) {
   if (img.channels() != 4) {
     cpp11::stop("Image must have 4 channels.");
   }
@@ -102,6 +103,52 @@ inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(const cv::M
   std::vector<int> ch{0, 0, 1, 1, 2, 2, 3, 3};
   cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
   return std::make_tuple(bgra, ch);
+}
+
+inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(uint32_t icol) {
+  return std::make_tuple(icol & 0xFF, (icol >> 8) & 0xFF, (icol >> 16) & 0xFF,
+                         (icol >> 24) & 0xFF);
+}
+
+inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
+  return r | (g << 8) | (b << 16) | (a << 24);
+}
+
+inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nara(
+  const cpp11::integers& nara,
+  int height, int width
+) {
+  cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      int idx = i * width + j;
+      const auto [r, g, b, a] = int_to_rgba(nara[idx]);
+      bgr.at<cv::Vec3b>(i, j) = cv::Vec3b(b, g, r);
+      alpha.at<uchar>(i, j) = a;
+    }
+  }
+  std::vector<cv::Mat> bgra{bgr, alpha};
+  std::vector<int> ch{0, 0, 1, 1, 2, 2, 3, 3};
+  return std::make_tuple(bgra, ch);
+}
+
+inline cpp11::integers encode_nara(const cv::Mat& bgr,
+                                   const cv::Mat& alpha) {
+  if (bgr.size() != alpha.size()) {
+    cpp11::stop("bgr and alpha must have the same size.");
+  }
+  const int height = bgr.rows, width = bgr.cols;
+  std::vector<uint32_t> dat;
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
+      uchar a = alpha.at<uchar>(i, j);
+      dat.push_back(pack_into_int(v[2], v[1], v[0], a));
+    }
+  }
+  cpp11::writable::integers out = cpp11::as_sexp(dat);
+  out.attr("dim") = cpp11::as_sexp({height, width});
+  return out;
 }
 
 };  // namespace aznyan

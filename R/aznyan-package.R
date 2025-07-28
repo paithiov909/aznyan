@@ -22,6 +22,12 @@ as_recordedplot <- function(png) {
   invisible(grDevices::recordPlot(load = "aznyan"))
 }
 
+as_recordedplot2 <- function(png) {
+  grid::grid.newpage(recording = FALSE)
+  grid::grid.raster(png, interpolate = TRUE)
+  invisible(grDevices::recordPlot(load = "aznyan"))
+}
+
 int_match <- function(x, arg, values) {
   tmp <- match(x[1], values) - 1L
   if (is.na(tmp)) {

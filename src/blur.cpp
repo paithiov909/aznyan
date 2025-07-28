@@ -1,12 +1,12 @@
 #include "aznyan_types.h"
 
+// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 [[cpp11::register]]
-cpp11::raws azny_medianblur(cpp11::raws png, int ksize) {
-  cv::Mat img = aznyan::decode_raws(png);
-  cv::Mat out;
-  cv::medianBlur(img, out, 2 * ksize + 1);
-
-  return aznyan::encode_raws(out);
+cpp11::integers azny_medianblur(const cpp11::integers& nara, int height, int width, int ksize) {
+  auto [bgra, ch] = aznyan::decode_nara(nara, height, width);
+  cv::Mat out{bgra[0].rows, bgra[0].cols, CV_8UC3};
+  cv::medianBlur(bgra[0], out, 2 * ksize + 1);
+  return aznyan::encode_nara(out, bgra[1]);
 }
 
 [[cpp11::register]]

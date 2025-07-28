@@ -10,8 +10,13 @@ png <- readBin(
 test_that("median_blur works", {
   vdiffr::expect_doppelganger(
     "median_blur",
-    median_blur(png, ksize = 8) |>
-      as_recordedplot()
+    fastpng::read_png(
+      system.file("images/sample-361x241.png", package = "aznyan"),
+      type = "nativeraster",
+      rgba = TRUE
+    ) |>
+      median_blur(ksize = 8) |>
+      as_recordedplot2()
   )
 })
 

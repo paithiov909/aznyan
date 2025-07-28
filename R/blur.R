@@ -5,7 +5,9 @@
 #' @returns A raw vector of PNG image.
 #' @export
 median_blur <- function(png, ksize = 1) {
-  azny_medianblur(png, ksize)
+  out <- azny_medianblur(as.integer(png), nrow(png), ncol(png), ksize)
+  class(out) <- c("nativeRaster", class(out))
+  out
 }
 
 #' Box blur
