@@ -5,7 +5,7 @@
 \title{Box blur}
 \usage{
 box_blur(
-  png,
+  nr,
   box_w = 1,
   box_h = box_w,
   normalize = TRUE,
@@ -13,8 +13,6 @@ box_blur(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
-
 \item{box_w}{The width of box.}
 
 \item{box_h}{The height of box.}
@@ -22,9 +20,11 @@ box_blur(
 \item{normalize}{Whether normalize.}
 
 \item{border}{The type of pixel extrapolation method.}
+
+\item{png}{A \code{nativeRaster} object.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Box blur

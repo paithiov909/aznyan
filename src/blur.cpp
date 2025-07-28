@@ -1,43 +1,44 @@
 #include "aznyan_types.h"
 
-// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 [[cpp11::register]]
-cpp11::integers azny_medianblur(const cpp11::integers& nara, int height, int width, int ksize) {
-  auto [bgra, ch] = aznyan::decode_nara(nara, height, width);
-  cv::Mat out{bgra[0].rows, bgra[0].cols, CV_8UC3};
+cpp11::integers azny_medianblur(const cpp11::integers& nr, int height, int width, int ksize) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  cv::Mat out;
   cv::medianBlur(bgra[0], out, 2 * ksize + 1);
-  return aznyan::encode_nara(out, bgra[1]);
+
+  return aznyan::encode_nr(out, bgra[1]);
 }
 
 [[cpp11::register]]
-cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize,
-                         int border) {
-  cv::Mat img = aznyan::decode_raws(png);
+cpp11::integers azny_boxblur(const cpp11::integers& nr, int height, int width,
+                             int boxW, int boxH, bool normalize, int border) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat out;
-  cv::boxFilter(img, out, -1, cv::Size(boxW, boxH), cv::Point(-1, -1),
+  cv::boxFilter(bgra[0], out, -1, cv::Size(boxW, boxH), cv::Point(-1, -1),
                 normalize, aznyan::mode_a[border]);
 
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, bgra[1]);
 }
 
 [[cpp11::register]]
-cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH,
-                              double sigmaX, double sigmaY, int border) {
-  cv::Mat img = aznyan::decode_raws(png);
+cpp11::integers azny_gaussianblur(const cpp11::integers& nr, int height, int width,
+                                  int boxW, int boxH,
+                                  double sigmaX, double sigmaY, int border) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   int kx = std::max(2 * boxW - 1, 0);
   int ky = std::max(2 * boxH - 1, 0);
   cv::Mat out;
-  cv::GaussianBlur(img, out, cv::Size(kx, ky), sigmaX, sigmaY,
+  cv::GaussianBlur(bgra[0], out, cv::Size(kx, ky), sigmaX, sigmaY,
                    aznyan::mode_a[border]);
 
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, bgra[1]);
 }
 
 [[cpp11::register]]
-cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor,
-                               double sigmaspace, int border, bool alphasync) {
-  const cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_bilateralblur(const cpp11::integers& nr, int height, int width,
+                                   int d, double sigmacolor,
+                                   double sigmaspace, int border, bool alphasync) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
   cv::Mat tmpB, tmpC;
   cv::bilateralFilter(bgra[0], tmpB, d, sigmacolor, sigmaspace, aznyan::mode_b[border]);
@@ -46,8 +47,5 @@ cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor,
     cv::bilateralFilter(bgra[1], tmpC, d, sigmacolor, sigmaspace, aznyan::mode_b[border]);
     bgra[1] = tmpC.clone();
   }
-  cv::Mat out(img.size(), img.type());
-  cv::mixChannels(bgra.data(), 2, &out, 1, ch.data(), 4);
-
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(bgra[0], bgra[1]);
 }

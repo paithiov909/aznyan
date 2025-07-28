@@ -28,6 +28,15 @@ as_recordedplot2 <- function(png) {
   invisible(grDevices::recordPlot(load = "aznyan"))
 }
 
+#' Take `x` and set its class to `nativeRaster`
+#' @noRd
+enclass <- function(x) {
+  class(x) <- c("nativeRaster", class(x))
+  x
+}
+
+#' Match `x` to `values`
+#' @noRd
 int_match <- function(x, arg, values) {
   tmp <- match(x[1], values) - 1L
   if (is.na(tmp)) {

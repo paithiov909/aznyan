@@ -6,31 +6,31 @@
 #include <R_ext/Visibility.h>
 
 // blur.cpp
-cpp11::integers azny_medianblur(const cpp11::integers& nara, int height, int width, int ksize);
-extern "C" SEXP _aznyan_azny_medianblur(SEXP nara, SEXP height, SEXP width, SEXP ksize) {
+cpp11::integers azny_medianblur(const cpp11::integers& nr, int height, int width, int ksize);
+extern "C" SEXP _aznyan_azny_medianblur(SEXP nr, SEXP height, SEXP width, SEXP ksize) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_medianblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nara), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(ksize)));
+    return cpp11::as_sexp(azny_medianblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(ksize)));
   END_CPP11
 }
 // blur.cpp
-cpp11::raws azny_boxblur(cpp11::raws png, int boxW, int boxH, bool normalize, int border);
-extern "C" SEXP _aznyan_azny_boxblur(SEXP png, SEXP boxW, SEXP boxH, SEXP normalize, SEXP border) {
+cpp11::integers azny_boxblur(const cpp11::integers& nr, int height, int width, int boxW, int boxH, bool normalize, int border);
+extern "C" SEXP _aznyan_azny_boxblur(SEXP nr, SEXP height, SEXP width, SEXP boxW, SEXP boxH, SEXP normalize, SEXP border) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_boxblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<bool>>(normalize), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+    return cpp11::as_sexp(azny_boxblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<bool>>(normalize), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
   END_CPP11
 }
 // blur.cpp
-cpp11::raws azny_gaussianblur(cpp11::raws png, int boxW, int boxH, double sigmaX, double sigmaY, int border);
-extern "C" SEXP _aznyan_azny_gaussianblur(SEXP png, SEXP boxW, SEXP boxH, SEXP sigmaX, SEXP sigmaY, SEXP border) {
+cpp11::integers azny_gaussianblur(const cpp11::integers& nr, int height, int width, int boxW, int boxH, double sigmaX, double sigmaY, int border);
+extern "C" SEXP _aznyan_azny_gaussianblur(SEXP nr, SEXP height, SEXP width, SEXP boxW, SEXP boxH, SEXP sigmaX, SEXP sigmaY, SEXP border) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_gaussianblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaX), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaY), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+    return cpp11::as_sexp(azny_gaussianblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(boxW), cpp11::as_cpp<cpp11::decay_t<int>>(boxH), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaX), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaY), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
   END_CPP11
 }
 // blur.cpp
-cpp11::raws azny_bilateralblur(cpp11::raws png, int d, double sigmacolor, double sigmaspace, int border, bool alphasync);
-extern "C" SEXP _aznyan_azny_bilateralblur(SEXP png, SEXP d, SEXP sigmacolor, SEXP sigmaspace, SEXP border, SEXP alphasync) {
+cpp11::integers azny_bilateralblur(const cpp11::integers& nr, int height, int width, int d, double sigmacolor, double sigmaspace, int border, bool alphasync);
+extern "C" SEXP _aznyan_azny_bilateralblur(SEXP nr, SEXP height, SEXP width, SEXP d, SEXP sigmacolor, SEXP sigmaspace, SEXP border, SEXP alphasync) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
+    return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
   END_CPP11
 }
 // diffusion.cpp
@@ -185,14 +185,14 @@ extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,         6},
     {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,       5},
-    {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,    6},
-    {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,          5},
+    {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,    8},
+    {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,          7},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,      6},
     {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,         6},
     {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,    1},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,        6},
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,    1},
-    {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,     6},
+    {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,     8},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,  6},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,     6},
     {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,        4},
