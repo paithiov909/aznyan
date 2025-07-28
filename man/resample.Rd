@@ -5,14 +5,14 @@
 \title{Resample image}
 \usage{
 resample(
-  png,
+  nr,
   wh = c(0.2, 0.2),
   resize_mode1 = c(1, 2, 3, 4, 5, 6, 0),
   resize_mode2 = c(1, 2, 3, 4, 5, 6, 0)
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{wh}{The width and height coef for reduction.}
 
@@ -21,7 +21,7 @@ resample(
 \item{resize_mode2}{The resize mode for expansion.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Resample image

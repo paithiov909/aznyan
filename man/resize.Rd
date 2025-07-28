@@ -5,20 +5,23 @@
 \title{Resize image}
 \usage{
 resize(
-  png,
+  nr,
   wh = c(1, 1),
   resize_mode = c(1, 2, 3, 4, 5, 6, 0),
   set_size = FALSE
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{wh}{The width and height.}
 
 \item{resize_mode}{The resize mode.}
 
 \item{set_size}{Whether \code{wh} is actual width and height instead of coef.}
+}
+\value{
+A \code{nativeRaster} object.
 }
 \description{
 Resize image

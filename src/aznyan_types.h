@@ -99,7 +99,7 @@ inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
   if (img.channels() != 4) {
     cpp11::stop("Image must have 4 channels.");
   }
-  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8U);
+  cv::Mat bgr(img.size(), CV_8UC3), alpha(img.size(), CV_8UC1);
   std::vector<cv::Mat> bgra{bgr, alpha};
   std::vector<int> ch{0, 0, 1, 1, 2, 2, 3, 3};
   cv::mixChannels(&img, 1, bgra.data(), 2, ch.data(), 4);
@@ -115,11 +115,10 @@ inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 
-// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
+// NOTE:
+// rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
-  const cpp11::integers& nr,
-  int height, int width
-) {
+    const cpp11::integers& nr, int height, int width) {
   cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
@@ -133,8 +132,7 @@ inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
   return std::make_tuple(bgra, ch);
 }
 
-inline cpp11::integers encode_nr(const cv::Mat& bgr,
-                                 const cv::Mat& alpha) {
+inline cpp11::integers encode_nr(const cv::Mat& bgr, const cv::Mat& alpha) {
   if (bgr.size() != alpha.size()) {
     cpp11::stop("BGR and alpha channels must have the same size.");
   }

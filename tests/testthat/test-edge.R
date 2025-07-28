@@ -33,15 +33,23 @@ test_that("laplacian_filter works", {
   )
 })
 
+png <-
+  fastpng::read_png(
+    system.file("images/sample-361x241.png", package = "aznyan"),
+    type = "nativeraster",
+    rgba = TRUE,
+    flags = 1L
+  )
+
 test_that("canny_filter works", {
   vdiffr::expect_doppelganger(
     "canny_filter",
     canny_filter(png, use_rgb = FALSE) |>
-      as_recordedplot()
+      as_recordedplot2()
   )
   vdiffr::expect_doppelganger(
     "canny_rgb",
     canny_filter(png, use_rgb = TRUE) |>
-      as_recordedplot()
+      as_recordedplot2()
   )
 })

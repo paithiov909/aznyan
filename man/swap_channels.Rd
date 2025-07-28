@@ -4,17 +4,17 @@
 \alias{swap_channels}
 \title{Swap channels}
 \usage{
-swap_channels(png, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3))
+swap_channels(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3))
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{from}{The channels to swap from.}
 
 \item{to}{The channels to swap to.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Swap channels

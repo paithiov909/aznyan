@@ -20,12 +20,12 @@ azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, 
   .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
 }
 
-azny_cannyfilter <- function(png, asize, balp, gradient, thres1, thres2) {
-  .Call(`_aznyan_azny_cannyfilter`, png, asize, balp, gradient, thres1, thres2)
+azny_cannyfilter <- function(nr, height, width, asize, balp, gradient, thres1, thres2) {
+  .Call(`_aznyan_azny_cannyfilter`, nr, height, width, asize, balp, gradient, thres1, thres2)
 }
 
-azny_cannyrgb <- function(png, asize, balp, gradient, thres1, thres2) {
-  .Call(`_aznyan_azny_cannyrgb`, png, asize, balp, gradient, thres1, thres2)
+azny_cannyrgb <- function(nr, height, width, asize, balp, gradient, thres1, thres2) {
+  .Call(`_aznyan_azny_cannyrgb`, nr, height, width, asize, balp, gradient, thres1, thres2)
 }
 
 azny_laplacianfilter <- function(png, ksize, balp, border, scale, delta) {
@@ -64,16 +64,16 @@ azny_encode_rec709 <- function(in_vec) {
   .Call(`_aznyan_azny_encode_rec709`, in_vec)
 }
 
-azny_swap_channels <- function(png, mapping) {
-  .Call(`_aznyan_azny_swap_channels`, png, mapping)
+azny_swap_channels <- function(nr, height, width, mapping) {
+  .Call(`_aznyan_azny_swap_channels`, nr, height, width, mapping)
 }
 
-azny_resize <- function(png, wh, resize_mode, set_size) {
-  .Call(`_aznyan_azny_resize`, png, wh, resize_mode, set_size)
+azny_resize <- function(nr, height, width, wh, resize_mode, set_size) {
+  .Call(`_aznyan_azny_resize`, nr, height, width, wh, resize_mode, set_size)
 }
 
-azny_resample <- function(png, wh, resize_red, resize_exp) {
-  .Call(`_aznyan_azny_resample`, png, wh, resize_red, resize_exp)
+azny_resample <- function(nr, height, width, wh, resize_red, resize_exp) {
+  .Call(`_aznyan_azny_resample`, nr, height, width, wh, resize_red, resize_exp)
 }
 
 azny_morphologyfilter <- function(nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt) {

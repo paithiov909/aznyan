@@ -11,13 +11,17 @@
 #' @param delta The delta of Sobel filter.
 #' @returns A raw vector of PNG image.
 #' @export
-sobel_filter <- function(png, ksize = 3,
-                         balp = TRUE,
-                         dx = 1, dy = dx,
-                         border = c(3, 4, 0, 1, 2),
-                         use_rgb = TRUE,
-                         scale = 1.0,
-                         delta = 0.0) {
+sobel_filter <- function(
+  png,
+  ksize = 3,
+  balp = TRUE,
+  dx = 1,
+  dy = dx,
+  border = c(3, 4, 0, 1, 2),
+  use_rgb = TRUE,
+  scale = 1.0,
+  delta = 0.0
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
     azny_sobelrgb(png, ksize, balp, dx, dy, border, scale, delta)
@@ -37,12 +41,15 @@ sobel_filter <- function(png, ksize = 3,
 #' @param delta The delta of Laplacian filter.
 #' @returns A raw vector of PNG image.
 #' @export
-laplacian_filter <- function(png, ksize = 3,
-                             balp = TRUE,
-                             border = c(3, 4, 0, 1, 2),
-                             use_rgb = TRUE,
-                             scale = 1.0,
-                             delta = 0.0) {
+laplacian_filter <- function(
+  png,
+  ksize = 3,
+  balp = TRUE,
+  border = c(3, 4, 0, 1, 2),
+  use_rgb = TRUE,
+  scale = 1.0,
+  delta = 0.0
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
     azny_laplacianrgb(png, ksize, balp, border, scale, delta)
@@ -62,15 +69,19 @@ laplacian_filter <- function(png, ksize = 3,
 #' @param thres2 The second threshold.
 #' @returns A raw vector of PNG image.
 #' @export
-canny_filter <- function(png, asize = 2,
-                         balp = FALSE,
-                         use_rgb = TRUE,
-                         grad = TRUE,
-                         thres1 = 100.0,
-                         thres2 = 200.0) {
+canny_filter <- function(
+  nr,
+  asize = 2,
+  balp = FALSE,
+  use_rgb = TRUE,
+  grad = TRUE,
+  thres1 = 100.0,
+  thres2 = 200.0
+) {
   if (use_rgb) {
-    azny_cannyrgb(png, asize, balp, grad, thres1, thres2)
+    out <- azny_cannyrgb(as.integer(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
   } else {
-    azny_cannyfilter(png, asize, balp, grad, thres1, thres2)
+    out <- azny_cannyfilter(as.integer(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
   }
+  enclass(out)
 }

@@ -41,17 +41,17 @@ extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP it
   END_CPP11
 }
 // edge-canny.cpp
-cpp11::raws azny_cannyfilter(cpp11::raws png, int asize, bool balp, bool gradient, double thres1, double thres2);
-extern "C" SEXP _aznyan_azny_cannyfilter(SEXP png, SEXP asize, SEXP balp, SEXP gradient, SEXP thres1, SEXP thres2) {
+cpp11::integers azny_cannyfilter(const cpp11::integers& nr, int height, int width, int asize, bool balp, bool gradient, double thres1, double thres2);
+extern "C" SEXP _aznyan_azny_cannyfilter(SEXP nr, SEXP height, SEXP width, SEXP asize, SEXP balp, SEXP gradient, SEXP thres1, SEXP thres2) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_cannyfilter(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(asize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<bool>>(gradient), cpp11::as_cpp<cpp11::decay_t<double>>(thres1), cpp11::as_cpp<cpp11::decay_t<double>>(thres2)));
+    return cpp11::as_sexp(azny_cannyfilter(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(asize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<bool>>(gradient), cpp11::as_cpp<cpp11::decay_t<double>>(thres1), cpp11::as_cpp<cpp11::decay_t<double>>(thres2)));
   END_CPP11
 }
 // edge-canny.cpp
-cpp11::raws azny_cannyrgb(cpp11::raws png, int asize, bool balp, bool gradient, double thres1, double thres2);
-extern "C" SEXP _aznyan_azny_cannyrgb(SEXP png, SEXP asize, SEXP balp, SEXP gradient, SEXP thres1, SEXP thres2) {
+cpp11::integers azny_cannyrgb(const cpp11::integers& nr, int height, int width, int asize, bool balp, bool gradient, double thres1, double thres2);
+extern "C" SEXP _aznyan_azny_cannyrgb(SEXP nr, SEXP height, SEXP width, SEXP asize, SEXP balp, SEXP gradient, SEXP thres1, SEXP thres2) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_cannyrgb(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<int>>(asize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<bool>>(gradient), cpp11::as_cpp<cpp11::decay_t<double>>(thres1), cpp11::as_cpp<cpp11::decay_t<double>>(thres2)));
+    return cpp11::as_sexp(azny_cannyrgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(asize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<bool>>(gradient), cpp11::as_cpp<cpp11::decay_t<double>>(thres1), cpp11::as_cpp<cpp11::decay_t<double>>(thres2)));
   END_CPP11
 }
 // edge-laplacian.cpp
@@ -118,24 +118,24 @@ extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
   END_CPP11
 }
 // misc.cpp
-cpp11::raws azny_swap_channels(cpp11::raws png, cpp11::integers mapping);
-extern "C" SEXP _aznyan_azny_swap_channels(SEXP png, SEXP mapping) {
+cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height, int width, const std::vector<int>& mapping);
+extern "C" SEXP _aznyan_azny_swap_channels(SEXP nr, SEXP height, SEXP width, SEXP mapping) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_swap_channels(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::integers>>(mapping)));
+    return cpp11::as_sexp(azny_swap_channels(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const std::vector<int>&>>(mapping)));
   END_CPP11
 }
 // misc.cpp
-cpp11::raws azny_resize(cpp11::raws png, cpp11::doubles wh, int resize_mode, bool set_size);
-extern "C" SEXP _aznyan_azny_resize(SEXP png, SEXP wh, SEXP resize_mode, SEXP set_size) {
+cpp11::integers azny_resize(const cpp11::integers& nr, int height, int width, cpp11::doubles wh, int resize_mode, bool set_size);
+extern "C" SEXP _aznyan_azny_resize(SEXP nr, SEXP height, SEXP width, SEXP wh, SEXP resize_mode, SEXP set_size) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_resize(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_mode), cpp11::as_cpp<cpp11::decay_t<bool>>(set_size)));
+    return cpp11::as_sexp(azny_resize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_mode), cpp11::as_cpp<cpp11::decay_t<bool>>(set_size)));
   END_CPP11
 }
 // misc.cpp
-cpp11::raws azny_resample(cpp11::raws png, cpp11::doubles wh, int resize_red, int resize_exp);
-extern "C" SEXP _aznyan_azny_resample(SEXP png, SEXP wh, SEXP resize_red, SEXP resize_exp) {
+cpp11::integers azny_resample(const cpp11::integers& nr, int height, int width, cpp11::doubles wh, int resize_red, int resize_exp);
+extern "C" SEXP _aznyan_azny_resample(SEXP nr, SEXP height, SEXP width, SEXP wh, SEXP resize_red, SEXP resize_exp) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_resample(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_red), cpp11::as_cpp<cpp11::decay_t<int>>(resize_exp)));
+    return cpp11::as_sexp(azny_resample(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_red), cpp11::as_cpp<cpp11::decay_t<int>>(resize_exp)));
   END_CPP11
 }
 // morph.cpp
@@ -187,8 +187,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,        5},
     {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,     8},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
-    {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       6},
-    {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          6},
+    {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},
+    {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          8},
     {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,     1},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
@@ -201,11 +201,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    10},
     {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,    6},
     {"_aznyan_azny_read_cube",        (DL_FUNC) &_aznyan_azny_read_cube,         2},
-    {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          4},
-    {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            4},
+    {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
+    {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,       8},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,          8},
-    {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     2},
+    {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
     {"_aznyan_azny_write_smcube",     (DL_FUNC) &_aznyan_azny_write_smcube,      2},
     {NULL, NULL, 0}
