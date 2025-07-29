@@ -13,6 +13,6 @@ test_that("diffusion works", {
   vdiffr::expect_doppelganger(
     "diffusion",
     diffusion_filter(png, factor = 5) |>
-      as_recordedplot2()
+      as_recordedplot()
   )
 })

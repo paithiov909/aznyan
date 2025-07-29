@@ -13,11 +13,11 @@ test_that("other filters work", {
   vdiffr::expect_doppelganger(
     "mean-shift",
     mean_shift(png) |>
-      as_recordedplot2()
+      as_recordedplot()
   )
   vdiffr::expect_doppelganger(
     "preserve-edge",
     preserve_edge(png) |>
-      as_recordedplot2()
+      as_recordedplot()
   )
 })

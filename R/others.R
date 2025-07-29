@@ -6,8 +6,8 @@
 #' @returns A `nativeRaster` object.
 #' @export
 mean_shift <- function(nr, sp = 10, sr = 30, max_level = 1) {
-  out <- azny_meanshift(as.integer(nr), nrow(nr), ncol(nr), sp, sr, as.integer(max_level))
-  enclass(out)
+  out <- azny_meanshift(cast_nr(nr), nrow(nr), ncol(nr), sp, sr, as.integer(max_level))
+  as_nr(out)
 }
 
 #' Preserve-edge filter
@@ -23,6 +23,6 @@ preserve_edge <- function(
   sgmR = 40, # nolint
   recursive = TRUE
 ) {
-  out <- azny_preserve_edges(as.integer(nr), nrow(nr), ncol(nr), sgmS, sgmR, recursive)
-  enclass(out)
+  out <- azny_preserve_edges(cast_nr(nr), nrow(nr), ncol(nr), sgmS, sgmR, recursive)
+  as_nr(out)
 }

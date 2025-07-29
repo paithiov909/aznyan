@@ -28,8 +28,8 @@ thres <- function(
     rlang::abort("`maxv` must be in range [0, 255]")
   }
   mode <- int_match(mode, "mode", c(0, 1, 2, 3, 4, 5, 6))
-  out <- azny_thres(as.integer(nr), nrow(nr), ncol(nr), threshold, maxv, mode)
-  enclass(out)
+  out <- azny_thres(cast_nr(nr), nrow(nr), ncol(nr), threshold, maxv, mode)
+  as_nr(out)
 }
 
 #' @rdname thres
@@ -48,6 +48,6 @@ adpthres <- function(
     rlang::abort("`bsize` must be in range [1, 50]")
   }
   mode <- int_match(mode, "mode", c(0, 1))
-  out <- azny_adpthres(as.integer(nr), nrow(nr), ncol(nr), as.logical(mode), maxv, bsize, invert, C)
-  enclass(out)
+  out <- azny_adpthres(cast_nr(nr), nrow(nr), ncol(nr), as.logical(mode), maxv, bsize, invert, C)
+  as_nr(out)
 }

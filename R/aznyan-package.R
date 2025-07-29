@@ -9,28 +9,27 @@ NULL
 
 #' Convert PNG image data into recorded plot
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @returns A recorded plot is invisibly returned.
 #' @export
-as_recordedplot <- function(png) {
-  if (!requireNamespace("fastpng", quietly = TRUE)) {
-    rlang::abort("fastpng package is required.")
-  }
-  png <- fastpng::read_png(png, type = "nativeraster", rgba = TRUE)
+as_recordedplot <- function(nr) {
   grid::grid.newpage(recording = FALSE)
-  grid::grid.raster(png)
+  grid::grid.raster(nr, interpolate = TRUE)
   invisible(grDevices::recordPlot(load = "aznyan"))
 }
 
-as_recordedplot2 <- function(png) {
-  grid::grid.newpage(recording = FALSE)
-  grid::grid.raster(png, interpolate = TRUE)
-  invisible(grDevices::recordPlot(load = "aznyan"))
+#' Cast `x` into integers if it's a `nativeRaster` object
+#' @noRd
+cast_nr <- function(nr) {
+  if (!inherits(nr, "nativeRaster")) {
+    rlang::abort("`nr` must be a nativeRaster object.")
+  }
+  as.integer(nr)
 }
 
 #' Take `x` and set its class to `nativeRaster`
 #' @noRd
-enclass <- function(x) {
+as_nr <- function(x) {
   class(x) <- c("nativeRaster", class(x))
   x
 }

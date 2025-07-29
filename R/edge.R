@@ -12,23 +12,22 @@
 #' @returns A `nativeRaster` object.
 #' @export
 sobel_filter <- function(
-  nr,
-  ksize = 3,
-  balp = TRUE,
-  dx = 1,
-  dy = dx,
-  border = c(3, 4, 0, 1, 2),
-  use_rgb = TRUE,
-  scale = 1.0,
-  delta = 0.0
-) {
+    nr,
+    ksize = 3,
+    balp = TRUE,
+    dx = 1,
+    dy = dx,
+    border = c(3, 4, 0, 1, 2),
+    use_rgb = TRUE,
+    scale = 1.0,
+    delta = 0.0) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    out <- azny_sobelrgb(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelrgb(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
   } else {
-    out <- azny_sobelfilter(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelfilter(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
   }
-  enclass(out)
+  as_nr(out)
 }
 
 #' Laplacian filter
@@ -43,47 +42,45 @@ sobel_filter <- function(
 #' @returns A `nativeRaster` object.
 #' @export
 laplacian_filter <- function(
-  nr,
-  ksize = 3,
-  balp = TRUE,
-  border = c(3, 4, 0, 1, 2),
-  use_rgb = TRUE,
-  scale = 1.0,
-  delta = 0.0
-) {
+    nr,
+    ksize = 3,
+    balp = TRUE,
+    border = c(3, 4, 0, 1, 2),
+    use_rgb = TRUE,
+    scale = 1.0,
+    delta = 0.0) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    out <- azny_laplacianrgb(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
+    out <- azny_laplacianrgb(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
   } else {
-    out <- azny_laplacianfilter(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
+    out <- azny_laplacianfilter(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
   }
-  enclass(out)
+  as_nr(out)
 }
 
 #' Canny filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param asize Aparture size for Sobel operation.
 #' @param balp Whether to remove black background.
 #' @param use_rgb Whether to use RGB Canny filter.
 #' @param grad Flag to be passed to `L2gradient`.
 #' @param thres1 The first threshold.
 #' @param thres2 The second threshold.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
 canny_filter <- function(
-  nr,
-  asize = 2,
-  balp = FALSE,
-  use_rgb = TRUE,
-  grad = TRUE,
-  thres1 = 100.0,
-  thres2 = 200.0
-) {
+    nr,
+    asize = 2,
+    balp = FALSE,
+    use_rgb = TRUE,
+    grad = TRUE,
+    thres1 = 100.0,
+    thres2 = 200.0) {
   if (use_rgb) {
-    out <- azny_cannyrgb(as.integer(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
+    out <- azny_cannyrgb(cast_nr(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
   } else {
-    out <- azny_cannyfilter(as.integer(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
+    out <- azny_cannyfilter(cast_nr(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
   }
-  enclass(out)
+  as_nr(out)
 }

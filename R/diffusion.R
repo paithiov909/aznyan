@@ -17,7 +17,7 @@ diffusion_filter <- function(
   sigma = 2
 ) {
   out <- azny_diffusion(
-    as.integer(nr),
+    cast_nr(nr),
     nrow(nr),
     ncol(nr),
     iter,
@@ -26,5 +26,5 @@ diffusion_filter <- function(
     gamma,
     sigma
   )
-  enclass(out)
+  as_nr(out)
 }

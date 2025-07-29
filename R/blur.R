@@ -5,8 +5,8 @@
 #' @returns A `nativeRaster` object.
 #' @export
 median_blur <- function(nr, ksize = 1) {
-  out <- azny_medianblur(as.integer(nr), nrow(nr), ncol(nr), ksize)
-  enclass(out)
+  out <- azny_medianblur(cast_nr(nr), nrow(nr), ncol(nr), ksize)
+  as_nr(out)
 }
 
 #' Box blur
@@ -27,7 +27,7 @@ box_blur <- function(
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   out <- azny_boxblur(
-    as.integer(nr),
+    cast_nr(nr),
     nrow(nr),
     ncol(nr),
     box_w,
@@ -35,7 +35,7 @@ box_blur <- function(
     normalize,
     border
   )
-  enclass(out)
+  as_nr(out)
 }
 
 #' Gaussian blur
@@ -58,7 +58,7 @@ gaussian_blur <- function(
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   out <- azny_gaussianblur(
-    as.integer(nr),
+    cast_nr(nr),
     nrow(nr),
     ncol(nr),
     box_w,
@@ -67,7 +67,7 @@ gaussian_blur <- function(
     sigma_y,
     border
   )
-  enclass(out)
+  as_nr(out)
 }
 
 #' Bilateral filter
@@ -90,7 +90,7 @@ bilateral_filter <- function(
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   out <- azny_bilateralblur(
-    as.integer(nr),
+    cast_nr(nr),
     nrow(nr),
     ncol(nr),
     d,
@@ -99,5 +99,5 @@ bilateral_filter <- function(
     border,
     alphasync
   )
-  enclass(out)
+  as_nr(out)
 }

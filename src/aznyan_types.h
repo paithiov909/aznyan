@@ -77,23 +77,6 @@ inline void parallel_for(int st, int ed, FUNC func) {
 //       nstripes);
 // }
 
-// Decode raws to cv::Mat using 'cv::IMREAD_UNCHANGED'
-inline cv::Mat decode_raws(const cpp11::raws& png) {
-  const std::vector<unsigned char> png_data{png.begin(), png.end()};
-  cv::Mat img = cv::imdecode(std::move(png_data), cv::IMREAD_UNCHANGED);
-  if (img.empty()) {
-    cpp11::stop("Cannot decode image.");
-  }
-  return img;
-}
-
-// TODO: remove calls to this
-inline cpp11::raws encode_raws(const cv::Mat& img) {
-  std::vector<unsigned char> ret;
-  cv::imencode(".png", img, ret, aznyan::params);
-  return cpp11::writable::raws{std::move(ret)};
-}
-
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
     const cv::Mat& img) {
   if (img.channels() != 4) {
@@ -115,8 +98,7 @@ inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 
-// NOTE:
-// rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
+// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
     const cpp11::integers& nr, int height, int width) {
   cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);

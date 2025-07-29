@@ -45,7 +45,7 @@ morphology <- function(
   anchor <- as.integer(anchor)
   if (use_rgb) {
     out <- azny_morphologyrgb(
-      as.integer(nr),
+      cast_nr(nr),
       nrow(nr),
       ncol(nr),
       ksize,
@@ -58,7 +58,7 @@ morphology <- function(
     )
   } else {
     out <- azny_morphologyfilter(
-      as.integer(nr),
+      cast_nr(nr),
       nrow(nr),
       ncol(nr),
       ksize[1],
@@ -70,5 +70,5 @@ morphology <- function(
       anchor
     )
   }
-  enclass(out)
+  as_nr(out)
 }

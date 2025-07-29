@@ -18,8 +18,8 @@ apply_cube <- function(nr, lut, is_r_fastest = TRUE, intensity = 1.0) {
   }
   lut <- as.matrix(lut)
   cube_size <- nrow(lut)^(1 / 3)
-  out <- azny_apply_cube(as.integer(nr), nrow(nr), ncol(nr), lut, as.integer(cube_size), intensity, is_r_fastest)
-  enclass(out)
+  out <- azny_apply_cube(cast_nr(nr), nrow(nr), ncol(nr), lut, as.integer(cube_size), intensity, is_r_fastest)
+  as_nr(out)
 }
 
 #' Gamma and inverse gamma in 'Rec.709' color space
