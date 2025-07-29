@@ -11,7 +11,7 @@ median_blur <- function(nr, ksize = 1) {
 
 #' Box blur
 #'
-#' @param png A `nativeRaster` object.
+#' @param nr A `nativeRaster` object.
 #' @param box_w The width of box.
 #' @param box_h The height of box.
 #' @param normalize Whether normalize.

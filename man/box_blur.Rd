@@ -13,6 +13,8 @@ box_blur(
 )
 }
 \arguments{
+\item{nr}{A \code{nativeRaster} object.}
+
 \item{box_w}{The width of box.}
 
 \item{box_h}{The height of box.}
@@ -20,8 +22,6 @@ box_blur(
 \item{normalize}{Whether normalize.}
 
 \item{border}{The type of pixel extrapolation method.}
-
-\item{png}{A \code{nativeRaster} object.}
 }
 \value{
 A \code{nativeRaster} object.
