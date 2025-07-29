@@ -5,7 +5,7 @@
 \title{Sobel filter}
 \usage{
 sobel_filter(
-  png,
+  nr,
   ksize = 3,
   balp = TRUE,
   dx = 1,
@@ -17,7 +17,7 @@ sobel_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{ksize}{The size of kernel.}
 
@@ -36,7 +36,7 @@ sobel_filter(
 \item{delta}{The delta of Sobel filter.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Sobel filter

@@ -28,20 +28,20 @@ azny_cannyrgb <- function(nr, height, width, asize, balp, gradient, thres1, thre
   .Call(`_aznyan_azny_cannyrgb`, nr, height, width, asize, balp, gradient, thres1, thres2)
 }
 
-azny_laplacianfilter <- function(png, ksize, balp, border, scale, delta) {
-  .Call(`_aznyan_azny_laplacianfilter`, png, ksize, balp, border, scale, delta)
+azny_laplacianfilter <- function(nr, height, width, ksize, balp, border, scale, delta) {
+  .Call(`_aznyan_azny_laplacianfilter`, nr, height, width, ksize, balp, border, scale, delta)
 }
 
-azny_laplacianrgb <- function(png, ksize, balp, border, scale, delta) {
-  .Call(`_aznyan_azny_laplacianrgb`, png, ksize, balp, border, scale, delta)
+azny_laplacianrgb <- function(nr, height, width, ksize, balp, border, scale, delta) {
+  .Call(`_aznyan_azny_laplacianrgb`, nr, height, width, ksize, balp, border, scale, delta)
 }
 
-azny_sobelfilter <- function(png, ksize, balp, dx, dy, border, scale, delta) {
-  .Call(`_aznyan_azny_sobelfilter`, png, ksize, balp, dx, dy, border, scale, delta)
+azny_sobelfilter <- function(nr, height, width, ksize, balp, dx, dy, border, scale, delta) {
+  .Call(`_aznyan_azny_sobelfilter`, nr, height, width, ksize, balp, dx, dy, border, scale, delta)
 }
 
-azny_sobelrgb <- function(png, ksize, balp, dx, dy, border, scale, delta) {
-  .Call(`_aznyan_azny_sobelrgb`, png, ksize, balp, dx, dy, border, scale, delta)
+azny_sobelrgb <- function(nr, height, width, ksize, balp, dx, dy, border, scale, delta) {
+  .Call(`_aznyan_azny_sobelrgb`, nr, height, width, ksize, balp, dx, dy, border, scale, delta)
 }
 
 azny_write_smcube <- function(input_path, output_path) {

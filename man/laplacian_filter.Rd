@@ -5,7 +5,7 @@
 \title{Laplacian filter}
 \usage{
 laplacian_filter(
-  png,
+  nr,
   ksize = 3,
   balp = TRUE,
   border = c(3, 4, 0, 1, 2),
@@ -15,7 +15,7 @@ laplacian_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{ksize}{The size of kernel.}
 
@@ -30,7 +30,7 @@ laplacian_filter(
 \item{delta}{The delta of Laplacian filter.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Laplacian filter

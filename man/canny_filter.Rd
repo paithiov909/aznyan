@@ -5,7 +5,7 @@
 \title{Canny filter}
 \usage{
 canny_filter(
-  png,
+  nr,
   asize = 2,
   balp = FALSE,
   use_rgb = TRUE,
@@ -15,8 +15,6 @@ canny_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
-
 \item{asize}{Aparture size for Sobel operation.}
 
 \item{balp}{Whether to remove black background.}
@@ -28,6 +26,8 @@ canny_filter(
 \item{thres1}{The first threshold.}
 
 \item{thres2}{The second threshold.}
+
+\item{png}{A raw vector of PNG image.}
 }
 \value{
 A raw vector of PNG image.

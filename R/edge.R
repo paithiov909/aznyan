@@ -1,6 +1,6 @@
 #' Sobel filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param ksize The size of kernel.
 #' @param balp Whether to remove black background.
 #' @param dx The direction of Sobel filter.
@@ -9,10 +9,10 @@
 #' @param use_rgb Whether to use RGB Sobel filter.
 #' @param scale The scale of Sobel filter.
 #' @param delta The delta of Sobel filter.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
 sobel_filter <- function(
-  png,
+  nr,
   ksize = 3,
   balp = TRUE,
   dx = 1,
@@ -24,25 +24,26 @@ sobel_filter <- function(
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    azny_sobelrgb(png, ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelrgb(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
   } else {
-    azny_sobelfilter(png, ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelfilter(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
   }
+  enclass(out)
 }
 
 #' Laplacian filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param ksize The size of kernel.
 #' @param balp Whether to remove black background.
 #' @param border The type of pixel extrapolation method.
 #' @param use_rgb Whether to use RGB Laplacian filter.
 #' @param scale The scale of Laplacian filter.
 #' @param delta The delta of Laplacian filter.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
 laplacian_filter <- function(
-  png,
+  nr,
   ksize = 3,
   balp = TRUE,
   border = c(3, 4, 0, 1, 2),
@@ -52,10 +53,11 @@ laplacian_filter <- function(
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    azny_laplacianrgb(png, ksize, balp, border, scale, delta)
+    out <- azny_laplacianrgb(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
   } else {
-    azny_laplacianfilter(png, ksize, balp, border, scale, delta)
+    out <- azny_laplacianfilter(as.integer(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
   }
+  enclass(out)
 }
 
 #' Canny filter
