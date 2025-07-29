@@ -97,10 +97,10 @@ extern "C" SEXP _aznyan_azny_read_cube(SEXP file_path, SEXP verbose) {
   END_CPP11
 }
 // lut.cpp
-cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data, int cube_size, double intensity, bool is_r_fastest);
-extern "C" SEXP _aznyan_azny_apply_cube(SEXP png, SEXP lut_data, SEXP cube_size, SEXP intensity, SEXP is_r_fastest) {
+cpp11::integers azny_apply_cube(const cpp11::integers& nr, int height, int width, cpp11::doubles_matrix<> lut_data, int cube_size, double intensity, bool is_r_fastest);
+extern "C" SEXP _aznyan_azny_apply_cube(SEXP nr, SEXP height, SEXP width, SEXP lut_data, SEXP cube_size, SEXP intensity, SEXP is_r_fastest) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_apply_cube(cpp11::as_cpp<cpp11::decay_t<cpp11::raws>>(png), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles_matrix<>>>(lut_data), cpp11::as_cpp<cpp11::decay_t<int>>(cube_size), cpp11::as_cpp<cpp11::decay_t<double>>(intensity), cpp11::as_cpp<cpp11::decay_t<bool>>(is_r_fastest)));
+    return cpp11::as_sexp(azny_apply_cube(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles_matrix<>>>(lut_data), cpp11::as_cpp<cpp11::decay_t<int>>(cube_size), cpp11::as_cpp<cpp11::decay_t<double>>(intensity), cpp11::as_cpp<cpp11::decay_t<bool>>(is_r_fastest)));
   END_CPP11
 }
 // lut.cpp
@@ -184,7 +184,7 @@ extern "C" SEXP _aznyan_azny_adpthres(SEXP nr, SEXP height, SEXP width, SEXP adp
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,          8},
-    {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,        5},
+    {"_aznyan_azny_apply_cube",       (DL_FUNC) &_aznyan_azny_apply_cube,        7},
     {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,     8},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},

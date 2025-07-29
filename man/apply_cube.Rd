@@ -4,10 +4,10 @@
 \alias{apply_cube}
 \title{Apply a 3D LUT to a PNG image}
 \usage{
-apply_cube(png, lut, is_r_fastest = TRUE, intensity = 1)
+apply_cube(nr, lut, is_r_fastest = TRUE, intensity = 1)
 }
 \arguments{
-\item{png}{A raw vector of PNG image to apply the LUT to.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{lut}{The path to the 3D LUT to apply.}
 
@@ -19,7 +19,7 @@ If \code{FALSE}, assumes it's B-fastest
 \item{intensity}{This is for debugging purposes.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Apply a 3D LUT to a PNG image

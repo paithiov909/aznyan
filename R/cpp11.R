@@ -52,8 +52,8 @@ azny_read_cube <- function(file_path, verbose) {
   .Call(`_aznyan_azny_read_cube`, file_path, verbose)
 }
 
-azny_apply_cube <- function(png, lut_data, cube_size, intensity, is_r_fastest) {
-  .Call(`_aznyan_azny_apply_cube`, png, lut_data, cube_size, intensity, is_r_fastest)
+azny_apply_cube <- function(nr, height, width, lut_data, cube_size, intensity, is_r_fastest) {
+  .Call(`_aznyan_azny_apply_cube`, nr, height, width, lut_data, cube_size, intensity, is_r_fastest)
 }
 
 azny_decode_rec709 <- function(in_vec) {

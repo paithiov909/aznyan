@@ -59,12 +59,14 @@ cv::Mat linear_to_sRGB(const cv::Mat& img) {
 }  // namespace aznyan
 
 [[cpp11::register]]
-bool azny_write_smcube(const std::string& input_path, const std::string& output_path) {
+bool azny_write_smcube(const std::string& input_path,
+                       const std::string& output_path) {
   auto luts = smcube_load_from_file(input_path.c_str());
   if (luts == nullptr) {
     cpp11::stop("Incompatible file format.");
   }
-  auto ok = smcube_save_to_file_smcube(output_path.c_str(), luts, smcube_save_flag_FilterData);
+  auto ok = smcube_save_to_file_smcube(output_path.c_str(), luts,
+                                       smcube_save_flag_FilterData);
   smcube_free(luts);
   return ok;
 }
@@ -129,21 +131,21 @@ cpp11::doubles azny_read_cube(const std::string& file_path, bool verbose) {
 }
 
 [[cpp11::register]]
-cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data,
-                            int cube_size, double intensity,
-                            bool is_r_fastest) {
-  cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_apply_cube(const cpp11::integers& nr, int height,
+                                int width, cpp11::doubles_matrix<> lut_data,
+                                int cube_size, double intensity,
+                                bool is_r_fastest) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
   // sRGB -> linear
   cv::Mat tmpA;
   bgra[0].convertTo(tmpA, CV_32FC3, 1.0 / 255, 0.0);
   cv::Mat img_lin = aznyan::sRGB_to_linear(tmpA);
 
-  cv::Mat tmpB = cv::Mat::zeros(img.size(), CV_32FC3);
+  cv::Mat tmpB = cv::Mat::zeros(bgra[0].size(), CV_32FC3);
 
-  for (int i = 0; i < img.rows; i++) {
-    for (int j = 0; j < img.cols; j++) {
+  for (int i = 0; i < bgra[0].rows; i++) {
+    for (int j = 0; j < bgra[1].cols; j++) {
       cv::Vec3f v = img_lin.at<cv::Vec3f>(i, j);
 
       int idx = aznyan::index(v[0], v[1], v[2], cube_size, is_r_fastest);
@@ -152,11 +154,11 @@ cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data,
       }
       tmpB.at<cv::Vec3f>(i, j) =
           cv::Vec3f(v[2] * (1 - intensity) +
-                        static_cast<float>(lut_data(idx, 2)) * intensity,
+                        static_cast<float>(lut_data(idx, 0)) * intensity,
                     v[1] * (1 - intensity) +
                         static_cast<float>(lut_data(idx, 1)) * intensity,
                     v[0] * (1 - intensity) +
-                        static_cast<float>(lut_data(idx, 0)) * intensity);
+                        static_cast<float>(lut_data(idx, 2)) * intensity);
     }
   }
   // linear -> sRGB
@@ -164,11 +166,7 @@ cpp11::raws azny_apply_cube(cpp11::raws png, cpp11::doubles_matrix<> lut_data,
 
   cv::Mat img_u8;
   img_srgb.convertTo(img_u8, CV_8UC3, 255.0);
-
-  std::vector<cv::Mat> tmpC{img_u8, bgra[1]};
-  cv::Mat final_img;
-  cv::merge(tmpC, final_img);
-  return aznyan::encode_raws(final_img);
+  return aznyan::encode_nr(img_u8, bgra[1]);
 }
 
 [[cpp11::register]]
