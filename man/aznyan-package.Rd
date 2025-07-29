@@ -4,7 +4,7 @@
 \name{aznyan-package}
 \alias{aznyan}
 \alias{aznyan-package}
-\title{aznyan: Image Filters With 'OpenCV'}
+\title{aznyan: Image Filters with 'OpenCV'}
 \description{
 Offers image filters wrapping 'OpenCV' \url{https://opencv.org/}, ported from \url{https://github.com/5PB-3-4/AviUtl_OpenCV_Scripts}.
 }
