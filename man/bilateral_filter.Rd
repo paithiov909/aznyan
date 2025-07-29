@@ -5,7 +5,7 @@
 \title{Bilateral filter}
 \usage{
 bilateral_filter(
-  png,
+  nr,
   d = 5,
   sigmacolor = 1,
   sigmaspace = 1,
@@ -14,7 +14,7 @@ bilateral_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{d}{The size of kernel.}
 
@@ -27,7 +27,7 @@ bilateral_filter(
 \item{alphasync}{Whether sync alpha.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Bilateral filter

@@ -5,7 +5,7 @@
 \title{Gaussian blur}
 \usage{
 gaussian_blur(
-  png,
+  nr,
   box_w = 1,
   box_h = box_w,
   sigma_x = 0,
@@ -14,7 +14,7 @@ gaussian_blur(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{box_w}{The width of box.}
 
@@ -27,7 +27,7 @@ gaussian_blur(
 \item{border}{The type of pixel extrapolation method.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Gaussian blur

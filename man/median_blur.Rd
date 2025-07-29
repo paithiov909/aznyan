@@ -4,15 +4,15 @@
 \alias{median_blur}
 \title{Median blur}
 \usage{
-median_blur(png, ksize = 1)
+median_blur(nr, ksize = 1)
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{ksize}{The size of kernel.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Median blur

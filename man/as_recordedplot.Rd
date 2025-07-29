@@ -4,10 +4,10 @@
 \alias{as_recordedplot}
 \title{Convert PNG image data into recorded plot}
 \usage{
-as_recordedplot(png)
+as_recordedplot(nr)
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 }
 \value{
 A recorded plot is invisibly returned.

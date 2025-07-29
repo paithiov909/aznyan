@@ -12,7 +12,7 @@
 #' 6. cv::MORPH_BLACKHAT
 #' 7. cv::MORPH_HITMISS
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param ksize The size of kernel.
 #' @param ktype The type of kernel.
 #' @param mode The mode of morphology.
@@ -21,17 +21,19 @@
 #' @param alphasync Whether sync alpha.
 #' @param use_rgb Whether to use RGB morphology.
 #' @param anchor The anchor of morphology.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-morphology <- function(png,
-                       ksize = c(2, 2, 2),
-                       ktype = c(0, 1, 2),
-                       mode = c(0, 1, 2, 3, 4, 5, 6, 7),
-                       border = c(3, 4, 0, 1, 2),
-                       iterations = 1,
-                       alphasync = TRUE,
-                       use_rgb = TRUE,
-                       anchor = c(-1, -1)) {
+morphology <- function(
+  nr,
+  ksize = c(2, 2, 2),
+  ktype = c(0, 1, 2),
+  mode = c(0, 1, 2, 3, 4, 5, 6, 7),
+  border = c(3, 4, 0, 1, 2),
+  iterations = 1,
+  alphasync = TRUE,
+  use_rgb = TRUE,
+  anchor = c(-1, -1)
+) {
   if (!all(ksize >= 0)) {
     rlang::abort("ksize must be >= 0")
   }
@@ -42,8 +44,31 @@ morphology <- function(png,
   ksize <- as.integer(ksize)
   anchor <- as.integer(anchor)
   if (use_rgb) {
-    azny_morphologyrgb(png, ksize, ktype, mode, iterations, border, alphasync, anchor)
+    out <- azny_morphologyrgb(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize,
+      ktype,
+      mode,
+      iterations,
+      border,
+      alphasync,
+      anchor
+    )
   } else {
-    azny_morphologyfilter(png, ksize[1], ktype, mode, iterations, border, alphasync, anchor)
+    out <- azny_morphologyfilter(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize[1],
+      ktype,
+      mode,
+      iterations,
+      border,
+      alphasync,
+      anchor
+    )
   }
+  as_nr(out)
 }

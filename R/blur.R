@@ -1,63 +1,103 @@
 #' Median blur
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param ksize The size of kernel.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-median_blur <- function(png, ksize = 1) {
-  azny_medianblur(png, ksize)
+median_blur <- function(nr, ksize = 1) {
+  out <- azny_medianblur(cast_nr(nr), nrow(nr), ncol(nr), ksize)
+  as_nr(out)
 }
 
 #' Box blur
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param box_w The width of box.
 #' @param box_h The height of box.
 #' @param normalize Whether normalize.
 #' @param border The type of pixel extrapolation method.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-box_blur <- function(png,
-                     box_w = 1, box_h = box_w,
-                     normalize = TRUE,
-                     border = c(3, 4, 0, 1, 2)) {
+box_blur <- function(
+  nr,
+  box_w = 1,
+  box_h = box_w,
+  normalize = TRUE,
+  border = c(3, 4, 0, 1, 2)
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
-  azny_boxblur(png, box_w, box_h, normalize, border)
+  out <- azny_boxblur(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    box_w,
+    box_h,
+    normalize,
+    border
+  )
+  as_nr(out)
 }
 
 #' Gaussian blur
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param box_w The width of box.
 #' @param box_h The height of box.
 #' @param sigma_x The sigma of x.
 #' @param sigma_y The sigma of y.
 #' @param border The type of pixel extrapolation method.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-gaussian_blur <- function(png,
-                          box_w = 1, box_h = box_w,
-                          sigma_x = 0, sigma_y = sigma_x,
-                          border = c(3, 4, 0, 1, 2)) {
+gaussian_blur <- function(
+  nr,
+  box_w = 1,
+  box_h = box_w,
+  sigma_x = 0,
+  sigma_y = sigma_x,
+  border = c(3, 4, 0, 1, 2)
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
-  azny_gaussianblur(png, box_w, box_h, sigma_x, sigma_y, border)
+  out <- azny_gaussianblur(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    box_w,
+    box_h,
+    sigma_x,
+    sigma_y,
+    border
+  )
+  as_nr(out)
 }
 
 #' Bilateral filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param d The size of kernel.
 #' @param sigmacolor The sigma of color.
 #' @param sigmaspace The sigma of space.
 #' @param border The type of pixel extrapolation method.
 #' @param alphasync Whether sync alpha.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-bilateral_filter <- function(png,
-                             d = 5,
-                             sigmacolor = 1, sigmaspace = 1,
-                             border = c(3, 4, 0, 1, 2),
-                             alphasync = TRUE) {
+bilateral_filter <- function(
+  nr,
+  d = 5,
+  sigmacolor = 1,
+  sigmaspace = 1,
+  border = c(3, 4, 0, 1, 2),
+  alphasync = TRUE
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
-  azny_bilateralblur(png, d, sigmacolor, sigmaspace, border, alphasync)
+  out <- azny_bilateralblur(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    d,
+    sigmacolor,
+    sigmaspace,
+    border,
+    alphasync
+  )
+  as_nr(out)
 }

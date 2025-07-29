@@ -4,17 +4,17 @@
 \alias{mean_shift}
 \title{Mean shift filter}
 \usage{
-mean_shift(png, sp = 10, sr = 30, max_level = 1)
+mean_shift(nr, sp = 10, sr = 30, max_level = 1)
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{sp, sr}{The parameters of mean shift.}
 
 \item{max_level}{The maximum level of mean shift.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Mean shift filter

@@ -5,7 +5,7 @@
 \title{Canny filter}
 \usage{
 canny_filter(
-  png,
+  nr,
   asize = 2,
   balp = FALSE,
   use_rgb = TRUE,
@@ -15,7 +15,7 @@ canny_filter(
 )
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{asize}{Aparture size for Sobel operation.}
 
@@ -30,7 +30,7 @@ canny_filter(
 \item{thres2}{The second threshold.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Canny filter

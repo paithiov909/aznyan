@@ -1,11 +1,13 @@
 skip_on_cran()
 skip_on_ci()
 
-png <- readBin(
-  system.file("images/sample-361x241.png", package = "aznyan"),
-  what = "raw",
-  n = file.info(system.file("images/sample-361x241.png", package = "aznyan"))$size
-)
+png <-
+  fastpng::read_png(
+    system.file("images/sample-361x241.png", package = "aznyan"),
+    type = "nativeraster",
+    rgba = TRUE,
+    flags = 1L
+  )
 
 test_that("sobel_filter works", {
   vdiffr::expect_doppelganger(

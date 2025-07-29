@@ -4,17 +4,17 @@
 \alias{preserve_edge}
 \title{Preserve-edge filter}
 \usage{
-preserve_edge(png, sgmS = 600, sgmR = 40, recursive = TRUE)
+preserve_edge(nr, sgmS = 600, sgmR = 40, recursive = TRUE)
 }
 \arguments{
-\item{png}{A raw vector of PNG image.}
+\item{nr}{A \code{nativeRaster} object.}
 
 \item{sgmS, sgmR}{The parameters of edge preserving filter.}
 
 \item{recursive}{Whether to use recursive mode.}
 }
 \value{
-A raw vector of PNG image.
+A \code{nativeRaster} object.
 }
 \description{
 Preserve-edge filter

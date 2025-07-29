@@ -1,24 +1,28 @@
 #' Mean shift filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param sp,sr The parameters of mean shift.
 #' @param max_level The maximum level of mean shift.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-mean_shift <- function(png, sp = 10, sr = 30, max_level = 1) {
-  azny_meanshift(png, sp, sr, as.integer(max_level))
+mean_shift <- function(nr, sp = 10, sr = 30, max_level = 1) {
+  out <- azny_meanshift(cast_nr(nr), nrow(nr), ncol(nr), sp, sr, as.integer(max_level))
+  as_nr(out)
 }
 
 #' Preserve-edge filter
 #'
-#' @param png A raw vector of PNG image.
+#' @param nr A `nativeRaster` object.
 #' @param sgmS,sgmR The parameters of edge preserving filter.
 #' @param recursive Whether to use recursive mode.
-#' @returns A raw vector of PNG image.
+#' @returns A `nativeRaster` object.
 #' @export
-preserve_edge <- function(png,
-                          sgmS = 600, # nolint
-                          sgmR = 40, # nolint
-                          recursive = TRUE) {
-  azny_preserve_edges(png, sgmS, sgmR, recursive)
+preserve_edge <- function(
+  nr,
+  sgmS = 600, # nolint
+  sgmR = 40, # nolint
+  recursive = TRUE
+) {
+  out <- azny_preserve_edges(cast_nr(nr), nrow(nr), ncol(nr), sgmS, sgmR, recursive)
+  as_nr(out)
 }

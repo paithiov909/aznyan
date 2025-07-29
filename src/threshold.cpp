@@ -1,25 +1,25 @@
 #include "aznyan_types.h"
 
 [[cpp11::register]]
-cpp11::raws azny_thres(cpp11::raws png, double thres, double maxv, int mode) {
-  cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_thres(const cpp11::integers& nr, int height, int width,
+                           double thres, double maxv, int mode) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
   cv::Mat tmpB, tmpC;
   cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGR2GRAY);
   cv::threshold(tmpB, tmpC, thres, maxv, aznyan::thresmode[mode]);
 
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC, bgra[1]};
+  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
   cv::merge(ch_out, out);
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, bgra[1]);
 }
 
 [[cpp11::register]]
-cpp11::raws azny_adpthres(cpp11::raws png, bool adpthres, double maxv,
-                          int bsize, bool mode, double valC) {
-  cv::Mat img = aznyan::decode_raws(png);
-  auto [bgra, ch] = aznyan::split_bgra(img);
+cpp11::integers azny_adpthres(const cpp11::integers& nr, int height, int width,
+                              bool adpthres, double maxv, int bsize, bool mode,
+                              double valC) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
   const auto adp_mode =
       adpthres ? cv::ADAPTIVE_THRESH_GAUSSIAN_C : cv::ADAPTIVE_THRESH_MEAN_C;
@@ -30,7 +30,7 @@ cpp11::raws azny_adpthres(cpp11::raws png, bool adpthres, double maxv,
   cv::adaptiveThreshold(tmpB, tmpC, maxv, adp_mode, thres_type, 2 * bsize + 1,
                         valC);
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC, bgra[1]};
+  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
   cv::merge(ch_out, out);
-  return aznyan::encode_raws(out);
+  return aznyan::encode_nr(out, bgra[1]);
 }
