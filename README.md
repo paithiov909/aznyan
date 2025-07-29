@@ -18,22 +18,23 @@ your system.
 
 ## Usage
 
-aznyan provides functions that take a `raw` vector of image data as
-their first argument and return a `raw` vector of PNG format image after
-applying the effect.
+aznyan provides functions that take a `nativeRaster` of image data as
+their first argument and return a `nativeRaster` after applying the
+effect.
 
-You can simply read a PNG image into a raw vector using `readBin()` and
-save those return values as a PNG image using `writeBin()`.
+You can simply read a PNG image into a `nativeRaster` using
+`fastpng::read_png()`.
 
 ``` r
 pkgload::load_all(export_all = FALSE)
 #> ℹ Loading aznyan
 
-png <- readBin(
-  system.file("images/sample-256x256-4ch.png", package = "aznyan"),
-  what = "raw",
-  n = file.info(system.file("images/sample-256x256-4ch.png", package = "aznyan"))$size
-)
+png <-
+  fastpng::read_png(
+    system.file("images/sample-256x256-4ch.png", package = "aznyan"),
+    type = "nativeraster",
+    rgba = TRUE
+  )
 ```
 
 The original image `png` above looks like this:
@@ -44,7 +45,6 @@ The original image `png` above looks like this:
 
 ``` r
 median_blur(png, ksize = 8) |>
-  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
@@ -54,7 +54,6 @@ median_blur(png, ksize = 8) |>
 
 ``` r
 diffusion_filter(png, factor = 8) |>
-  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
@@ -64,7 +63,6 @@ diffusion_filter(png, factor = 8) |>
 
 ``` r
 morphology(png, ksize = c(4, 4, 4)) |>
-  fastpng::read_png(type = "nativeraster", rgba = TRUE) |>
   grid::grid.raster(interpolate = FALSE)
 ```
 
