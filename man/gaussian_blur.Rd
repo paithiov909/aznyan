@@ -20,9 +20,9 @@ gaussian_blur(
 
 \item{box_h}{The height of box.}
 
-\item{sigma_x}{The sigma of x.}
+\item{sigma_x}{The sigma of x direction.}
 
-\item{sigma_y}{The sigma of y.}
+\item{sigma_y}{The sigma of y direction.}
 
 \item{border}{The type of pixel extrapolation method.}
 }

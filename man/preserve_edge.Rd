@@ -4,12 +4,13 @@
 \alias{preserve_edge}
 \title{Preserve-edge filter}
 \usage{
-preserve_edge(nr, sgmS = 600, sgmR = 40, recursive = TRUE)
+preserve_edge(nr, sgmS = 60, sgmR = 0.4, recursive = TRUE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{sgmS, sgmR}{The parameters of edge preserving filter.}
+\item{sgmS, sgmR}{The parameters of edge preserving filter.
+\verb{[0, 200]} for \code{sgmS} and \verb{[0, 1]} for \code{sgmR}.}
 
 \item{recursive}{Whether to use recursive mode.}
 }

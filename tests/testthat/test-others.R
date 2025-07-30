@@ -17,7 +17,7 @@ test_that("other filters work", {
   )
   vdiffr::expect_doppelganger(
     "preserve-edge",
-    preserve_edge(png) |>
+    preserve_edge(png, 200, 1) |>
       as_recordedplot()
   )
 })

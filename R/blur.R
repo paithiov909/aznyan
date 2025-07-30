@@ -43,8 +43,8 @@ box_blur <- function(
 #' @param nr A `nativeRaster` object.
 #' @param box_w The width of box.
 #' @param box_h The height of box.
-#' @param sigma_x The sigma of x.
-#' @param sigma_y The sigma of y.
+#' @param sigma_x The sigma of x direction.
+#' @param sigma_y The sigma of y direction.
 #' @param border The type of pixel extrapolation method.
 #' @returns A `nativeRaster` object.
 #' @export
