@@ -7,7 +7,7 @@
 ## usethis namespace: end
 NULL
 
-#' Convert PNG image data into recorded plot
+#' Convert image data into recorded plot
 #'
 #' @param nr A `nativeRaster` object.
 #' @returns A recorded plot is invisibly returned.

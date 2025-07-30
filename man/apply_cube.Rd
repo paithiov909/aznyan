@@ -2,7 +2,7 @@
 % Please edit documentation in R/lut.R
 \name{apply_cube}
 \alias{apply_cube}
-\title{Apply a 3D LUT to a PNG image}
+\title{Apply a 3D LUT to an image}
 \usage{
 apply_cube(nr, lut, is_r_fastest = TRUE, intensity = 1)
 }
@@ -22,7 +22,7 @@ If \code{FALSE}, assumes it's B-fastest
 A \code{nativeRaster} object.
 }
 \description{
-Apply a 3D LUT to a PNG image
+Apply a 3D LUT to an image
 }
 \note{
 This function is incomplete. The result seems incorrect at the moment.

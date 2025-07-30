@@ -1,4 +1,4 @@
-#' Apply a 3D LUT to a PNG image
+#' Apply a 3D LUT to an image
 #'
 #' @note
 #' This function is incomplete. The result seems incorrect at the moment.
