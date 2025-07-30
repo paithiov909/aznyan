@@ -12,20 +12,43 @@
 #' @returns A `nativeRaster` object.
 #' @export
 sobel_filter <- function(
-    nr,
-    ksize = 3,
-    balp = TRUE,
-    dx = 1,
-    dy = dx,
-    border = c(3, 4, 0, 1, 2),
-    use_rgb = TRUE,
-    scale = 1.0,
-    delta = 0.0) {
+  nr,
+  ksize = 3,
+  balp = TRUE,
+  dx = 1,
+  dy = dx,
+  border = c(3, 4, 0, 1, 2),
+  use_rgb = TRUE,
+  scale = 1.0,
+  delta = 0.0
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    out <- azny_sobelrgb(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelrgb(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize,
+      balp,
+      dx,
+      dy,
+      border,
+      scale,
+      delta
+    )
   } else {
-    out <- azny_sobelfilter(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, dx, dy, border, scale, delta)
+    out <- azny_sobelfilter(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize,
+      balp,
+      dx,
+      dy,
+      border,
+      scale,
+      delta
+    )
   }
   as_nr(out)
 }
@@ -42,18 +65,37 @@ sobel_filter <- function(
 #' @returns A `nativeRaster` object.
 #' @export
 laplacian_filter <- function(
-    nr,
-    ksize = 3,
-    balp = TRUE,
-    border = c(3, 4, 0, 1, 2),
-    use_rgb = TRUE,
-    scale = 1.0,
-    delta = 0.0) {
+  nr,
+  ksize = 3,
+  balp = TRUE,
+  border = c(3, 4, 0, 1, 2),
+  use_rgb = TRUE,
+  scale = 1.0,
+  delta = 0.0
+) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
   if (use_rgb) {
-    out <- azny_laplacianrgb(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
+    out <- azny_laplacianrgb(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize,
+      balp,
+      border,
+      scale,
+      delta
+    )
   } else {
-    out <- azny_laplacianfilter(cast_nr(nr), nrow(nr), ncol(nr), ksize, balp, border, scale, delta)
+    out <- azny_laplacianfilter(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      ksize,
+      balp,
+      border,
+      scale,
+      delta
+    )
   }
   as_nr(out)
 }
@@ -70,17 +112,36 @@ laplacian_filter <- function(
 #' @returns A `nativeRaster` object.
 #' @export
 canny_filter <- function(
-    nr,
-    asize = 2,
-    balp = FALSE,
-    use_rgb = TRUE,
-    grad = TRUE,
-    thres1 = 100.0,
-    thres2 = 200.0) {
+  nr,
+  asize = 2,
+  balp = FALSE,
+  use_rgb = TRUE,
+  grad = TRUE,
+  thres1 = 100.0,
+  thres2 = 200.0
+) {
   if (use_rgb) {
-    out <- azny_cannyrgb(cast_nr(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
+    out <- azny_cannyrgb(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      asize,
+      balp,
+      grad,
+      thres1,
+      thres2
+    )
   } else {
-    out <- azny_cannyfilter(cast_nr(nr), nrow(nr), ncol(nr), asize, balp, grad, thres1, thres2)
+    out <- azny_cannyfilter(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      asize,
+      balp,
+      grad,
+      thres1,
+      thres2
+    )
   }
   as_nr(out)
 }

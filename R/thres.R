@@ -17,10 +17,11 @@ NULL
 #' @rdname thres
 #' @export
 thres <- function(
-    nr,
-    threshold = 100,
-    maxv = 255,
-    mode = c(0, 1, 2, 3, 4, 5, 6)) {
+  nr,
+  threshold = 100,
+  maxv = 255,
+  mode = c(0, 1, 2, 3, 4, 5, 6)
+) {
   if (threshold < 0 || threshold > 255) {
     rlang::abort("`threshold` must be in range [0, 255]")
   }
@@ -35,12 +36,13 @@ thres <- function(
 #' @rdname thres
 #' @export
 adpthres <- function(
-    nr,
-    maxv = 255,
-    bsize = 1,
-    C = 5, # nolint
-    mode = c(0, 1),
-    invert = FALSE) {
+  nr,
+  maxv = 255,
+  bsize = 1,
+  C = 5, # nolint
+  mode = c(0, 1),
+  invert = FALSE
+) {
   if (maxv < 0 || maxv > 255) {
     rlang::abort("`threshold` must be in range [0, 255]")
   }
@@ -48,6 +50,15 @@ adpthres <- function(
     rlang::abort("`bsize` must be in range [1, 50]")
   }
   mode <- int_match(mode, "mode", c(0, 1))
-  out <- azny_adpthres(cast_nr(nr), nrow(nr), ncol(nr), as.logical(mode), maxv, bsize, invert, C)
+  out <- azny_adpthres(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    as.logical(mode),
+    maxv,
+    bsize,
+    invert,
+    C
+  )
   as_nr(out)
 }

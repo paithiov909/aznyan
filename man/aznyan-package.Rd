@@ -21,7 +21,6 @@ Useful links:
 
 Other contributors:
 \itemize{
-  \item Aras Pranckevičius [copyright holder]
   \item Jeroen Ooms [copyright holder]
 }
 

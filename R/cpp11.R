@@ -44,18 +44,6 @@ azny_sobelrgb <- function(nr, height, width, ksize, balp, dx, dy, border, scale,
   .Call(`_aznyan_azny_sobelrgb`, nr, height, width, ksize, balp, dx, dy, border, scale, delta)
 }
 
-azny_write_smcube <- function(input_path, output_path) {
-  .Call(`_aznyan_azny_write_smcube`, input_path, output_path)
-}
-
-azny_read_cube <- function(file_path, verbose) {
-  .Call(`_aznyan_azny_read_cube`, file_path, verbose)
-}
-
-azny_apply_cube <- function(nr, height, width, lut_data, cube_size, intensity, is_r_fastest) {
-  .Call(`_aznyan_azny_apply_cube`, nr, height, width, lut_data, cube_size, intensity, is_r_fastest)
-}
-
 azny_decode_rec709 <- function(in_vec) {
   .Call(`_aznyan_azny_decode_rec709`, in_vec)
 }

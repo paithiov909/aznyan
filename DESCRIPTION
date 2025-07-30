@@ -4,7 +4,6 @@ Title: Image Filters with 'OpenCV'
 Version: 25.07.29
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
-    person("Aras", "Pranckevičius", role = "cph"),
     person("Jeroen", "Ooms", role = "cph")
   )
 Maintainer: Akiru Kato <paithiov909@gmail.com>
