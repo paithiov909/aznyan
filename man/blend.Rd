@@ -2,6 +2,7 @@
 % Please edit documentation in R/blend.R
 \name{blend}
 \alias{blend}
+\alias{blend_over}
 \alias{blend_darken}
 \alias{blend_multiply}
 \alias{blend_colorburn}
@@ -25,6 +26,8 @@
 \alias{blend_ghosting}
 \title{Blend modes}
 \usage{
+blend_over(src, dst)
+
 blend_darken(src, dst)
 
 blend_multiply(src, dst)

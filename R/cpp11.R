@@ -28,6 +28,18 @@ azny_pack_integers <- function(rgb, a, height, width) {
   .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
 
+azny_saturate_value <- function(in_vec, amount) {
+  .Call(`_aznyan_azny_saturate_value`, in_vec, amount)
+}
+
+azny_rgb_to_hls <- function(rgb) {
+  .Call(`_aznyan_azny_rgb_to_hls`, rgb)
+}
+
+azny_hls_to_rgb <- function(hls) {
+  .Call(`_aznyan_azny_hls_to_rgb`, hls)
+}
+
 azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
   .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
 }

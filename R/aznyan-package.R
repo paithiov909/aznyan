@@ -3,7 +3,6 @@
 
 ## usethis namespace: start
 #' @useDynLib aznyan, .registration = TRUE
-#' @importFrom utils write.table
 ## usethis namespace: end
 NULL
 

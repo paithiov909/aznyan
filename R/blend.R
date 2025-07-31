@@ -45,6 +45,17 @@ gray <- function(x) {
 
 #' @rdname blend
 #' @export
+blend_over <- function(src, dst) {
+  check_nr_dim(src, dst)
+  sz <- dim(src)
+  src <- nr_to_rgba(src, "src") / 255
+  dst <- nr_to_rgba(dst, "dst") / 255
+  rgba <- clamp(alpha(src, dst), 0, 1) * 255
+  as_nr(azny_pack_integers(rgba[1:3, ], rgba[4, ], sz[1], sz[2]))
+}
+
+#' @rdname blend
+#' @export
 blend_darken <- function(src, dst) {
   check_nr_dim(src, dst)
   sz <- dim(src)

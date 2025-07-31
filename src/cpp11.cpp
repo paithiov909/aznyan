@@ -54,6 +54,27 @@ extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP w
     return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
   END_CPP11
 }
+// color.cpp
+cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double amount);
+extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP amount) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_saturate_value(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(in_vec), cpp11::as_cpp<cpp11::decay_t<double>>(amount)));
+  END_CPP11
+}
+// color.cpp
+cpp11::integers_matrix<> azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb);
+extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(rgb)));
+  END_CPP11
+}
+// color.cpp
+cpp11::integers_matrix<> azny_hls_to_rgb(const cpp11::integers_matrix<>& hls);
+extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(hls)));
+  END_CPP11
+}
 // diffusion.cpp
 cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, float decay_factor, float decay_offset, float gamma, int sigma);
 extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP iter, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
@@ -178,6 +199,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
     {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,      8},
+    {"_aznyan_azny_hls_to_rgb",       (DL_FUNC) &_aznyan_azny_hls_to_rgb,        1},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,   8},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,      8},
     {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,         6},
@@ -188,6 +210,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,    6},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
+    {"_aznyan_azny_rgb_to_hls",       (DL_FUNC) &_aznyan_azny_rgb_to_hls,        1},
+    {"_aznyan_azny_saturate_value",   (DL_FUNC) &_aznyan_azny_saturate_value,    2},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      10},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
