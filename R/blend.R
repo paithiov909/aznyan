@@ -303,8 +303,7 @@ blend_divide <- function(src, dst) {
   sz <- dim(src)
   src <- nr_to_rgba(src, "src") / 255
   dst <- nr_to_rgba(dst, "dst") / 255
-  # FIXME: 違うかもしれない
-  rgba <- ifelse(src == 0, 0, dst / src) * 255 ## divide by zero -> `Inf`
+  rgba <- clamp(dst / src, 0, 1) * 255 ## divide by zero -> `Inf`
   rgba[4, ] <- alpha(src[4, ], dst[4, ]) * 255
   as_nr(azny_pack_integers(rgba, sz[1], sz[2]))
 }
