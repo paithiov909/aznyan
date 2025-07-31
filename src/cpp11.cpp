@@ -48,10 +48,10 @@ extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
   END_CPP11
 }
 // color.cpp
-cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgba, int height, int width);
-extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgba, SEXP height, SEXP width) {
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
+extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgba), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
   END_CPP11
 }
 // diffusion.cpp
@@ -184,7 +184,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,        4},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 10},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    10},
-    {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     3},
+    {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     4},
     {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,    6},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},

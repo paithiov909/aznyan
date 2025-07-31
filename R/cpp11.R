@@ -24,8 +24,8 @@ azny_encode_rec709 <- function(in_vec) {
   .Call(`_aznyan_azny_encode_rec709`, in_vec)
 }
 
-azny_pack_integers <- function(rgba, height, width) {
-  .Call(`_aznyan_azny_pack_integers`, rgba, height, width)
+azny_pack_integers <- function(rgb, a, height, width) {
+  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
 
 azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {

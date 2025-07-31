@@ -60,15 +60,20 @@ cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec) {
 
 // Takes a matrix of RGBA values and packs them into 'native packed' integers
 [[cpp11::register]]
-cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgba, int height, int width) {
-  if (rgba.nrow() != 4) {
-    cpp11::stop("rgba must have 4 rows.");
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb,
+                                   const cpp11::doubles& a, int height,
+                                   int width) {
+  if (rgb.nrow() != 3) {
+    cpp11::stop("RGB must have 3 rows.");
   }
-  std::vector<uint32_t> ret(rgba.ncol());
-  for (R_xlen_t i = 0; i < rgba.ncol(); i++) {
+  if (rgb.ncol() != a.size()) {
+    cpp11::stop("RGB and alpha must have the same length.");
+  }
+  std::vector<uint32_t> ret(rgb.ncol());
+  for (R_xlen_t i = 0; i < rgb.ncol(); i++) {
     ret[i] = aznyan::pack_into_int(
-        static_cast<uchar>(rgba(0, i)), static_cast<uchar>(rgba(1, i)),
-        static_cast<uchar>(rgba(2, i)), static_cast<uchar>(rgba(3, i)));
+        static_cast<uchar>(rgb(0, i)), static_cast<uchar>(rgb(1, i)),
+        static_cast<uchar>(rgb(2, i)), static_cast<uchar>(a[i]));
   }
   cpp11::writable::integers out = cpp11::as_sexp(ret);
   out.attr("dim") = cpp11::as_sexp({height, width});
