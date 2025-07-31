@@ -33,6 +33,27 @@ extern "C" SEXP _aznyan_azny_bilateralblur(SEXP nr, SEXP height, SEXP width, SEX
     return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
   END_CPP11
 }
+// color.cpp
+cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec);
+extern "C" SEXP _aznyan_azny_decode_rec709(SEXP in_vec) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_decode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
+  END_CPP11
+}
+// color.cpp
+cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec);
+extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_encode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
+  END_CPP11
+}
+// color.cpp
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgba, int height, int width);
+extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgba, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgba), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
 // diffusion.cpp
 cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, float decay_factor, float decay_offset, float gamma, int sigma);
 extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP iter, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
@@ -80,20 +101,6 @@ cpp11::integers azny_sobelrgb(const cpp11::integers& nr, int height, int width, 
 extern "C" SEXP _aznyan_azny_sobelrgb(SEXP nr, SEXP height, SEXP width, SEXP ksize, SEXP balp, SEXP dx, SEXP dy, SEXP border, SEXP scale, SEXP delta) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
-  END_CPP11
-}
-// lut.cpp
-cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec);
-extern "C" SEXP _aznyan_azny_decode_rec709(SEXP in_vec) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_decode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
-  END_CPP11
-}
-// lut.cpp
-cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec);
-extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_encode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
   END_CPP11
 }
 // misc.cpp
@@ -177,6 +184,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,        4},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 10},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    10},
+    {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     3},
     {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,    6},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},

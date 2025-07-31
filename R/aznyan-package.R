@@ -20,9 +20,10 @@ as_recordedplot <- function(nr) {
 
 #' Cast `x` into integers if it's a `nativeRaster` object
 #' @noRd
-cast_nr <- function(nr) {
+cast_nr <- function(nr, nm = "nr") {
   if (!inherits(nr, "nativeRaster")) {
-    rlang::abort("`nr` must be a nativeRaster object.")
+    msg <- glue::glue("`{nm}` must be a nativeRaster object.")
+    rlang::abort(msg)
   }
   as.integer(nr)
 }

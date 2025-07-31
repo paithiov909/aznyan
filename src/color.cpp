@@ -38,7 +38,6 @@ cv::Mat linear_to_sRGB(const cv::Mat& img) {
 
 }  // namespace aznyan
 
-
 [[cpp11::register]]
 cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec) {
   std::vector<double> ret;
@@ -57,4 +56,21 @@ cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec) {
                               : 1.099f * std::pow(c, 0.45f) - 0.099f);
   }
   return cpp11::as_sexp(ret);
+}
+
+// Takes a matrix of RGBA values and packs them into 'native packed' integers
+[[cpp11::register]]
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgba, int height, int width) {
+  if (rgba.nrow() != 4) {
+    cpp11::stop("rgba must have 4 rows.");
+  }
+  std::vector<uint32_t> ret(rgba.ncol());
+  for (R_xlen_t i = 0; i < rgba.ncol(); i++) {
+    ret[i] = aznyan::pack_into_int(
+        static_cast<uchar>(rgba(0, i)), static_cast<uchar>(rgba(1, i)),
+        static_cast<uchar>(rgba(2, i)), static_cast<uchar>(rgba(3, i)));
+  }
+  cpp11::writable::integers out = cpp11::as_sexp(ret);
+  out.attr("dim") = cpp11::as_sexp({height, width});
+  return out;
 }

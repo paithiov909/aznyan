@@ -23,7 +23,6 @@ ported from [5PB-3-4/AviUtl_OpenCV_Scripts](https://github.com/5PB-3-4/AviUtl_Op
 
 Still in development. It will probably work, but documentation is scant. Also, note that this package requires some SIMD extensions to work on your system.
 
-
 ## Usage
 
 aznyan provides functions that take a `nativeRaster` of image data as their first argument
