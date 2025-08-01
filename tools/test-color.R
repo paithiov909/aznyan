@@ -12,5 +12,6 @@ nr2 <- fastpng::read_png(
 devtools::document()
 
 grid::grid.newpage()
-fill_with(361, 241, rgb(255, 0, 0, 255, maxColorValue = 255)) |>
+apply_nashville(nr2) |>
+  # restore_transparency() |>
   grid::grid.raster(interpolate = FALSE)

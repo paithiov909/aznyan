@@ -35,6 +35,8 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' @param nr A `nativeRaster` object.
 #' @param intensity A numeric scalar typically in range `[0, 1]`.
 #' @param depth An integer scalar.
+#' @param alpha A numeric scalar in range `[0, 1]`. Alpha value to be reset for transparency.
+#' @param rad A numeric scalar. Rotation angle in radian.
 #' @returns A `nativeRaster` object.
 #' @rdname color-manip
 #' @name color-manip
@@ -42,10 +44,50 @@ NULL
 
 #' @rdname color-manip
 #' @export
+restore_transparency <- function(nr, alpha = 1) {
+  sz <- dim(nr)
+  ret <- cast_nr(nr, "nr") |>
+    set_alpha(alpha)
+  dim(ret) <- c(sz[1], sz[2])
+  as_nr(ret)
+}
+
+#' @rdname color-manip
+#' @export
+hue_rotate <- function(nr, rad) {
+  cosv <- cos(rad)
+  sinv <- sin(rad)
+  mat <- c(
+    # Reds
+    0.213 + cosv * 0.787 - sinv * 0.213,
+    0.715 - cosv * 0.715 - sinv * 0.715,
+    0.072 - cosv * 0.072 + sinv * 0.928,
+    # Greens
+    0.213 - cosv * 0.213 + sinv * 0.143,
+    0.715 + cosv * 0.285 + sinv * 0.140,
+    0.072 - cosv * 0.072 - sinv * 0.283,
+    # Blues
+    0.213 - cosv * 0.213 - sinv * 0.787,
+    0.715 - cosv * 0.715 + sinv * 0.715,
+    0.072 + cosv * 0.928 + sinv * 0.072
+  )
+  sz <- dim(nr)
+  ret <- nr_to_rgba(nr, "nr")
+  rgb <- rbind(
+    mat[1] * ret[1, ] + mat[2] * ret[2, ] + mat[3] * ret[3, ],
+    mat[4] * ret[1, ] + mat[5] * ret[2, ] + mat[6] * ret[3, ],
+    mat[7] * ret[1, ] + mat[8] * ret[2, ] + mat[9] * ret[3, ]
+  ) |>
+    clamp(0, 255)
+  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+}
+
+#' @rdname color-manip
+#' @export
 contrast <- function(nr, intensity) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255 - 0.5) * intensity + 0.5, 0, 1) * 255
+  rgb <- clamp((ret[1:3, ] / 255 - 0.5) * (1 + intensity) + 0.5, 0, 1) * 255
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
@@ -54,16 +96,7 @@ contrast <- function(nr, intensity) {
 brighten <- function(nr, intensity) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255) * (1 + intensity), 0, 1) * 255
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
-}
-
-#' @rdname color-manip
-#' @export
-darken <- function(nr, intensity) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255) * (1 - intensity), 0, 1) * 255
+  rgb <- clamp(ret[1:3, ] * (1 + intensity), 0, 255)
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 

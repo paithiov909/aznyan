@@ -42,11 +42,10 @@ clamp <- function(x, min, max) {
 #' Alpha blending
 #'
 #' @param x1,x2 Alpha values.
-#' @param cap Maximum alpha value.
 #' @returns doubles
 #' @noRd
-alpha <- function(x1, x2, cap = 1) {
-  x1 + x2 - (cap - x1)
+alpha <- function(x1, x2) {
+  clamp(x1 + x2 * (1 - x1), 0, 1)
 }
 
 #' NTSC grayscale
@@ -66,7 +65,7 @@ blend_over <- function(src, dst) {
   sz <- dim(src)
   src <- nr_to_rgba(src, "src") / 255
   dst <- nr_to_rgba(dst, "dst") / 255
-  rgba <- clamp(alpha(src, dst), 0, 1) * 255
+  rgba <- alpha(src, dst) * 255
   as_nr(azny_pack_integers(rgba[1:3, ], rgba[4, ], sz[1], sz[2]))
 }
 
@@ -78,7 +77,7 @@ blend_darken <- function(src, dst) {
   src <- nr_to_rgba(src, "src")
   dst <- nr_to_rgba(dst, "dst")
   rgb <- pmin(src[1:3, ], dst[1:3, ]) * 1 ## coerce to doubles
-  a <- alpha(src[4, ], dst[4, ], cap = 255)
+  a <- alpha(src[4, ] / 255, dst[4, ] / 255) * 255
   as_nr(azny_pack_integers(rgb, a, sz[1], sz[2]))
 }
 
@@ -114,7 +113,7 @@ blend_lighten <- function(src, dst) {
   src <- nr_to_rgba(src, "src")
   dst <- nr_to_rgba(dst, "dst")
   rgb <- pmax(src[1:3, ], dst[1:3, ]) * 1 ## coerce to doubles
-  a <- alpha(src[4, ], dst[4, ], cap = 255)
+  a <- alpha(src[4, ] / 255, dst[4, ] / 255) * 255
   as_nr(azny_pack_integers(rgb, a, sz[1], sz[2]))
 }
 
@@ -125,7 +124,7 @@ blend_screen <- function(src, dst) {
   sz <- dim(src)
   src <- nr_to_rgba(src, "src") / 255
   dst <- nr_to_rgba(dst, "dst") / 255
-  rgb <- (1 - (1 - dst[1:3, ]) * (1 - src[1:3, ])) * 255
+  rgb <- clamp(1 - (1 - dst[1:3, ]) * (1 - src[1:3, ]), 0, 1) * 255
   a <- alpha(src[4, ], dst[4, ]) * 255
   as_nr(azny_pack_integers(rgb, a, sz[1], sz[2]))
 }
@@ -338,7 +337,7 @@ blend_luminosity <- function(src, dst) {
   dst <- nr_to_rgba(dst, "dst")
   rgb <- clamp(gray(src[1:3, ]) + (dst[1:3, ] / 255) - gray(dst[1:3, ]), 0, 1) *
     255
-  a <- alpha(src[4, ], dst[4, ], cap = 255)
+  a <- alpha(src[4, ] / 255, dst[4, ] / 255) * 255
   as_nr(azny_pack_integers(rgb, a, sz[1], sz[2]))
 }
 
@@ -358,6 +357,6 @@ blend_ghosting <- function(src, dst) {
     1
   ) *
     255
-  a <- alpha(src[4, ], dst[4, ], cap = 255)
+  a <- alpha(src[4, ] / 255, dst[4, ] / 255) * 255
   as_nr(azny_pack_integers(rgb, a, sz[1], sz[2]))
 }
