@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @import colorfast
 #' @useDynLib aznyan, .registration = TRUE
 ## usethis namespace: end
 NULL
@@ -27,7 +28,7 @@ cast_nr <- function(nr, nm = "nr") {
   as.integer(nr)
 }
 
-#' Take `x` and set its class to `nativeRaster`
+#' Take `x` and set its class as `nativeRaster`
 #' @noRd
 as_nr <- function(x) {
   class(x) <- c("nativeRaster", class(x))

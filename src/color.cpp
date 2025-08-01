@@ -1,43 +1,5 @@
 #include "aznyan_types.h"
 
-namespace aznyan {
-
-const float GANNMA = 2.4f;
-
-cv::Mat sRGB_to_linear(const cv::Mat& img) {
-  cv::Mat out(img.size(), CV_32FC3);
-  for (int i = 0; i < img.rows; i++) {
-    for (int j = 0; j < img.cols; j++) {
-      cv::Vec3f v = img.at<cv::Vec3f>(i, j);
-      for (int c = 0; c < 3; ++c) {
-        float s = v[c];
-        out.at<cv::Vec3f>(i, j)[c] =
-            (s <= 0.04045f) ? s / 12.92f
-                            : std::pow((s + 0.055f) / 1.055f, GANNMA);
-      }
-    }
-  }
-  return out;
-}
-
-cv::Mat linear_to_sRGB(const cv::Mat& img) {
-  cv::Mat out(img.size(), CV_32FC3);
-  for (int i = 0; i < img.rows; i++) {
-    for (int j = 0; j < img.cols; j++) {
-      cv::Vec3f v = img.at<cv::Vec3f>(i, j);
-      for (int c = 0; c < 3; ++c) {
-        float s = v[c];
-        out.at<cv::Vec3f>(i, j)[c] =
-            (s <= 0.0031308f) ? s * 12.92f
-                              : 1.055f * std::pow(s, 1.0f / GANNMA) - 0.055f;
-      }
-    }
-  }
-  return out;
-}
-
-}  // namespace aznyan
-
 [[cpp11::register]]
 cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec) {
   std::vector<double> ret;
@@ -58,7 +20,7 @@ cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec) {
   return cpp11::as_sexp(ret);
 }
 
-// Takes a matrix of RGBA values and packs them into 'native packed' integers
+// Takes doubles of RGBA values and packs them into 'native packed' integers
 [[cpp11::register]]
 cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb,
                                    const cpp11::doubles& a, int height,
@@ -81,10 +43,10 @@ cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb,
 }
 
 [[cpp11::register]]
-cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double amount) {
+cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val) {
   std::vector<double> ret;
   for (const auto& c : in_vec) {
-    ret.push_back(amount >= 0.0 ? c + amount * (1.0 - c) * c : c + amount * c);
+    ret.push_back(val >= 0.0 ? c + val * (1.0 - c) * c : c + val * c);
   }
   return cpp11::as_sexp(ret);
 }

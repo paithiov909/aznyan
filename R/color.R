@@ -14,54 +14,73 @@ decode_rec709 <- function(x) azny_decode_rec709(x)
 #' @export
 encode_rec709 <- function(x) azny_encode_rec709(x)
 
-#' Conversion between RGB and HSL
+#' Conversion between RGB and HLS colors
 #'
 #' @param x An integer matrix with 3 rows.
 #' @returns An integer matrix of the same size as `x`
-#' @rdname rgb-hsl
-#' @name rgb-hsl
+#' @rdname rgb-hls
+#' @name rgb-hls
 NULL
 
-#' @rdname rgb-hsl
+#' @rdname rgb-hls
 #' @export
 rgb2hls <- function(x) azny_rgb_to_hls(x)
 
-#' @rdname rgb-hsl
+#' @rdname rgb-hls
 #' @export
 hls2rgb <- function(x) azny_hls_to_rgb(x)
 
-#' @export
-fill_with <- function(width, height, color) {
-  packed_int <- colorfast::col_to_int(color) |>
-    rep(width * height)
-  dim(packed_int) <- c(height, width)
-  as_nr(packed_int)
-}
+#' Color manipulation
+#'
+#' @param nr A `nativeRaster` object.
+#' @param intensity A numeric scalar typically in range `[0, 1]`.
+#' @param depth An integer scalar.
+#' @returns A `nativeRaster` object.
+#' @rdname color-manip
+#' @name color-manip
+NULL
 
+#' @rdname color-manip
 #' @export
-contrast <- function(nr, amount) {
+contrast <- function(nr, intensity) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255 - 0.5) * amount + 0.5, 0, 1) * 255
+  rgb <- clamp((ret[1:3, ] / 255 - 0.5) * intensity + 0.5, 0, 1) * 255
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
+#' @rdname color-manip
 #' @export
-brighten <- function(nr, amount) {
+brighten <- function(nr, intensity) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255) * (1 + amount), 0, 1) * 255
+  rgb <- clamp((ret[1:3, ] / 255) * (1 + intensity), 0, 1) * 255
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
+#' @rdname color-manip
 #' @export
-darken <- function(nr, amount) {
+darken <- function(nr, intensity) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255) * (1 - amount), 0, 1) * 255
+  rgb <- clamp((ret[1:3, ] / 255) * (1 - intensity), 0, 1) * 255
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
+#' @rdname color-manip
+#' @export
+saturate <- function(nr, intensity) {
+  sz <- dim(nr)
+  ret <- nr_to_rgba(nr, "nr")
+  hls <- rgb2hls(ret[1:3, ])
+  hls[2, ] <- (azny_saturate_value(hls[2, ] / 255, intensity) * 255) |>
+    clamp(0, 255) |>
+    as.integer()
+  rgb <- hls2rgb(hls)
+  as_nr(azny_pack_integers(rgb * 1, ret[4, ] * 1, sz[1], sz[2]))
+}
+
+#' @rdname color-manip
 #' @export
 grayscale <- function(nr) {
   sz <- dim(nr)
@@ -70,6 +89,7 @@ grayscale <- function(nr) {
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
+#' @rdname color-manip
 #' @export
 sepia <- function(nr, intensity = 1, depth = 20) {
   sz <- dim(nr)
@@ -84,14 +104,15 @@ sepia <- function(nr, intensity = 1, depth = 20) {
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
+#' Create `nativeRaster` object filled with color
+#'
+#' @param width,height A positive integer scalar.
+#' @param color Color name or hex code.
+#' @returns A `nativeRaster` object.
 #' @export
-saturate <- function(nr, amount) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  hls <- rgb2hls(ret[1:3, ])
-  hls[2, ] <- (azny_saturate_value(hls[2, ] / 255, amount) * 255) |>
-    clamp(0, 255) |>
-    as.integer()
-  rgb <- hls2rgb(hls)
-  as_nr(azny_pack_integers(rgb * 1, ret[4, ] * 1, sz[1], sz[2]))
+fill_with <- function(width, height, color) {
+  packed_int <- col_to_int(color)[1] |>
+    rep(width * height)
+  dim(packed_int) <- c(height, width)
+  as_nr(packed_int)
 }

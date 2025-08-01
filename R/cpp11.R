@@ -28,8 +28,8 @@ azny_pack_integers <- function(rgb, a, height, width) {
   .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
 
-azny_saturate_value <- function(in_vec, amount) {
-  .Call(`_aznyan_azny_saturate_value`, in_vec, amount)
+azny_saturate_value <- function(in_vec, val) {
+  .Call(`_aznyan_azny_saturate_value`, in_vec, val)
 }
 
 azny_rgb_to_hls <- function(rgb) {

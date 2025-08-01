@@ -55,10 +55,10 @@ extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP w
   END_CPP11
 }
 // color.cpp
-cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double amount);
-extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP amount) {
+cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val);
+extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP val) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_saturate_value(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(in_vec), cpp11::as_cpp<cpp11::decay_t<double>>(amount)));
+    return cpp11::as_sexp(azny_saturate_value(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(in_vec), cpp11::as_cpp<cpp11::decay_t<double>>(val)));
   END_CPP11
 }
 // color.cpp

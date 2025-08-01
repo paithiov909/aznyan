@@ -1,12 +1,15 @@
 #' Blend modes
 #'
-#' @param dst A `nativeRaster` object.
-#' @param src A `nativeRaster` object.
+#' Blends two `nativeRaster` objects with the specified blend mode.
+#'
+#' @param src,dst A `nativeRaster` object.
 #' @returns A `nativeRaster` object.
 #' @rdname blend
-#' @name blend
+#' @name blend-mode
 NULL
 
+#' Check that `src` and `dst` have the same dimensions
+#' @noRd
 check_nr_dim <- function(src, dst) {
   if (!identical(dim(src), dim(dst))) {
     rlang::abort("`src` and `dst` must have the same dimensions.")
@@ -15,7 +18,10 @@ check_nr_dim <- function(src, dst) {
 }
 
 #' Cast native raster into 4*(w*h)-dimensional integer matrix
-#' @importFrom colorfast col_to_rgb int_to_col
+#'
+#' @param nr A `nativeRaster` object.
+#' @param nm Name of `nr`
+#' @returns integer matrix
 #' @noRd
 nr_to_rgba <- function(nr, nm) {
   cast_nr(nr, nm) |>
@@ -23,20 +29,30 @@ nr_to_rgba <- function(nr, nm) {
     col_to_rgb()
 }
 
+#' Clip values between `min` and `max`
+#'
+#' @param x numerics
+#' @param min,max numeric scalar
+#' @returns numerics
 #' @noRd
 clamp <- function(x, min, max) {
   pmin(pmax(x, min), max)
 }
 
 #' Alpha blending
+#'
 #' @param x1,x2 Alpha values.
 #' @param cap Maximum alpha value.
+#' @returns doubles
 #' @noRd
 alpha <- function(x1, x2, cap = 1) {
   x1 + x2 - (cap - x1)
 }
 
-#' NTSC (luma only)
+#' NTSC grayscale
+#'
+#' @param x 3-channel matrix
+#' @returns doubles
 #' @noRd
 gray <- function(x) {
   x <- x * c(0.299, 0.587, 0.114)
