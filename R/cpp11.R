@@ -16,6 +16,30 @@ azny_bilateralblur <- function(nr, height, width, d, sigmacolor, sigmaspace, bor
   .Call(`_aznyan_azny_bilateralblur`, nr, height, width, d, sigmacolor, sigmaspace, border, alphasync)
 }
 
+azny_decode_rec709 <- function(in_vec) {
+  .Call(`_aznyan_azny_decode_rec709`, in_vec)
+}
+
+azny_encode_rec709 <- function(in_vec) {
+  .Call(`_aznyan_azny_encode_rec709`, in_vec)
+}
+
+azny_pack_integers <- function(rgb, a, height, width) {
+  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
+}
+
+azny_saturate_value <- function(in_vec, val) {
+  .Call(`_aznyan_azny_saturate_value`, in_vec, val)
+}
+
+azny_rgb_to_hls <- function(rgb) {
+  .Call(`_aznyan_azny_rgb_to_hls`, rgb)
+}
+
+azny_hls_to_rgb <- function(hls) {
+  .Call(`_aznyan_azny_hls_to_rgb`, hls)
+}
+
 azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
   .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
 }
@@ -42,14 +66,6 @@ azny_sobelfilter <- function(nr, height, width, ksize, balp, dx, dy, border, sca
 
 azny_sobelrgb <- function(nr, height, width, ksize, balp, dx, dy, border, scale, delta) {
   .Call(`_aznyan_azny_sobelrgb`, nr, height, width, ksize, balp, dx, dy, border, scale, delta)
-}
-
-azny_decode_rec709 <- function(in_vec) {
-  .Call(`_aznyan_azny_decode_rec709`, in_vec)
-}
-
-azny_encode_rec709 <- function(in_vec) {
-  .Call(`_aznyan_azny_encode_rec709`, in_vec)
 }
 
 azny_swap_channels <- function(nr, height, width, mapping) {

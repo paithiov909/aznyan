@@ -2,8 +2,8 @@
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @import colorfast
 #' @useDynLib aznyan, .registration = TRUE
-#' @importFrom utils write.table
 ## usethis namespace: end
 NULL
 
@@ -19,15 +19,19 @@ as_recordedplot <- function(nr) {
 }
 
 #' Cast `x` into integers if it's a `nativeRaster` object
+#' @param nr A `nativeRaster` object.
+#' @param nm Name of `nr`
 #' @noRd
-cast_nr <- function(nr) {
+cast_nr <- function(nr, nm = "nr") {
   if (!inherits(nr, "nativeRaster")) {
-    rlang::abort("`nr` must be a nativeRaster object.")
+    msg <- glue::glue("`{nm}` must be a nativeRaster object.")
+    rlang::abort(msg)
   }
   as.integer(nr)
 }
 
-#' Take `x` and set its class to `nativeRaster`
+#' Take `x` and set its class as `nativeRaster`
+#' @param x Object to be set class.
 #' @noRd
 as_nr <- function(x) {
   class(x) <- c("nativeRaster", class(x))
@@ -35,6 +39,9 @@ as_nr <- function(x) {
 }
 
 #' Match `x` to `values`
+#' @param x Object to be matched.
+#' @param arg Argument name.
+#' @param values Possible values.
 #' @noRd
 int_match <- function(x, arg, values) {
   tmp <- match(x[1], values) - 1L

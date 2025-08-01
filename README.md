@@ -26,12 +26,12 @@ You can simply read a PNG image into a `nativeRaster` using
 `fastpng::read_png()`.
 
 ``` r
-pkgload::load_all(export_all = FALSE)
-#> ℹ Loading aznyan
+library(ggplot2)
+library(patchwork) # for layouting native rasters
 
 png <-
   fastpng::read_png(
-    system.file("images/sample-256x256-4ch.png", package = "aznyan"),
+    system.file("images/aznyan-256x256-4ch.png", package = "aznyan"),
     type = "nativeraster",
     rgba = TRUE
   )
@@ -39,31 +39,29 @@ png <-
 
 The original image `png` above looks like this:
 
-![original image](inst/images/sample-256x256-4ch.png)
+![original image](inst/images/aznyan-256x256-4ch.png)
 
-### Blur
-
-``` r
-median_blur(png, ksize = 8) |>
-  grid::grid.raster(interpolate = FALSE)
-```
-
-<img src="man/figures/README-median-blur-1.png" style="width:30.0%" />
-
-### Diffusion Filter (拡散フィルタ)
+Some filters are applied to the image and the result is shown below.
 
 ``` r
-diffusion_filter(png, factor = 8) |>
-  grid::grid.raster(interpolate = FALSE)
+blur <-
+  wrap_elements(full = aznyan::median_blur(png, ksize = 8)) +
+  labs(title = "Median Blur")
+diffusion <-
+  wrap_elements(full = aznyan::diffusion_filter(png, factor = 8)) +
+  labs(title = "Diffusion Filter")
+morph <-
+  wrap_elements(full = aznyan::morphology(png, ksize = c(4, 4, 4))) +
+  labs(title = "Morphological\nTransformation")
+
+(blur | diffusion | morph)
 ```
 
-<img src="man/figures/README-diffusion-1.png" style="width:30.0%" />
+<img src="man/figures/README-opencv-filters-1.png"
+data-fig-alt="Median blur, diffusion filter, and morphological transformation filters applied to a sample image" />
 
-### Morphological Transformation （モルフォロジー変換）
+Other filters ported from
+[Rustagram](https://github.com/ha-shine/rustagram) are also available.
 
-``` r
-morphology(png, ksize = c(4, 4, 4)) |>
-  grid::grid.raster(interpolate = FALSE)
-```
-
-<img src="man/figures/README-morph-erosion-1.png" style="width:30.0%" />
+<img src="man/figures/README-color-filters-1.png"
+data-fig-alt="Other color filters applied to a sample image" />

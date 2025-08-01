@@ -1,15 +1,12 @@
 ---
 title: aznyan
 format: gfm
-fig-width: 2.66
-fig-height: 2.66
 knitr:
   opts_chunk:
     dev: "ragg_png"
     collapse: true
     comment: "#>"
     fig.path: "man/figures/README-"
-    out.width: "30%"
 ---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
@@ -23,7 +20,6 @@ ported from [5PB-3-4/AviUtl_OpenCV_Scripts](https://github.com/5PB-3-4/AviUtl_Op
 
 Still in development. It will probably work, but documentation is scant. Also, note that this package requires some SIMD extensions to work on your system.
 
-
 ## Usage
 
 aznyan provides functions that take a `nativeRaster` of image data as their first argument
@@ -32,11 +28,12 @@ and return a `nativeRaster` after applying the effect.
 You can simply read a PNG image into a `nativeRaster` using `fastpng::read_png()`.
 
 ```{r}
-pkgload::load_all(export_all = FALSE)
+library(ggplot2)
+library(patchwork) # for layouting native rasters
 
 png <-
   fastpng::read_png(
-    system.file("images/sample-256x256-4ch.png", package = "aznyan"),
+    system.file("images/aznyan-256x256-4ch.png", package = "aznyan"),
     type = "nativeraster",
     rgba = TRUE
   )
@@ -44,29 +41,72 @@ png <-
 
 The original image `png` above looks like this:
 
-![original image](inst/images/sample-256x256-4ch.png)
+![original image](inst/images/aznyan-256x256-4ch.png)
 
-
-### Blur
+Some filters are applied to the image and the result is shown below.
 
 ```{r}
-#| label: median-blur
-median_blur(png, ksize = 8) |>
-  grid::grid.raster(interpolate = FALSE)
+#| label: opencv-filters
+#| fig-alt: "Median blur, diffusion filter, and morphological transformation filters applied to a sample image"
+#| fig-width: 8
+#| fig-height: 2
+blur <-
+  wrap_elements(full = aznyan::median_blur(png, ksize = 8)) +
+  labs(title = "Median Blur")
+diffusion <-
+  wrap_elements(full = aznyan::diffusion_filter(png, factor = 8)) +
+  labs(title = "Diffusion Filter")
+morph <-
+  wrap_elements(full = aznyan::morphology(png, ksize = c(4, 4, 4))) +
+  labs(title = "Morphological\nTransformation")
+
+(blur | diffusion | morph)
 ```
 
-### Diffusion Filter (拡散フィルタ)
+Other filters ported from [Rustagram](https://github.com/ha-shine/rustagram) are also available.
 
 ```{r}
-#| label: diffusion
-diffusion_filter(png, factor = 8) |>
-  grid::grid.raster(interpolate = FALSE)
-```
+#| label: color-filters
+#| fig-alt: "Other color filters applied to a sample image"
+#| fig-width: 9
+#| fig-height: 16
+#| echo: false
+all_filters <- c(
+  "1977",
+  "aden",
+  "brannan",
+  "brooklyn",
+  "clarendon",
+  "earlybird",
+  "gingham",
+  "hudson",
+  "inkwell",
+  "kelvin",
+  "lark",
+  "lofi",
+  "maven",
+  "mayfair",
+  "moon",
+  "nashville",
+  "reyes",
+  "rise",
+  "slumber",
+  "stinson",
+  "toaster",
+  "valencia",
+  "walden"
+)
 
-### Morphological Transformation （モルフォロジー変換）
+png <- fastpng::read_png(
+  system.file("images/city.png", package = "aznyan"),
+  type = "nativeraster",
+  rgba = TRUE
+)
+images <-
+  purrr::map(all_filters, ~ {
+    wrap_elements(full = aznyan::apply_filter(png, .)) + labs(title = .)
+  }) |>
+  wrap_plots(ncol = 3, byrow = TRUE)
 
-```{r}
-#| label: morph-erosion
-morphology(png, ksize = c(4, 4, 4)) |>
-  grid::grid.raster(interpolate = FALSE)
+print(images)
 ```
