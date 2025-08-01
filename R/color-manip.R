@@ -33,7 +33,7 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' Color manipulation
 #'
 #' @param nr A `nativeRaster` object.
-#' @param intensity A numeric scalar typically in range `[0, 1]`.
+#' @param intensity A numeric scalar.
 #' @param depth An integer scalar.
 #' @param alpha A numeric scalar in range `[0, 1]`. Alpha value to be reset for transparency.
 #' @param rad A numeric scalar. Rotation angle in radian.
@@ -137,7 +137,7 @@ sepia <- function(nr, intensity = 1, depth = 20) {
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
-#' Create `nativeRaster` object filled with color
+#' Create native raster filled with color
 #'
 #' @param width,height A positive integer scalar.
 #' @param color Color name or hex code.

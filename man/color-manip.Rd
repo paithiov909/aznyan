@@ -32,7 +32,7 @@ sepia(nr, intensity = 1, depth = 20)
 
 \item{rad}{A numeric scalar. Rotation angle in radian.}
 
-\item{intensity}{A numeric scalar typically in range \verb{[0, 1]}.}
+\item{intensity}{A numeric scalar.}
 
 \item{depth}{An integer scalar.}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/color-manip.R
 \name{fill_with}
 \alias{fill_with}
-\title{Create \code{nativeRaster} object filled with color}
+\title{Create native raster filled with color}
 \usage{
 fill_with(width, height, color)
 }
@@ -15,5 +15,5 @@ fill_with(width, height, color)
 A \code{nativeRaster} object.
 }
 \description{
-Create \code{nativeRaster} object filled with color
+Create native raster filled with color
 }

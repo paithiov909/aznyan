@@ -45,15 +45,36 @@ premul <- function(r, g, b, a, max = 255) {
 #' @returns A `nativeRaster` object.
 #' @export
 apply_filter <- function(
-    nr,
-    filter = c(
-      "1977", "aden", "brannan", "brooklyn", "clarendon", "earlybird", "gingham",
-      "hudson", "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon",
-      "nashville", "reyes", "rise", "slumber", "stinson", "toaster", "valencia",
-      "walden"
-    )) {
+  nr,
+  filter = c(
+    "1977",
+    "aden",
+    "brannan",
+    "brooklyn",
+    "clarendon",
+    "earlybird",
+    "gingham",
+    "hudson",
+    "inkwell",
+    "kelvin",
+    "lark",
+    "lofi",
+    "maven",
+    "mayfair",
+    "moon",
+    "nashville",
+    "reyes",
+    "rise",
+    "slumber",
+    "stinson",
+    "toaster",
+    "valencia",
+    "walden"
+  )
+) {
   filter <- rlang::arg_match(filter)
-  switch(filter,
+  switch(
+    filter,
     "1977" = apply_1977(nr),
     "aden" = apply_aden(nr),
     "brannan" = apply_brannan(nr),
@@ -87,7 +108,7 @@ apply_1977 <- function(nr) {
     brighten(.1) |>
     saturate(.3)
   fg <- fill_with(ncol(nr), nrow(nr), premul(243, 106, 188, 76))
-  blend_screen(fg, bg)
+  blend_screen(bg, fg) # bg, fg
 }
 
 #' @noRd
@@ -129,7 +150,8 @@ apply_earlybird <- function(nr) {
   bg <- contrast(nr, -.1) |>
     sepia(.05)
   fg <- fill_with(ncol(nr), nrow(nr), premul(208, 186, 142, 150))
-  blend_overlay(fg, bg)
+  out <- blend_overlay(bg, fg) # bg, fg
+  restore_transparency(out)
 }
 
 #' @noRd
@@ -223,9 +245,78 @@ apply_nashville <- function(nr) {
     brighten(.05) |>
     saturate(.2) |>
     blend_darken(
-      fill_with(ncol(nr), nrow(nr), premul(247, 176, 143, 243)),
+      fill_with(ncol(nr), nrow(nr), premul(247, 176, 153, 243)),
       dst = _
     )
   fg <- fill_with(ncol(nr), nrow(nr), premul(0, 70, 150, 230))
   blend_lighten(fg, bg)
+}
+
+#' @noRd
+apply_reyes <- function(nr) {
+  bg <- sepia(nr, .22) |>
+    brighten(.1) |>
+    contrast(-.15) |>
+    saturate(-.25)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(239, 205, 173, 10))
+  blend_over(fg, bg)
+}
+
+#' @noRd
+apply_rise <- function(nr) {
+  bg <- brighten(nr, .05) |>
+    sepia(.05) |>
+    contrast(-.1) |>
+    saturate(-.1)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(236, 205, 169, 240))
+  bg <- blend_multiply(fg, bg)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(232, 197, 152, 10))
+  fg <- blend_overlay(fg, bg)
+  blend_over(fg, nr)
+}
+
+#' @noRd
+apply_slumber <- function(nr) {
+  bg <- saturate(nr, -.34) |>
+    brighten(-.05)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(69, 41, 12, 102))
+  bg <- blend_lighten(fg, bg)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(125, 105, 24, 128))
+  blend_softlight(fg, bg)
+}
+
+#' @noRd
+apply_stinson <- function(nr) {
+  bg <- contrast(nr, -.25) |>
+    saturate(-.15) |>
+    brighten(.15)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(240, 149, 128, 51))
+  blend_softlight(fg, bg)
+}
+
+#' @noRd
+apply_toaster <- function(nr) {
+  bg <- contrast(nr, .2) |>
+    brighten(-.1)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(128, 78, 15, 140))
+  blend_screen(fg, bg)
+}
+
+#' @noRd
+apply_valencia <- function(nr) {
+  bg <- contrast(nr, .08) |>
+    brighten(.08) |>
+    sepia(.08)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(58, 3, 57, 128))
+  blend_exclusion(fg, bg)
+}
+
+#' @noRd
+apply_walden <- function(nr) {
+  bg <- brighten(nr, .1) |>
+    hue_rotate(-.1745329) |> # -10 deg
+    saturate(.6) |>
+    sepia(.05)
+  fg <- fill_with(ncol(nr), nrow(nr), premul(0, 88, 244, 77))
+  blend_screen(fg, bg)
 }

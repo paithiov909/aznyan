@@ -3,7 +3,7 @@ skip_on_ci()
 
 png <-
   fastpng::read_png(
-    system.file("images/sample-361x241.png", package = "aznyan"),
+    system.file("images/painting.png", package = "aznyan"),
     type = "nativeraster",
     rgba = TRUE,
     flags = 1L
