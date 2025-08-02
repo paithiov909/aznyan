@@ -33,7 +33,7 @@ library(patchwork) # for layouting native rasters
 
 png <-
   fastpng::read_png(
-    system.file("images/aznyan-256x256-4ch.png", package = "aznyan"),
+    system.file("images/aznyan-256x256.png", package = "aznyan"),
     type = "nativeraster",
     rgba = TRUE
   )
@@ -41,7 +41,7 @@ png <-
 
 The original image `png` above looks like this:
 
-![original image](inst/images/aznyan-256x256-4ch.png)
+![original image](inst/images/aznyan-256x256.png)
 
 Some filters are applied to the image and the result is shown below.
 

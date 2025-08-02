@@ -11,7 +11,7 @@ morphology(
   mode = c(0, 1, 2, 3, 4, 5, 6, 7),
   border = c(3, 4, 0, 1, 2),
   iterations = 1,
-  alphasync = TRUE,
+  alphasync = FALSE,
   use_rgb = TRUE,
   anchor = c(-1, -1)
 )
@@ -19,29 +19,43 @@ morphology(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{ksize}{The size of kernel.}
+\item{ksize}{A numeric vector of length 3. The kernel size.}
 
-\item{ktype}{The type of kernel.}
+\item{ktype}{An integer scalar.
+The type of kernel. See description.}
 
-\item{mode}{The mode of morphology.}
+\item{mode}{An integer scalar.
+The type of morphological operation. See description.}
 
-\item{border}{The type of pixel extrapolation method.}
+\item{border}{An integer scalar.
+The type of pixel extrapolation method.}
 
-\item{iterations}{The iteration of morphology.}
+\item{iterations}{An integer scalar.
+Number of times to apply the transformation.}
 
-\item{alphasync}{Whether sync alpha.}
+\item{alphasync}{A logical scalar.
+If \code{TRUE}, applies the transformation separately to the alpha channel.}
 
-\item{use_rgb}{Whether to use RGB morphology.}
+\item{use_rgb}{A logical scalar.
+If \code{TRUE}, applies morphology separately for each color channel
+and combines them.}
 
-\item{anchor}{The anchor of morphology.}
+\item{anchor}{An integer vector of length 2.
+Anchor position with the kernel. The default value means the center of the kernel.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Morphology
+Applies morphological transformations to an image.
+
+\code{ktype} refers to:
+\enumerate{
+\item cv::MORPH_RECT
+\item cv::MORPH_CROSS
+\item cv::MORPH_ELLIPSE
 }
-\details{
+
 \code{mode} is an integer scalar in range \verb{[0, 7]} corresponding to:
 \enumerate{
 \item cv::MORPH_ERODE
@@ -52,5 +66,15 @@ Morphology
 \item cv::MORPH_TOPHAT
 \item cv::MORPH_BLACKHAT
 \item cv::MORPH_HITMISS
+}
+}
+\details{
+\code{border} refers to:
+\enumerate{
+\item cv::BORDER_CONSTANT
+\item cv::BORDER_REPLICATE
+\item cv::BORDER_REFLECT
+\item cv::BORDER_REFLECT_101
+\item cv::BORDER_ISOLATED
 }
 }

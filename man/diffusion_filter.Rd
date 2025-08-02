@@ -16,15 +16,14 @@ diffusion_filter(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{factor}{The factor of diffusion.}
+\item{factor, offset}{The parameters of diffusion.}
 
-\item{offset}{The offset of diffusion.}
+\item{iter}{The iteration of diffusion step.}
 
-\item{iter}{The iteration of diffusion.}
+\item{gamma}{A numeric scalar. The gamma value for preprocessing.}
 
-\item{gamma}{The gamma of diffusion.}
-
-\item{sigma}{The sigma of diffusion.}
+\item{sigma}{A numeric scalar.
+The sigma of gaussian blur for preprocessing.}
 }
 \value{
 A \code{nativeRaster} object.

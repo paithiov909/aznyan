@@ -1,11 +1,11 @@
 #' Diffusion filter
 #'
 #' @param nr A `nativeRaster` object.
-#' @param factor The factor of diffusion.
-#' @param offset The offset of diffusion.
-#' @param iter The iteration of diffusion.
-#' @param gamma The gamma of diffusion.
-#' @param sigma The sigma of diffusion.
+#' @param factor,offset The parameters of diffusion.
+#' @param iter The iteration of diffusion step.
+#' @param gamma A numeric scalar. The gamma value for preprocessing.
+#' @param sigma A numeric scalar.
+#' The sigma of gaussian blur for preprocessing.
 #' @returns A `nativeRaster` object.
 #' @export
 diffusion_filter <- function(

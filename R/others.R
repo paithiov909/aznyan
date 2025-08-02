@@ -17,12 +17,13 @@ mean_shift <- function(nr, sp = 10, sr = 30, max_level = 1) {
   as_nr(out)
 }
 
-#' Preserve-edge filter
+#' Edge preserving filter
 #'
 #' @param nr A `nativeRaster` object.
 #' @param sgmS,sgmR The parameters of edge preserving filter.
 #' `[0, 200]` for `sgmS` and `[0, 1]` for `sgmR`.
-#' @param recursive Whether to use recursive mode.
+#' @param recursive A logical scalar. Flag for recursive filter.
+#' If `TRUE`, `cv::RECURS_FILTER` is used. Otherwise, `cv::NORMCONV_FILTER` is used.
 #' @returns A `nativeRaster` object.
 #' @export
 preserve_edge <- function(

@@ -1,24 +1,49 @@
-#' Sobel filter
+#' Edge extraction
+#'
+#' @details
+#' `border` refers to:
+#'
+#' 0. cv::BORDER_CONSTANT
+#' 1. cv::BORDER_REPLICATE
+#' 2. cv::BORDER_REFLECT
+#' 3. cv::BORDER_REFLECT_101
+#' 4. cv::BORDER_ISOLATED
 #'
 #' @param nr A `nativeRaster` object.
-#' @param ksize The size of kernel.
-#' @param balp Whether to remove black background.
-#' @param dx The direction of Sobel filter.
-#' @param dy The direction of Sobel filter.
-#' @param border The type of pixel extrapolation method.
-#' @param use_rgb Whether to use RGB Sobel filter.
-#' @param scale The scale of Sobel filter.
-#' @param delta The delta of Sobel filter.
+#' @param ksize An integer scalar.
+#' The size of kernel.
+#' @param asize An integer scalar.
+#' The size of aperture for Sobel operation.
+#' @param balp A logical scalar.
+#' If `TRUE`, resets transparency by thresholding.
+#' @param use_rgb A logical scalar.
+#' If `TRUE`, extracts edges separately for each color channel
+#' and combines them.
+#' @param border An integer scalar.
+#' The type of pixel extrapolation method.
+#' @param dx,dy An integer scalar.
+#' Order of derivative for Sobel filter.
+#' @param thres1,thres2 A numeric scalar.
+#' Thresholds for the hysteresis procedure.
+#' @param grad A logical scalar.
+#' Flag to be passed to `L2gradient`.
+#' @param scale,delta A numeric scalar.
+#' Optional parameters.
 #' @returns A `nativeRaster` object.
+#' @rdname edge-extract
+#' @name edge-extract
+NULL
+
+#' @rdname edge-extract
 #' @export
 sobel_filter <- function(
   nr,
   ksize = 3,
   balp = TRUE,
+  use_rgb = TRUE,
+  border = c(3, 4, 0, 1, 2),
   dx = 1,
   dy = dx,
-  border = c(3, 4, 0, 1, 2),
-  use_rgb = TRUE,
   scale = 1.0,
   delta = 0.0
 ) {
@@ -53,23 +78,14 @@ sobel_filter <- function(
   as_nr(out)
 }
 
-#' Laplacian filter
-#'
-#' @param nr A `nativeRaster` object.
-#' @param ksize The size of kernel.
-#' @param balp Whether to remove black background.
-#' @param border The type of pixel extrapolation method.
-#' @param use_rgb Whether to use RGB Laplacian filter.
-#' @param scale The scale of Laplacian filter.
-#' @param delta The delta of Laplacian filter.
-#' @returns A `nativeRaster` object.
+#' @rdname edge-extract
 #' @export
 laplacian_filter <- function(
   nr,
   ksize = 3,
   balp = TRUE,
-  border = c(3, 4, 0, 1, 2),
   use_rgb = TRUE,
+  border = c(3, 4, 0, 1, 2),
   scale = 1.0,
   delta = 0.0
 ) {
@@ -100,25 +116,16 @@ laplacian_filter <- function(
   as_nr(out)
 }
 
-#' Canny filter
-#'
-#' @param nr A `nativeRaster` object.
-#' @param asize Aparture size for Sobel operation.
-#' @param balp Whether to remove black background.
-#' @param use_rgb Whether to use RGB Canny filter.
-#' @param grad Flag to be passed to `L2gradient`.
-#' @param thres1 The first threshold.
-#' @param thres2 The second threshold.
-#' @returns A `nativeRaster` object.
+#' @rdname edge-extract
 #' @export
 canny_filter <- function(
   nr,
   asize = 2,
   balp = FALSE,
   use_rgb = TRUE,
-  grad = TRUE,
   thres1 = 100.0,
-  thres2 = 200.0
+  thres2 = 200.0,
+  grad = TRUE
 ) {
   if (use_rgb) {
     out <- azny_cannyrgb(

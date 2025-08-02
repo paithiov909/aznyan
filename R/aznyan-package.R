@@ -12,6 +12,7 @@ NULL
 #' @param nr A `nativeRaster` object.
 #' @returns A recorded plot is invisibly returned.
 #' @export
+#' @keywords internal
 as_recordedplot <- function(nr) {
   grid::grid.newpage(recording = FALSE)
   grid::grid.raster(nr, interpolate = TRUE)

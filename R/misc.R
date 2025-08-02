@@ -1,8 +1,7 @@
 #' Swap channels
 #'
 #' @param nr A `nativeRaster` object.
-#' @param from The channels to swap from.
-#' @param to The channels to swap to.
+#' @param from,to An integer vector of length 4. The channels to swap from and to.
 #' @returns A `nativeRaster` object.
 #' @export
 swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
@@ -16,13 +15,21 @@ swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
   as_nr(out)
 }
 
-#' Resize image
+#' Resize and resample
 #'
 #' @param nr A `nativeRaster` object.
-#' @param wh The width and height.
-#' @param resize_mode The resize mode.
-#' @param set_size Whether `wh` is actual width and height instead of coef.
+#' @param wh A numeric vector of length 2. The width and height coef for reduction.
+#' @param resize_mode,resize_mode1,resize_mode2 An integer scalar.
+#' The resize mode. For `resample` `1` is for reduction and `2` is for expansion.
+#' @param set_size A logical scalar.
+#' If `TRUE`, `wh` is treated as actual width and height instead of coef.
 #' @returns A `nativeRaster` object.
+#' @rdname resize
+#' @name resize
+#' @aliases resample
+NULL
+
+#' @rdname resize
 #' @export
 resize <- function(
   nr,
@@ -42,13 +49,7 @@ resize <- function(
   as_nr(out)
 }
 
-#' Resample image
-#'
-#' @param nr A `nativeRaster` object.
-#' @param wh The width and height coef for reduction.
-#' @param resize_mode1 The resize mode for reduction.
-#' @param resize_mode2 The resize mode for expansion.
-#' @returns A `nativeRaster` object.
+#' @rdname resize
 #' @export
 resample <- function(
   nr,

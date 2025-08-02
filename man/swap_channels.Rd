@@ -9,9 +9,7 @@ swap_channels(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3))
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{from}{The channels to swap from.}
-
-\item{to}{The channels to swap to.}
+\item{from, to}{An integer vector of length 4. The channels to swap from and to.}
 }
 \value{
 A \code{nativeRaster} object.

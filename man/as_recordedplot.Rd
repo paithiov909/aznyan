@@ -15,3 +15,4 @@ A recorded plot is invisibly returned.
 \description{
 Convert image data into recorded plot
 }
+\keyword{internal}

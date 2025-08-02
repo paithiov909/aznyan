@@ -1,6 +1,14 @@
 #' Morphology
 #'
-#' @details
+#' @description
+#' Applies morphological transformations to an image.
+#'
+#' `ktype` refers to:
+#'
+#' 0. cv::MORPH_RECT
+#' 1. cv::MORPH_CROSS
+#' 2. cv::MORPH_ELLIPSE
+#'
 #' `mode` is an integer scalar in range `[0, 7]` corresponding to:
 #'
 #' 0. cv::MORPH_ERODE
@@ -12,15 +20,32 @@
 #' 6. cv::MORPH_BLACKHAT
 #' 7. cv::MORPH_HITMISS
 #'
+#' @details
+#' `border` refers to:
+#'
+#' 0. cv::BORDER_CONSTANT
+#' 1. cv::BORDER_REPLICATE
+#' 2. cv::BORDER_REFLECT
+#' 3. cv::BORDER_REFLECT_101
+#' 4. cv::BORDER_ISOLATED
+#'
 #' @param nr A `nativeRaster` object.
-#' @param ksize The size of kernel.
-#' @param ktype The type of kernel.
-#' @param mode The mode of morphology.
-#' @param border The type of pixel extrapolation method.
-#' @param iterations The iteration of morphology.
-#' @param alphasync Whether sync alpha.
-#' @param use_rgb Whether to use RGB morphology.
-#' @param anchor The anchor of morphology.
+#' @param ksize A numeric vector of length 3. The kernel size.
+#' @param ktype An integer scalar.
+#' The type of kernel. See description.
+#' @param mode An integer scalar.
+#' The type of morphological operation. See description.
+#' @param border An integer scalar.
+#' The type of pixel extrapolation method.
+#' @param iterations An integer scalar.
+#' Number of times to apply the transformation.
+#' @param alphasync A logical scalar.
+#' If `TRUE`, applies the transformation separately to the alpha channel.
+#' @param use_rgb A logical scalar.
+#' If `TRUE`, applies morphology separately for each color channel
+#' and combines them.
+#' @param anchor An integer vector of length 2.
+#' Anchor position with the kernel. The default value means the center of the kernel.
 #' @returns A `nativeRaster` object.
 #' @export
 morphology <- function(
@@ -30,7 +55,7 @@ morphology <- function(
   mode = c(0, 1, 2, 3, 4, 5, 6, 7),
   border = c(3, 4, 0, 1, 2),
   iterations = 1,
-  alphasync = TRUE,
+  alphasync = FALSE,
   use_rgb = TRUE,
   anchor = c(-1, -1)
 ) {

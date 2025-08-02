@@ -10,25 +10,49 @@ bilateral_filter(
   sigmacolor = 1,
   sigmaspace = 1,
   border = c(3, 4, 0, 1, 2),
-  alphasync = TRUE
+  alphasync = FALSE
 )
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{d}{The size of kernel.}
+\item{d}{An integer scalar.
+Diameter of each pixel neighborhood that is used during filtering.
+If it is non-positive, it is computed from \code{sigmaspace}.}
 
-\item{sigmacolor}{The sigma of color.}
+\item{sigmacolor}{A double scalar.
+Filter sigma in the color space.
+A larger value of the parameter means that farther colors
+within the pixel neighborhood will be mixed together,
+resulting in larger areas of semi-equal color.}
 
-\item{sigmaspace}{The sigma of space.}
+\item{sigmaspace}{A double scalar.
+Filter sigma in the coordinate space.
+A larger value of the parameter means
+that farther pixels will influence each other
+as long as their colors are close enough.}
 
-\item{border}{The type of pixel extrapolation method.}
+\item{border}{An integer scalar.
+The type of pixel extrapolation method.}
 
-\item{alphasync}{Whether sync alpha.}
+\item{alphasync}{A logical scalar.
+If \code{TRUE}, filtering is applied separately to the alpha channel.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Bilateral filter
+Applies bilateral filtering to an image.
+It can be used to reduce noise while keeping edges sharp.
+However, it is very slow compared to most filters.
+}
+\details{
+\code{border} refers to:
+\enumerate{
+\item cv::BORDER_CONSTANT
+\item cv::BORDER_REPLICATE
+\item cv::BORDER_REFLECT
+\item cv::BORDER_REFLECT_101
+\item cv::BORDER_ISOLATED
+}
 }

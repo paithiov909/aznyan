@@ -12,21 +12,40 @@ adpthres(nr, maxv = 255, bsize = 1, C = 5, mode = c(0, 1), invert = FALSE)
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{threshold}{The threshold value.}
+\item{threshold}{A numeric scalar. Threshold value.}
 
-\item{maxv}{The maximum value.}
+\item{maxv}{A numeric scalar. Max value to use with some thresholding modes.}
 
-\item{mode}{The mode of thresholding.}
+\item{mode}{An integer scalar. The mode of thresholding.}
 
-\item{bsize}{The block size.}
+\item{bsize}{A numeric scalar.
+The size of a pixel neighborhood that is used to calculate a threshold value for the pixel.}
 
 \item{C}{The C value for adaptive thresholding.}
 
-\item{invert}{Whether to invert the result in adaptive thresholding.}
+\item{invert}{A logical scalar.
+Whether to invert the result in adaptive thresholding.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Image thresholding
+Applies thresholding to an image.
+
+For \code{thres}, \code{mode} is an integer scalar in range \verb{[0, 6]} corresponding to:
+\enumerate{
+\item cv::THRESH_BINARY
+\item cv::THRESH_BINARY_INV
+\item cv::THRESH_TRUNC
+\item cv::THRESH_TOZERO
+\item cv::THRESH_TOZERO_INV
+\item cv::THRESH_OTSU
+\item cv::THRESH_TRIANGLE
+}
+
+And for \code{adpthres}, \code{mode} is an integer scalar \code{0} or \code{1} corresponding to:
+\enumerate{
+\item cv::ADAPTIVE_THRESH_MEAN_C
+\item cv::ADAPTIVE_THRESH_GAUSSIAN_C
+}
 }

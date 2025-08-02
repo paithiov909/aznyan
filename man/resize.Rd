@@ -2,7 +2,8 @@
 % Please edit documentation in R/misc.R
 \name{resize}
 \alias{resize}
-\title{Resize image}
+\alias{resample}
+\title{Resize and resample}
 \usage{
 resize(
   nr,
@@ -10,19 +11,28 @@ resize(
   resize_mode = c(1, 2, 3, 4, 5, 6, 0),
   set_size = FALSE
 )
+
+resample(
+  nr,
+  wh = c(0.2, 0.2),
+  resize_mode1 = c(1, 2, 3, 4, 5, 6, 0),
+  resize_mode2 = c(1, 2, 3, 4, 5, 6, 0)
+)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{wh}{The width and height.}
+\item{wh}{A numeric vector of length 2. The width and height coef for reduction.}
 
-\item{resize_mode}{The resize mode.}
+\item{resize_mode, resize_mode1, resize_mode2}{An integer scalar.
+The resize mode. For \code{resample} \code{1} is for reduction and \code{2} is for expansion.}
 
-\item{set_size}{Whether \code{wh} is actual width and height instead of coef.}
+\item{set_size}{A logical scalar.
+If \code{TRUE}, \code{wh} is treated as actual width and height instead of coef.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Resize image
+Resize and resample
 }

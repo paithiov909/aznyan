@@ -2,7 +2,7 @@
 % Please edit documentation in R/others.R
 \name{preserve_edge}
 \alias{preserve_edge}
-\title{Preserve-edge filter}
+\title{Edge preserving filter}
 \usage{
 preserve_edge(nr, sgmS = 60, sgmR = 0.4, recursive = TRUE)
 }
@@ -12,11 +12,12 @@ preserve_edge(nr, sgmS = 60, sgmR = 0.4, recursive = TRUE)
 \item{sgmS, sgmR}{The parameters of edge preserving filter.
 \verb{[0, 200]} for \code{sgmS} and \verb{[0, 1]} for \code{sgmR}.}
 
-\item{recursive}{Whether to use recursive mode.}
+\item{recursive}{A logical scalar. Flag for recursive filter.
+If \code{TRUE}, \code{cv::RECURS_FILTER} is used. Otherwise, \code{cv::NORMCONV_FILTER} is used.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Preserve-edge filter
+Edge preserving filter
 }
