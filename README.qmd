@@ -3,7 +3,7 @@ title: aznyan
 format: gfm
 knitr:
   opts_chunk:
-    dev: "ragg_png"
+    dev: "jpeg"
     collapse: true
     comment: "#>"
     fig.path: "man/figures/README-"

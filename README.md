@@ -57,11 +57,11 @@ morph <-
 (blur | diffusion | morph)
 ```
 
-<img src="man/figures/README-opencv-filters-1.png"
+<img src="man/figures/README-opencv-filters-1.jpeg"
 data-fig-alt="Median blur, diffusion filter, and morphological transformation filters applied to a sample image" />
 
 Other filters ported from
 [Rustagram](https://github.com/ha-shine/rustagram) are also available.
 
-<img src="man/figures/README-color-filters-1.png"
+<img src="man/figures/README-color-filters-1.jpeg"
 data-fig-alt="Other color filters applied to a sample image" />
