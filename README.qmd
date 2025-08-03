@@ -104,7 +104,7 @@ png <- fastpng::read_png(
 )
 images <-
   purrr::map(all_filters, ~ {
-    wrap_elements(full = aznyan::apply_filter(png, .)) + labs(title = .)
+    wrap_elements(full = aznyan::color_filter(png, .)) + labs(title = .)
   }) |>
   wrap_plots(ncol = 3, byrow = TRUE)
 

@@ -44,7 +44,7 @@ premul <- function(r, g, b, a, max = 255) {
 #' @param filter The name of the filter.
 #' @returns A `nativeRaster` object.
 #' @export
-apply_filter <- function(
+color_filter <- function(
   nr,
   filter = c(
     "1977",
