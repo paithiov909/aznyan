@@ -1,10 +1,10 @@
 #' Create color code while premultiplying alpha
 #'
 #' @param r,g,b,a Numeric scalars.
-#' @param max A numeric scalar.
+#' @param max An integer scalar. The maximum value of the color code.
 #' @returns A color code.
 #' @export
-premul <- function(r, g, b, a, max = 255) {
+premul <- function(r, g, b, a, max = 255L) {
   alpha <- a / max
   grDevices::rgb(r * alpha, g * alpha, b * alpha, a, maxColorValue = max)
 }

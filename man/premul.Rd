@@ -4,12 +4,12 @@
 \alias{premul}
 \title{Create color code while premultiplying alpha}
 \usage{
-premul(r, g, b, a, max = 255)
+premul(r, g, b, a, max = 255L)
 }
 \arguments{
 \item{r, g, b, a}{Numeric scalars.}
 
-\item{max}{A numeric scalar.}
+\item{max}{An integer scalar. The maximum value of the color code.}
 }
 \value{
 A color code.

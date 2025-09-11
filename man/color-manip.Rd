@@ -2,6 +2,7 @@
 % Please edit documentation in R/color-manip.R
 \name{color-manip}
 \alias{color-manip}
+\alias{unpremul}
 \alias{restore_transparency}
 \alias{hue_rotate}
 \alias{contrast}
@@ -11,6 +12,8 @@
 \alias{sepia}
 \title{Color manipulation}
 \usage{
+unpremul(nr, max = 255L)
+
 restore_transparency(nr, alpha = 1)
 
 hue_rotate(nr, rad)
@@ -27,6 +30,8 @@ sepia(nr, intensity = 1, depth = 20)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
+
+\item{max}{An integer scalar. The maximum value of the color code.}
 
 \item{alpha}{A numeric scalar in range \verb{[0, 1]}. Alpha value to be reset for transparency.}
 

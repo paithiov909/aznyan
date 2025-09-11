@@ -37,10 +37,20 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' @param depth An integer scalar.
 #' @param alpha A numeric scalar in range `[0, 1]`. Alpha value to be reset for transparency.
 #' @param rad A numeric scalar. Rotation angle in radian.
+#' @param max An integer scalar. The maximum value of the color code.
 #' @returns A `nativeRaster` object.
 #' @rdname color-manip
 #' @name color-manip
 NULL
+
+#' @rdname color-manip
+#' @export
+unpremul <- function(nr, max = 255L) {
+  sz <- dim(nr)
+  ret <- nr_to_rgba(nr, "nr")
+  rgb <- ret[1:3, ] / (ret[4, ] / max)
+  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+}
 
 #' @rdname color-manip
 #' @export
