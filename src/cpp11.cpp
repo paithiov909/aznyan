@@ -33,6 +33,13 @@ extern "C" SEXP _aznyan_azny_bilateralblur(SEXP nr, SEXP height, SEXP width, SEX
     return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
   END_CPP11
 }
+// blurhash.cpp
+cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width, int x_comps, int y_comps);
+extern "C" SEXP _aznyan_azny_blurhash(SEXP nr, SEXP height, SEXP width, SEXP x_comps, SEXP y_comps) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blurhash(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(x_comps), cpp11::as_cpp<cpp11::decay_t<int>>(y_comps)));
+  END_CPP11
+}
 // color.cpp
 cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec);
 extern "C" SEXP _aznyan_azny_decode_rec709(SEXP in_vec) {
@@ -192,6 +199,7 @@ extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,          8},
     {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,     8},
+    {"_aznyan_azny_blurhash",         (DL_FUNC) &_aznyan_azny_blurhash,          5},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},
     {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          8},

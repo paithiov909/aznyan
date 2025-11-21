@@ -42,3 +42,14 @@ preserve_edge <- function(
   )
   as_nr(out)
 }
+
+#' BlurHash
+#'
+#' @param nr A `nativeRaster` object.
+#' @param x_comps,y_comps The number of x and y components.
+#' @returns A `nativeRaster` object.
+#' @export
+blurhash <- function(nr, x_comps = 6, y_comps = 6) {
+  out <- azny_blurhash(cast_nr(nr), nrow(nr), ncol(nr), x_comps, y_comps)
+  as_nr(out)
+}

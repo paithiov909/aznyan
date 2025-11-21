@@ -49,7 +49,7 @@ static const std::vector<int> thresmode{
 
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {
-  int num_cpu = std::thread::hardware_concurrency();
+  int num_cpu = cv::getNumThreads();
   int nstripes = (ed - st + num_cpu - 1) / num_cpu;
   cv::parallel_for_(
       cv::Range(st, ed),
