@@ -20,4 +20,9 @@ test_that("other filters work", {
     preserve_edge(png, 200, 1) |>
       as_recordedplot()
   )
+  vdiffr::expect_doppelganger(
+    "blurhash",
+    blurhash(png, 1, 1) |>
+      as_recordedplot()
+  )
 })
