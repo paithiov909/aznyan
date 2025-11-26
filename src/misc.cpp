@@ -64,3 +64,6 @@ cpp11::integers azny_resample(const cpp11::integers& nr, int height, int width,
   auto [bgra_out, ch_out] = aznyan::split_bgra(eximg);
   return aznyan::encode_nr(bgra_out[0], bgra_out[1]);
 }
+
+[[cpp11::register]]
+int get_num_threads() { return cv::getNumThreads(); }

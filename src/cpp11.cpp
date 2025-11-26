@@ -55,17 +55,17 @@ extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
   END_CPP11
 }
 // color.cpp
-cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
-extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
-  END_CPP11
-}
-// color.cpp
 cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val);
 extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP val) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_saturate_value(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(in_vec), cpp11::as_cpp<cpp11::decay_t<double>>(val)));
+  END_CPP11
+}
+// color.cpp
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
+extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
   END_CPP11
 }
 // color.cpp
@@ -152,6 +152,13 @@ extern "C" SEXP _aznyan_azny_resample(SEXP nr, SEXP height, SEXP width, SEXP wh,
     return cpp11::as_sexp(azny_resample(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_red), cpp11::as_cpp<cpp11::decay_t<int>>(resize_exp)));
   END_CPP11
 }
+// misc.cpp
+int get_num_threads();
+extern "C" SEXP _aznyan_get_num_threads() {
+  BEGIN_CPP11
+    return cpp11::as_sexp(get_num_threads());
+  END_CPP11
+}
 // morph.cpp
 cpp11::integers azny_morphologyfilter(const cpp11::integers& nr, int height, int width, int ksize, int ktype, int mode, int iterations, int border, bool alphasync, cpp11::integers pt);
 extern "C" SEXP _aznyan_azny_morphologyfilter(SEXP nr, SEXP height, SEXP width, SEXP ksize, SEXP ktype, SEXP mode, SEXP iterations, SEXP border, SEXP alphasync, SEXP pt) {
@@ -224,6 +231,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
+    {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
     {NULL, NULL, 0}
 };
 }

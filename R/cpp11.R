@@ -28,12 +28,12 @@ azny_encode_rec709 <- function(in_vec) {
   .Call(`_aznyan_azny_encode_rec709`, in_vec)
 }
 
-azny_pack_integers <- function(rgb, a, height, width) {
-  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
-}
-
 azny_saturate_value <- function(in_vec, val) {
   .Call(`_aznyan_azny_saturate_value`, in_vec, val)
+}
+
+azny_pack_integers <- function(rgb, a, height, width) {
+  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
 
 azny_rgb_to_hls <- function(rgb) {
@@ -82,6 +82,10 @@ azny_resize <- function(nr, height, width, wh, resize_mode, set_size) {
 
 azny_resample <- function(nr, height, width, wh, resize_red, resize_exp) {
   .Call(`_aznyan_azny_resample`, nr, height, width, wh, resize_red, resize_exp)
+}
+
+get_num_threads <- function() {
+  .Call(`_aznyan_get_num_threads`)
 }
 
 azny_morphologyfilter <- function(nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt) {
