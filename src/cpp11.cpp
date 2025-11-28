@@ -69,14 +69,21 @@ extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP w
   END_CPP11
 }
 // color.cpp
-cpp11::integers_matrix<> azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb);
+cpp11::integers azny_unpack_integers(const cpp11::integers& nr);
+extern "C" SEXP _aznyan_azny_unpack_integers(SEXP nr) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_unpack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr)));
+  END_CPP11
+}
+// color.cpp
+cpp11::integers azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb);
 extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(rgb)));
   END_CPP11
 }
 // color.cpp
-cpp11::integers_matrix<> azny_hls_to_rgb(const cpp11::integers_matrix<>& hls);
+cpp11::integers azny_hls_to_rgb(const cpp11::integers_matrix<>& hls);
 extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(hls)));
@@ -239,6 +246,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
+    {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},
     {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
     {NULL, NULL, 0}
 };

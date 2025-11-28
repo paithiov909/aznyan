@@ -36,6 +36,10 @@ azny_pack_integers <- function(rgb, a, height, width) {
   .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
 
+azny_unpack_integers <- function(nr) {
+  .Call(`_aznyan_azny_unpack_integers`, nr)
+}
+
 azny_rgb_to_hls <- function(rgb) {
   .Call(`_aznyan_azny_rgb_to_hls`, rgb)
 }

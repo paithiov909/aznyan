@@ -51,8 +51,24 @@ cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb,
   return out;
 }
 
+// Takes packed RGBA color values and unpacks them
 [[cpp11::register]]
-cpp11::integers_matrix<> azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb) {
+cpp11::integers azny_unpack_integers(const cpp11::integers& nr) {
+  std::vector<uchar> ret(nr.size() * 4);
+  aznyan::parallel_for(0, nr.size(), [&](int i) {
+    const auto [r, g, b, a] = aznyan::int_to_rgba(nr[i]);
+    ret[i * 4 + 0] = r;
+    ret[i * 4 + 1] = g;
+    ret[i * 4 + 2] = b;
+    ret[i * 4 + 3] = a;
+  });
+  cpp11::writable::integers out = cpp11::as_sexp(ret);
+  out.attr("dim") = cpp11::as_sexp({4, (int)nr.size()});
+  return out;
+}
+
+[[cpp11::register]]
+cpp11::integers azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb) {
   if (rgb.nrow() != 3) {
     cpp11::stop("RGB must have 3 rows.");
   }
@@ -63,17 +79,21 @@ cpp11::integers_matrix<> azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb) {
                   static_cast<uchar>(rgb(2, i)));
   });
   cv::cvtColor(tmp, tmp, cv::COLOR_RGB2HLS);
-  cpp11::writable::integers_matrix<> out(3, rgb.ncol());
-  for (R_xlen_t i = 0; i < rgb.ncol(); i++) {
-    out(0, i) = tmp.at<cv::Vec3b>(0, i)[0];
-    out(1, i) = tmp.at<cv::Vec3b>(0, i)[1];
-    out(2, i) = tmp.at<cv::Vec3b>(0, i)[2];
-  }
+
+  std::vector<uchar> ret(3 * rgb.ncol());
+  aznyan::parallel_for(0, rgb.ncol(), [&](int i) {
+    const auto hls = tmp.at<cv::Vec3b>(0, i);
+    ret[i * 3 + 0] = hls[0];
+    ret[i * 3 + 1] = hls[1];
+    ret[i * 3 + 2] = hls[2];
+  });
+  cpp11::writable::integers out = cpp11::as_sexp(ret);
+  out.attr("dim") = cpp11::as_sexp({3, rgb.ncol()});
   return out;
 }
 
 [[cpp11::register]]
-cpp11::integers_matrix<> azny_hls_to_rgb(const cpp11::integers_matrix<>& hls) {
+cpp11::integers azny_hls_to_rgb(const cpp11::integers_matrix<>& hls) {
   if (hls.nrow() != 3) {
     cpp11::stop("HLS must have 3 rows.");
   }
@@ -84,12 +104,16 @@ cpp11::integers_matrix<> azny_hls_to_rgb(const cpp11::integers_matrix<>& hls) {
                   static_cast<uchar>(hls(2, i)));
   });
   cv::cvtColor(tmp, tmp, cv::COLOR_HLS2RGB);
-  cpp11::writable::integers_matrix<> out(3, hls.ncol());
-  for (R_xlen_t i = 0; i < hls.ncol(); i++) {
-    out(0, i) = tmp.at<cv::Vec3b>(0, i)[0];
-    out(1, i) = tmp.at<cv::Vec3b>(0, i)[1];
-    out(2, i) = tmp.at<cv::Vec3b>(0, i)[2];
-  }
+
+  std::vector<uchar> ret(3 * hls.ncol());
+  aznyan::parallel_for(0, hls.ncol(), [&](int i) {
+    const auto rgb = tmp.at<cv::Vec3b>(0, i);
+    ret[i * 3 + 0] = rgb[0];
+    ret[i * 3 + 1] = rgb[1];
+    ret[i * 3 + 2] = rgb[2];
+  });
+  cpp11::writable::integers out = cpp11::as_sexp(ret);
+  out.attr("dim") = cpp11::as_sexp({3, hls.ncol()});
   return out;
 }
 

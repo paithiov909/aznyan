@@ -24,9 +24,9 @@ check_nr_dim <- function(src, dst) {
 #' @returns integer matrix
 #' @noRd
 nr_to_rgba <- function(nr, nm) {
+  if (missing(nm)) nm <- deparse1(substitute(nr))
   cast_nr(nr, nm) |>
-    int_to_col() |>
-    col_to_rgb()
+    azny_unpack_integers()
 }
 
 #' Clip values between `min` and `max`

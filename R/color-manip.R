@@ -56,10 +56,9 @@ unpremul <- function(nr, max = 255L) {
 #' @export
 restore_transparency <- function(nr, alpha = 1) {
   sz <- dim(nr)
-  ret <- cast_nr(nr, "nr") |>
-    set_alpha(alpha)
-  dim(ret) <- c(sz[1], sz[2])
-  as_nr(ret)
+  ret <- nr_to_rgba(nr, "nr")
+  ret[4, ] <- clamp(alpha * 255, 0, 255)
+  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ] * 1, sz[1], sz[2]))
 }
 
 #' @rdname color-manip
@@ -154,8 +153,13 @@ sepia <- function(nr, intensity = 1, depth = 20) {
 #' @returns A `nativeRaster` object.
 #' @export
 fill_with <- function(width, height, color) {
-  packed_int <- col_to_int(color)[1] |>
-    rep(width * height)
-  dim(packed_int) <- c(height, width)
-  as_nr(packed_int)
+  packed_int <-
+    grDevices::col2rgb(color[1], alpha = TRUE) |>
+    rlang::as_function(~ {
+      x <- as.double(.)
+      azny_pack_integers(x[1:3], x[4], 1, 1)
+    })()
+  out <- rep(packed_int, width * height)
+  dim(out) <- c(height, width)
+  as_nr(out)
 }
