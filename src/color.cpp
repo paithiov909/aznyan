@@ -92,3 +92,29 @@ cpp11::integers_matrix<> azny_hls_to_rgb(const cpp11::integers_matrix<>& hls) {
   }
   return out;
 }
+
+[[cpp11::register]]
+cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width,
+                               int mode, bool hsvmode, bool invmode) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  cv::Mat tmpB;
+  if (hsvmode) {
+    cv::Mat tmp;
+    std::vector<cv::Mat> hsv_ch;
+    cv::cvtColor(bgra[0], tmp, cv::COLOR_BGR2HSV_FULL);
+    cv::split(tmp, hsv_ch);
+    hsv_ch[0].convertTo(tmpB, CV_8UC1);
+  } else {
+    cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGR2GRAY, 1);
+  }
+
+  if (invmode) {
+    cv::Mat tmp1 = cv::Mat::ones(tmpB.size(), CV_8UC1) * 255;
+    cv::Mat tmp2 = cv::Mat::zeros(tmpB.size(), CV_8UC1);
+    cv::subtract(tmp1, tmpB, tmp2);
+    tmpB = tmp2.clone();
+  }
+  cv::applyColorMap(tmpB, tmpB, aznyan::cmmode[mode]);
+
+  return aznyan::encode_nr(tmpB, bgra[1]);
+}

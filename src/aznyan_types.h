@@ -47,6 +47,22 @@ static const std::vector<int> thresmode{
     cv::THRESH_TOZERO,  cv::THRESH_TOZERO_INV, cv::THRESH_OTSU,
     cv::THRESH_TRIANGLE};
 
+/**
+ * 0-21
+ */
+static const std::vector<int> cmmode{
+    cv::COLORMAP_AUTUMN,   cv::COLORMAP_BONE,
+    cv::COLORMAP_JET,      cv::COLORMAP_WINTER,
+    cv::COLORMAP_RAINBOW,  cv::COLORMAP_OCEAN,
+    cv::COLORMAP_SUMMER,   cv::COLORMAP_SPRING,
+    cv::COLORMAP_COOL,     cv::COLORMAP_HSV,
+    cv::COLORMAP_PINK,     cv::COLORMAP_HOT,
+    cv::COLORMAP_PARULA,   cv::COLORMAP_MAGMA,
+    cv::COLORMAP_INFERNO,  cv::COLORMAP_PLASMA,
+    cv::COLORMAP_VIRIDIS,  cv::COLORMAP_CIVIDIS,
+    cv::COLORMAP_TWILIGHT, cv::COLORMAP_TWILIGHT_SHIFTED,
+    cv::COLORMAP_TURBO,    cv::COLORMAP_DEEPGREEN};
+
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {
   int num_cpu = cv::getNumThreads();
@@ -98,7 +114,8 @@ inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 
-// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
+// NOTE:
+// rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
     const cpp11::integers& nr, int height, int width) {
   cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);

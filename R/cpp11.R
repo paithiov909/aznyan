@@ -44,6 +44,10 @@ azny_hls_to_rgb <- function(hls) {
   .Call(`_aznyan_azny_hls_to_rgb`, hls)
 }
 
+azny_color_map <- function(nr, height, width, mode, hsvmode, invmode) {
+  .Call(`_aznyan_azny_color_map`, nr, height, width, mode, hsvmode, invmode)
+}
+
 azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
   .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
 }

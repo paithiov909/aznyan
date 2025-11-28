@@ -82,6 +82,13 @@ extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
     return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(hls)));
   END_CPP11
 }
+// color.cpp
+cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width, int mode, bool hsvmode, bool invmode);
+extern "C" SEXP _aznyan_azny_color_map(SEXP nr, SEXP height, SEXP width, SEXP mode, SEXP hsvmode, SEXP invmode) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_color_map(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(hsvmode), cpp11::as_cpp<cpp11::decay_t<bool>>(invmode)));
+  END_CPP11
+}
 // diffusion.cpp
 cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, float decay_factor, float decay_offset, float gamma, int sigma);
 extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP iter, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
@@ -210,6 +217,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},
     {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          8},
+    {"_aznyan_azny_color_map",        (DL_FUNC) &_aznyan_azny_color_map,         6},
     {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,     1},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
