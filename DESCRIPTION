@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 25.11.29
+Version: 25.12.10
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph")

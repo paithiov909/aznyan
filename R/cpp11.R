@@ -16,6 +16,10 @@ azny_bilateralblur <- function(nr, height, width, d, sigmacolor, sigmaspace, bor
   .Call(`_aznyan_azny_bilateralblur`, nr, height, width, d, sigmacolor, sigmaspace, border, alphasync)
 }
 
+azny_convolve <- function(nr, height, width, kernel, border, alphasync) {
+  .Call(`_aznyan_azny_convolve`, nr, height, width, kernel, border, alphasync)
+}
+
 azny_blurhash <- function(nr, height, width, x_comps, y_comps) {
   .Call(`_aznyan_azny_blurhash`, nr, height, width, x_comps, y_comps)
 }
