@@ -12,12 +12,16 @@ azny_gaussianblur <- function(nr, height, width, boxW, boxH, sigmaX, sigmaY, bor
   .Call(`_aznyan_azny_gaussianblur`, nr, height, width, boxW, boxH, sigmaX, sigmaY, border)
 }
 
-azny_bilateralblur <- function(nr, height, width, d, sigmacolor, sigmaspace, border, alphasync) {
-  .Call(`_aznyan_azny_bilateralblur`, nr, height, width, d, sigmacolor, sigmaspace, border, alphasync)
+azny_bilateral <- function(nr, height, width, d, sigmacolor, sigmaspace, border, alphasync) {
+  .Call(`_aznyan_azny_bilateral`, nr, height, width, d, sigmacolor, sigmaspace, border, alphasync)
 }
 
 azny_convolve <- function(nr, height, width, kernel, border, alphasync) {
   .Call(`_aznyan_azny_convolve`, nr, height, width, kernel, border, alphasync)
+}
+
+azny_kuwahara <- function(nr, height, width, kernel1, kernel2, beta, border) {
+  .Call(`_aznyan_azny_kuwahara`, nr, height, width, kernel1, kernel2, beta, border)
 }
 
 azny_blurhash <- function(nr, height, width, x_comps, y_comps) {

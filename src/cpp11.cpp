@@ -27,10 +27,10 @@ extern "C" SEXP _aznyan_azny_gaussianblur(SEXP nr, SEXP height, SEXP width, SEXP
   END_CPP11
 }
 // blur.cpp
-cpp11::integers azny_bilateralblur(const cpp11::integers& nr, int height, int width, int d, double sigmacolor, double sigmaspace, int border, bool alphasync);
-extern "C" SEXP _aznyan_azny_bilateralblur(SEXP nr, SEXP height, SEXP width, SEXP d, SEXP sigmacolor, SEXP sigmaspace, SEXP border, SEXP alphasync) {
+cpp11::integers azny_bilateral(const cpp11::integers& nr, int height, int width, int d, double sigmacolor, double sigmaspace, int border, bool alphasync);
+extern "C" SEXP _aznyan_azny_bilateral(SEXP nr, SEXP height, SEXP width, SEXP d, SEXP sigmacolor, SEXP sigmaspace, SEXP border, SEXP alphasync) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_bilateralblur(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
+    return cpp11::as_sexp(azny_bilateral(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(d), cpp11::as_cpp<cpp11::decay_t<double>>(sigmacolor), cpp11::as_cpp<cpp11::decay_t<double>>(sigmaspace), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
   END_CPP11
 }
 // blur.cpp
@@ -38,6 +38,13 @@ cpp11::integers azny_convolve(const cpp11::integers& nr, int height, int width, 
 extern "C" SEXP _aznyan_azny_convolve(SEXP nr, SEXP height, SEXP width, SEXP kernel, SEXP border, SEXP alphasync) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_convolve(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(kernel), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<bool>>(alphasync)));
+  END_CPP11
+}
+// blur.cpp
+cpp11::integers azny_kuwahara(const cpp11::integers& nr, int height, int width, const cpp11::doubles_matrix<>& kernel1, const cpp11::doubles_matrix<>& kernel2, double beta, int border);
+extern "C" SEXP _aznyan_azny_kuwahara(SEXP nr, SEXP height, SEXP width, SEXP kernel1, SEXP kernel2, SEXP beta, SEXP border) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_kuwahara(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(kernel1), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(kernel2), cpp11::as_cpp<cpp11::decay_t<double>>(beta), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
   END_CPP11
 }
 // blurhash.cpp
@@ -226,7 +233,7 @@ extern "C" SEXP _aznyan_azny_adpthres(SEXP nr, SEXP height, SEXP width, SEXP adp
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,          8},
-    {"_aznyan_azny_bilateralblur",    (DL_FUNC) &_aznyan_azny_bilateralblur,     8},
+    {"_aznyan_azny_bilateral",        (DL_FUNC) &_aznyan_azny_bilateral,         8},
     {"_aznyan_azny_blurhash",         (DL_FUNC) &_aznyan_azny_blurhash,          5},
     {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
     {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},
@@ -238,6 +245,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
     {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,      8},
     {"_aznyan_azny_hls_to_rgb",       (DL_FUNC) &_aznyan_azny_hls_to_rgb,        1},
+    {"_aznyan_azny_kuwahara",         (DL_FUNC) &_aznyan_azny_kuwahara,          7},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,   8},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,      8},
     {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,         6},
