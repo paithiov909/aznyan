@@ -111,10 +111,10 @@ extern "C" SEXP _aznyan_azny_color_map(SEXP nr, SEXP height, SEXP width, SEXP mo
   END_CPP11
 }
 // diffusion.cpp
-cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, float decay_factor, float decay_offset, float gamma, int sigma);
+cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, double decay_factor, double decay_offset, double gamma, int sigma);
 extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP iter, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_diffusion(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(iter), cpp11::as_cpp<cpp11::decay_t<float>>(decay_factor), cpp11::as_cpp<cpp11::decay_t<float>>(decay_offset), cpp11::as_cpp<cpp11::decay_t<float>>(gamma), cpp11::as_cpp<cpp11::decay_t<int>>(sigma)));
+    return cpp11::as_sexp(azny_diffusion(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(iter), cpp11::as_cpp<cpp11::decay_t<double>>(decay_factor), cpp11::as_cpp<cpp11::decay_t<double>>(decay_offset), cpp11::as_cpp<cpp11::decay_t<double>>(gamma), cpp11::as_cpp<cpp11::decay_t<int>>(sigma)));
   END_CPP11
 }
 // edge-canny.cpp
@@ -202,6 +202,20 @@ extern "C" SEXP _aznyan_azny_morphologyrgb(SEXP nr, SEXP height, SEXP width, SEX
   END_CPP11
 }
 // others.cpp
+cpp11::integers azny_det_enhance(const cpp11::integers& nr, int height, int width, double sgmS, double sgmR);
+extern "C" SEXP _aznyan_azny_det_enhance(SEXP nr, SEXP height, SEXP width, SEXP sgmS, SEXP sgmR) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_det_enhance(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR)));
+  END_CPP11
+}
+// others.cpp
+cpp11::integers azny_hist_eq(const cpp11::integers& nr, int height, int width, int gridW, int gridH, double limit, bool adp, bool color);
+extern "C" SEXP _aznyan_azny_hist_eq(SEXP nr, SEXP height, SEXP width, SEXP gridW, SEXP gridH, SEXP limit, SEXP adp, SEXP color) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_hist_eq(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(gridW), cpp11::as_cpp<cpp11::decay_t<int>>(gridH), cpp11::as_cpp<cpp11::decay_t<double>>(limit), cpp11::as_cpp<cpp11::decay_t<bool>>(adp), cpp11::as_cpp<cpp11::decay_t<bool>>(color)));
+  END_CPP11
+}
+// others.cpp
 cpp11::integers azny_meanshift(const cpp11::integers& nr, int height, int width, double sp, double sr, int maxl);
 extern "C" SEXP _aznyan_azny_meanshift(SEXP nr, SEXP height, SEXP width, SEXP sp, SEXP sr, SEXP maxl) {
   BEGIN_CPP11
@@ -209,10 +223,31 @@ extern "C" SEXP _aznyan_azny_meanshift(SEXP nr, SEXP height, SEXP width, SEXP sp
   END_CPP11
 }
 // others.cpp
-cpp11::integers azny_preserve_edges(const cpp11::integers& nr, int height, int width, float sgmS, float sgmR, bool mode);
-extern "C" SEXP _aznyan_azny_preserve_edges(SEXP nr, SEXP height, SEXP width, SEXP sgmS, SEXP sgmR, SEXP mode) {
+cpp11::integers azny_oilpaint(const cpp11::integers& nr, int height, int width, int size, int ratio);
+extern "C" SEXP _aznyan_azny_oilpaint(SEXP nr, SEXP height, SEXP width, SEXP size, SEXP ratio) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_preserve_edges(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<float>>(sgmS), cpp11::as_cpp<cpp11::decay_t<float>>(sgmR), cpp11::as_cpp<cpp11::decay_t<bool>>(mode)));
+    return cpp11::as_sexp(azny_oilpaint(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(size), cpp11::as_cpp<cpp11::decay_t<int>>(ratio)));
+  END_CPP11
+}
+// others.cpp
+cpp11::integers azny_pencilskc(const cpp11::integers& nr, int height, int width, double sgmS, double sgmR, double shade, bool color);
+extern "C" SEXP _aznyan_azny_pencilskc(SEXP nr, SEXP height, SEXP width, SEXP sgmS, SEXP sgmR, SEXP shade, SEXP color) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_pencilskc(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR), cpp11::as_cpp<cpp11::decay_t<double>>(shade), cpp11::as_cpp<cpp11::decay_t<bool>>(color)));
+  END_CPP11
+}
+// others.cpp
+cpp11::integers azny_preserving(const cpp11::integers& nr, int height, int width, double sgmS, double sgmR, bool mode);
+extern "C" SEXP _aznyan_azny_preserving(SEXP nr, SEXP height, SEXP width, SEXP sgmS, SEXP sgmR, SEXP mode) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_preserving(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR), cpp11::as_cpp<cpp11::decay_t<bool>>(mode)));
+  END_CPP11
+}
+// others.cpp
+cpp11::integers azny_stylize(const cpp11::integers& nr, int height, int width, double sgmS, double sgmR);
+extern "C" SEXP _aznyan_azny_stylize(SEXP nr, SEXP height, SEXP width, SEXP sgmS, SEXP sgmR) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_stylize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR)));
   END_CPP11
 }
 // threshold.cpp
@@ -241,9 +276,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_color_map",        (DL_FUNC) &_aznyan_azny_color_map,         6},
     {"_aznyan_azny_convolve",         (DL_FUNC) &_aznyan_azny_convolve,          6},
     {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,     1},
+    {"_aznyan_azny_det_enhance",      (DL_FUNC) &_aznyan_azny_det_enhance,       5},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
     {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
     {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,      8},
+    {"_aznyan_azny_hist_eq",          (DL_FUNC) &_aznyan_azny_hist_eq,           8},
     {"_aznyan_azny_hls_to_rgb",       (DL_FUNC) &_aznyan_azny_hls_to_rgb,        1},
     {"_aznyan_azny_kuwahara",         (DL_FUNC) &_aznyan_azny_kuwahara,          7},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,   8},
@@ -252,14 +289,17 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,        4},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 10},
     {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    10},
+    {"_aznyan_azny_oilpaint",         (DL_FUNC) &_aznyan_azny_oilpaint,          5},
     {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     4},
-    {"_aznyan_azny_preserve_edges",   (DL_FUNC) &_aznyan_azny_preserve_edges,    6},
+    {"_aznyan_azny_pencilskc",        (DL_FUNC) &_aznyan_azny_pencilskc,         7},
+    {"_aznyan_azny_preserving",       (DL_FUNC) &_aznyan_azny_preserving,        6},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
     {"_aznyan_azny_rgb_to_hls",       (DL_FUNC) &_aznyan_azny_rgb_to_hls,        1},
     {"_aznyan_azny_saturate_value",   (DL_FUNC) &_aznyan_azny_saturate_value,    2},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      10},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
+    {"_aznyan_azny_stylize",          (DL_FUNC) &_aznyan_azny_stylize,           5},
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
     {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},

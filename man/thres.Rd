@@ -3,7 +3,7 @@
 \name{thres}
 \alias{thres}
 \alias{adpthres}
-\title{Image thresholding}
+\title{Thresholding and adaptive thresholding}
 \usage{
 thres(nr, threshold = 100, maxv = 255, mode = c(0, 1, 2, 3, 4, 5, 6))
 
@@ -12,25 +12,62 @@ adpthres(nr, maxv = 255, bsize = 1, C = 5, mode = c(0, 1), invert = FALSE)
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{threshold}{A numeric scalar. Threshold value.}
+\item{threshold}{A numeric scalar in \verb{[0, 255]} specifying the fixed
+threshold value.}
 
-\item{maxv}{A numeric scalar. Max value to use with some thresholding modes.}
+\item{maxv}{A numeric scalar in \verb{[0, 255]}.
+\itemize{
+\item For \code{thres()}: A numeric scalar in \verb{[0, 255]} giving the value assigned to
+"foreground" pixels.
+\item For \code{adpthres()}: A numeric scalar in \verb{[0, 255]}
+specifying the output value for "foreground" pixels.
+}}
 
-\item{mode}{An integer scalar. The mode of thresholding.}
+\item{mode}{\itemize{
+\item For \code{thres()}: An integer scalar selecting the thresholding mode.
+Must be one of \verb{0–6}, corresponding to OpenCV's threshold flags.
+\item For \code{adpthres()}: An integer scalar selecting the binary mode.
+\code{0} (\code{THRESH_BINARY_INV}) or \code{1} (\code{THRESH_BINARY}).
+}}
 
-\item{bsize}{A numeric scalar.
-The size of a pixel neighborhood that is used to calculate a threshold value for the pixel.}
+\item{bsize}{An integer scalar in \verb{[1, 50]} giving the neighborhood radius.
+The actual window size is computed as \code{2 * bsize + 1}.}
 
-\item{C}{The C value for adaptive thresholding.}
+\item{C}{A numeric scalar subtracted from the local threshold
+(used by OpenCV). Controls how strong the threshold offset is.}
 
 \item{invert}{A logical scalar.
-Whether to invert the result in adaptive thresholding.}
+If \code{TRUE}, invert the local thresholding result.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Applies thresholding to an image.
+Perform global (fixed) thresholding or adaptive thresholding on a
+\code{nativeRaster} image.
+Both functions operate on a grayscale conversion of the input
+and return a 3-channel binary (0/\code{maxv}) image with the original alpha
+preserved.
+}
+\details{
+\subsection{\code{thres()}}{
+
+Apply a fixed threshold to the grayscale image.
+Pixels with values greater than \code{threshold}
+(depending on the thresholding mode) are set to \code{maxv};
+others are set to \code{0}.
+The behavior is controlled by the thresholding \code{mode}, which corresponds to
+OpenCV's threshold types.
+}
+
+\subsection{\code{adpthres()}}{
+
+Apply adaptive thresholding, where the threshold value is computed locally
+for each pixel based on a neighborhood mean or Gaussian-weighted sum. The
+block size and constant \code{C} adjust how the local threshold is computed.
+}
+
+\subsection{Options}{
 
 For \code{thres}, \code{mode} is an integer scalar in range \verb{[0, 6]} corresponding to:
 \enumerate{
@@ -42,10 +79,5 @@ For \code{thres}, \code{mode} is an integer scalar in range \verb{[0, 6]} corres
 \item cv::THRESH_OTSU
 \item cv::THRESH_TRIANGLE
 }
-
-And for \code{adpthres}, \code{mode} is an integer scalar \code{0} or \code{1} corresponding to:
-\enumerate{
-\item cv::ADAPTIVE_THRESH_MEAN_C
-\item cv::ADAPTIVE_THRESH_GAUSSIAN_C
 }
 }

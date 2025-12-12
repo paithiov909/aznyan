@@ -16,38 +16,34 @@ bilateral_filter(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{d}{An integer scalar.
-Diameter of each pixel neighborhood that is used during filtering.
-If it is non-positive, it is computed from \code{sigmaspace}.}
+\item{d}{An integer scalar specifying the diameter of the pixel neighborhood
+used for filtering. If set to a non-positive value, OpenCV computes the
+diameter from the sigmas.}
 
-\item{sigmacolor}{A double scalar.
-Filter sigma in the color space.
-A larger value of the parameter means that farther colors
-within the pixel neighborhood will be mixed together,
-resulting in larger areas of semi-equal color.}
+\item{sigmacolor}{A numeric scalar giving the filter sigma in color space.
+Larger values allow blending of pixels with greater color differences.}
 
-\item{sigmaspace}{A double scalar.
-Filter sigma in the coordinate space.
-A larger value of the parameter means
-that farther pixels will influence each other
-as long as their colors are close enough.}
+\item{sigmaspace}{A numeric scalar giving the filter sigma in coordinate
+space. Larger values increase the spatial extent of smoothing.}
 
-\item{border}{An integer scalar.
-The type of pixel extrapolation method.}
+\item{border}{An integer scalar specifying the border-handling mode.
+One of \verb{0, 1, 2, 3, 4},
+corresponding to OpenCV's bilateral filter border modes.}
 
 \item{alphasync}{A logical scalar.
-If \code{TRUE}, filtering is applied separately to the alpha channel.}
+If \code{TRUE}, the same bilateral filter is applied to the alpha channel;
+if \code{FALSE}, the alpha channel is preserved.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Applies bilateral filtering to an image.
-It can be used to reduce noise while keeping edges sharp.
-However, it is very slow compared to most filters.
+Apply a bilateral filter to a \code{nativeRaster} image. This edge-preserving
+smoothing technique reduces noise while retaining sharp boundaries by
+considering both spatial distance and color similarity.
 }
 \details{
-\code{border} refers to:
+\code{border} corresponds to the OpenCV extrapolation types:
 \enumerate{
 \item cv::BORDER_CONSTANT
 \item cv::BORDER_REPLICATE

@@ -1,6 +1,5 @@
 #include "aznyan_types.h"
 
-// チャンネル入替 (ch_chg)
 [[cpp11::register]]
 cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height,
                                    int width, const std::vector<int>& mapping) {
@@ -17,7 +16,6 @@ cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height,
   return aznyan::encode_nr(bgra[0], bgra[1]);
 }
 
-// リサイズ (resizefilter)
 [[cpp11::register]]
 cpp11::integers azny_resize(const cpp11::integers& nr, int height, int width,
                             cpp11::doubles wh, int resize_mode, bool set_size) {
@@ -41,7 +39,6 @@ cpp11::integers azny_resize(const cpp11::integers& nr, int height, int width,
   return aznyan::encode_nr(bgra_out[0], bgra_out[1]);
 }
 
-// リサンプル (resample)
 [[cpp11::register]]
 cpp11::integers azny_resample(const cpp11::integers& nr, int height, int width,
                               cpp11::doubles wh, int resize_red,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/morph.R
 \name{morphology}
 \alias{morphology}
-\title{Morphology}
+\title{Morphological operations (grayscale or RGB)}
 \usage{
 morphology(
   nr,
@@ -19,37 +19,69 @@ morphology(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{ksize}{A numeric vector of length 3. The kernel size.}
+\item{ksize}{An integer vector specifying kernel size(s).
+\itemize{
+\item Length 1 (grayscale mode): kernel radius.
+\item Length 3 (RGB mode): per-channel kernel radii.
+Must be non-negative.
+}}
 
-\item{ktype}{An integer scalar.
-The type of kernel. See description.}
+\item{ktype}{An integer scalar selecting the structuring element shape.
+One of \verb{0, 1, 2}, corresponding to OpenCV kernel types.}
 
-\item{mode}{An integer scalar.
-The type of morphological operation. See description.}
+\item{mode}{An integer scalar selecting the morphological operation.
+One of \verb{0–7}, mapped to OpenCV operation modes (\code{morphologyEx} operations).}
 
-\item{border}{An integer scalar.
-The type of pixel extrapolation method.}
+\item{border}{An integer scalar selecting the border-handling mode.
+One of \verb{0–4}, corresponding to OpenCV's border modes.}
 
-\item{iterations}{An integer scalar.
-Number of times to apply the transformation.}
+\item{iterations}{An integer scalar giving the number of repetitions of the
+operation. Must be grater than 0.}
 
-\item{alphasync}{A logical scalar.
-If \code{TRUE}, applies the transformation separately to the alpha channel.}
+\item{alphasync}{A logical scalar. If \code{TRUE}, apply the morphological
+operation to the alpha channel as well.}
 
-\item{use_rgb}{A logical scalar.
-If \code{TRUE}, applies morphology separately for each color channel
-and combines them.}
+\item{use_rgb}{A logical scalar. If \code{TRUE}, apply the operation independently
+to each RGB channel; if \code{FALSE}, apply it to a grayscale image derived from
+masked RGB.}
 
-\item{anchor}{An integer vector of length 2.
-Anchor position with the kernel. The default value means the center of the kernel.}
+\item{anchor}{An integer vector of length 2 specifying the anchor point
+(kernel origin). Use \code{c(-1, -1)} for the default centered anchor.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Applies morphological transformations to an image.
+Applies morphological image-processing operations to a \code{nativeRaster} image.
+Depending on \code{use_rgb}, operations are applied either to the grayscale image
+masked by the alpha channel or independently to each RGB channel with
+per-channel structuring elements. Supported operations include erosion,
+dilation, opening, closing, gradient, and related transforms.
+}
+\details{
+\subsection{Kernel specification}{
 
-\code{ktype} refers to:
+The shape of the structuring element is controlled by \code{ktype}, and its size
+is determined by \code{ksize}.
+\itemize{
+\item When \code{use_rgb = FALSE}, \code{ksize} must be a single non-negative integer.
+\item When \code{use_rgb = TRUE}, \code{ksize} must be a length-3 integer vector, allowing
+separate kernel sizes for the R, G, and B channels.
+}
+
+The location of the anchor (kernel origin) can be specified via \code{anchor}.
+Use \code{c(-1, -1)} for the default centered anchor.
+}
+
+\subsection{Alpha handling}{
+
+If \code{alphasync = TRUE}, the same morphological operation is applied to the
+alpha channel. Otherwise, the alpha channel is preserved.
+}
+
+\subsection{Options}{
+
+\code{ktype} corresponds to:
 \enumerate{
 \item cv::MORPH_RECT
 \item cv::MORPH_CROSS
@@ -67,14 +99,14 @@ Applies morphological transformations to an image.
 \item cv::MORPH_BLACKHAT
 \item cv::MORPH_HITMISS
 }
-}
-\details{
-\code{border} refers to:
+
+\code{border} corresponds to:
 \enumerate{
 \item cv::BORDER_CONSTANT
 \item cv::BORDER_REPLICATE
 \item cv::BORDER_REFLECT
 \item cv::BORDER_REFLECT_101
 \item cv::BORDER_ISOLATED
+}
 }
 }

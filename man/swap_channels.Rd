@@ -2,18 +2,26 @@
 % Please edit documentation in R/misc.R
 \name{swap_channels}
 \alias{swap_channels}
-\title{Swap channels}
+\title{Swap or remap image channels}
 \usage{
 swap_channels(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3))
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{from, to}{An integer vector of length 4. The channels to swap from and to.}
+\item{from}{An integer vector of length 4 giving the source channel indices
+(\code{0 = B}, \code{1 = G}, \code{2 = R}, \code{3 = A}). Each element specifies which channel
+to read from.}
+
+\item{to}{An integer vector of length 4 giving the destination channel
+indices (\code{0 = B}, \code{1 = G}, \code{2 = R}, \code{3 = A}). Each element specifies where
+the corresponding \code{from} channel is written.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Swap channels
+Remaps color or alpha channels of a \code{nativeRaster} image using arbitrary
+pairwise assignments. This function wraps OpenCV's \code{mixChannels}, allowing
+reordering or selective copying of the BGRA channels.
 }

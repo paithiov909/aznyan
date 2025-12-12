@@ -2,28 +2,36 @@
 % Please edit documentation in R/color-map.R
 \name{color_map}
 \alias{color_map}
-\title{Apply colormap}
+\title{Apply a color map}
 \usage{
 color_map(nr, map = 0, use_hsv = FALSE, inverse = FALSE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{map}{An integer scalar.}
+\item{map}{An integer scalar specifying the colormap ID.
+Must be one of \verb{0–21}, corresponding to OpenCV's built-in color maps.}
 
 \item{use_hsv}{A logical scalar.
-If \code{TRUE}, the map source is taken from the hue channel
-converted with \code{cv::COLOR_BGR2HSV_FULL}.}
+If \code{TRUE}, the hue channel (HSV_FULL) is used as the input to the colormap;
+if \code{FALSE}, a grayscale conversion is used instead.}
 
-\item{inverse}{A logical scalar.}
+\item{inverse}{A logical scalar. If \code{TRUE}, the input channel is inverted
+(\code{255 - value}) before applying the colormap.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Applies a GNU Octave/MATLAB equivalent colormap to an image.
+Maps grayscale or hue values of a \code{nativeRaster} image to a predefined color
+lookup table (OpenCV colormaps). The input can be derived either from the
+grayscale intensity or from the hue channel in HSV space. The mapped values
+replace the image's color channels while preserving the alpha channel.
+}
+\details{
+\subsection{Options}{
 
-\code{map} refers to:
+\code{map} corresponds to:
 \enumerate{
 \item cv::COLORMAP_AUTUMN
 \item cv::COLORMAP_BONE
@@ -47,5 +55,6 @@ Applies a GNU Octave/MATLAB equivalent colormap to an image.
 \item cv::COLORMAP_TWILIGHT_SHIFTED
 \item cv::COLORMAP_TURBO
 \item cv::COLORMAP_DEEPGREEN
+}
 }
 }

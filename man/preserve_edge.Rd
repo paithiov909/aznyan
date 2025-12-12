@@ -2,22 +2,30 @@
 % Please edit documentation in R/others.R
 \name{preserve_edge}
 \alias{preserve_edge}
-\title{Edge preserving filter}
+\title{Edge-preserving smoothing filter}
 \usage{
-preserve_edge(nr, sgmS = 60, sgmR = 0.4, recursive = TRUE)
+preserve_edge(nr, sgmS = 60, sgmR = 0.44, recursive = TRUE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{sgmS, sgmR}{The parameters of edge preserving filter.
-\verb{[0, 200]} for \code{sgmS} and \verb{[0, 1]} for \code{sgmR}.}
+\item{sgmS}{A numeric scalar giving the spatial sigma, which controls the
+effective smoothing radius.
+Valid range: \verb{0–200}.}
 
-\item{recursive}{A logical scalar. Flag for recursive filter.
-If \code{TRUE}, \code{cv::RECURS_FILTER} is used. Otherwise, \code{cv::NORMCONV_FILTER} is used.}
+\item{sgmR}{A numeric scalar giving the range sigma, which determines how
+strongly edges are preserved based on color differences.
+Valid range: \verb{0–1}.}
+
+\item{recursive}{A logical scalar.
+If \code{TRUE}, use the recursive filtering mode (\code{RECURS_FILTER});
+if \code{FALSE}, use normalized convolution (\code{NORMCONV_FILTER}).}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Edge preserving filter
+Applies an edge-preserving smoothing filter to a \code{nativeRaster} image.
+This filter attenuates noise and texture while retaining sharp boundaries,
+producing a clean, stylized appearance.
 }

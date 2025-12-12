@@ -1,9 +1,12 @@
-#' Apply colormap
+#' Apply a color map
 #'
-#' @description
-#' Applies a GNU Octave/MATLAB equivalent colormap to an image.
+#' Maps grayscale or hue values of a `nativeRaster` image to a predefined color
+#' lookup table (OpenCV colormaps). The input can be derived either from the
+#' grayscale intensity or from the hue channel in HSV space. The mapped values
+#' replace the image's color channels while preserving the alpha channel.
 #'
-#' `map` refers to:
+#' ## Options
+#' `map` corresponds to:
 #'
 #' 0. cv::COLORMAP_AUTUMN
 #' 1. cv::COLORMAP_BONE
@@ -29,11 +32,13 @@
 #' 21. cv::COLORMAP_DEEPGREEN
 #'
 #' @param nr A `nativeRaster` object.
-#' @param map An integer scalar.
+#' @param map An integer scalar specifying the colormap ID.
+#' Must be one of `0–21`, corresponding to OpenCV's built-in color maps.
 #' @param use_hsv A logical scalar.
-#' If `TRUE`, the map source is taken from the hue channel
-#' converted with `cv::COLOR_BGR2HSV_FULL`.
-#' @param inverse A logical scalar.
+#' If `TRUE`, the hue channel (HSV_FULL) is used as the input to the colormap;
+#' if `FALSE`, a grayscale conversion is used instead.
+#' @param inverse A logical scalar. If `TRUE`, the input channel is inverted
+#' (`255 - value`) before applying the colormap.
 #' @returns A `nativeRaster` object.
 #' @export
 color_map <- function(nr, map = 0, use_hsv = FALSE, inverse = FALSE) {

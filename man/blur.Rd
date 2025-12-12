@@ -29,17 +29,26 @@ gaussian_blur(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{ksize, box_w, box_h}{A numeric scalar. The kernel size.}
+\item{ksize}{An integer scalar specifying the kernel size.
+The actual kernel size becomes \code{2 * ksize + 1}.}
 
-\item{normalize}{A logical scalar.
-Whether the kernel is normalized by its area or not.}
+\item{box_w}{An integer scalar controlling the half-size of the kernel in
+the horizontal direction. The actual kernel width becomes \code{2 * box_w - 1}.}
 
-\item{border}{An integer scalar.
-The type of pixel extrapolation method.}
+\item{box_h}{An integer scalar controlling the half-size of the kernel in
+the vertical direction. Defaults to \code{box_w}. The actual kernel height
+becomes \code{2 * box_h - 1}.}
 
-\item{sigma_x, sigma_y}{A numeric scalar.
-The standard deviation of the Gaussian kernel in X and Y direction.
-If both are 0, they are computed from \code{ksize}.}
+\item{normalize}{A logical scalar
+specifying whether the kernel is normalized by its area or not.
+Defaults to \code{TRUE}.}
+
+\item{border}{An integer scalar specifying the border-handling mode.
+One of \verb{0, 1, 2, 3, 4}, corresponding to OpenCV's border modes.}
+
+\item{sigma_x, sigma_y}{A numeric scalar giving the standard deviation of the
+Gaussian kernel along the x-axis. A value of \code{0} lets OpenCV compute it
+automatically from the kernel size.}
 }
 \value{
 A \code{nativeRaster} object.
@@ -48,7 +57,7 @@ A \code{nativeRaster} object.
 Blur filters
 }
 \details{
-\code{border} refers to:
+\code{border} corresponds to the OpenCV extrapolation types:
 \enumerate{
 \item cv::BORDER_CONSTANT
 \item cv::BORDER_REPLICATE

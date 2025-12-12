@@ -2,20 +2,29 @@
 % Please edit documentation in R/others.R
 \name{mean_shift}
 \alias{mean_shift}
-\title{Mean shift filter}
+\title{Mean shift filtering}
 \usage{
 mean_shift(nr, sp = 10, sr = 30, max_level = 1)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{sp, sr}{The parameters of mean shift.}
+\item{sp}{A numeric scalar giving the spatial window radius.
+Larger values increase the smoothing effect across neighboring pixels.}
 
-\item{max_level}{The maximum level of mean shift.}
+\item{sr}{A numeric scalar giving the color (range) window radius.
+Larger values allow grouping across larger color differences.}
+
+\item{max_level}{An integer scalar specifying the number of pyramid levels
+to process. Must be non-negative.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Mean shift filter
+Applies mean shift filtering to a \code{nativeRaster} image.
+This edge-preserving smoothing technique groups pixels
+in joint spatial–color space,
+producing a stylized effect with flattened regions
+while retaining clear boundaries.
 }

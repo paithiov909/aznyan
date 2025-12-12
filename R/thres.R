@@ -1,8 +1,27 @@
-#' Image thresholding
+#' Thresholding and adaptive thresholding
 #'
-#' @description
-#' Applies thresholding to an image.
+#' Perform global (fixed) thresholding or adaptive thresholding on a
+#' `nativeRaster` image.
+#' Both functions operate on a grayscale conversion of the input
+#' and return a 3-channel binary (0/`maxv`) image with the original alpha
+#' preserved.
 #'
+#' ## `thres()`
+#'
+#' Apply a fixed threshold to the grayscale image.
+#' Pixels with values greater than `threshold`
+#' (depending on the thresholding mode) are set to `maxv`;
+#' others are set to `0`.
+#' The behavior is controlled by the thresholding `mode`, which corresponds to
+#' OpenCV's threshold types.
+#'
+#' ## `adpthres()`
+#'
+#' Apply adaptive thresholding, where the threshold value is computed locally
+#' for each pixel based on a neighborhood mean or Gaussian-weighted sum. The
+#' block size and constant `C` adjust how the local threshold is computed.
+#'
+#' ## Options
 #' For `thres`, `mode` is an integer scalar in range `[0, 6]` corresponding to:
 #'
 #' 0. cv::THRESH_BINARY
@@ -13,20 +32,25 @@
 #' 5. cv::THRESH_OTSU
 #' 6. cv::THRESH_TRIANGLE
 #'
-#' And for `adpthres`, `mode` is an integer scalar `0` or `1` corresponding to:
-#'
-#' 0. cv::ADAPTIVE_THRESH_MEAN_C
-#' 1. cv::ADAPTIVE_THRESH_GAUSSIAN_C
-#'
 #' @param nr A `nativeRaster` object.
-#' @param threshold A numeric scalar. Threshold value.
-#' @param maxv A numeric scalar. Max value to use with some thresholding modes.
-#' @param bsize A numeric scalar.
-#' The size of a pixel neighborhood that is used to calculate a threshold value for the pixel.
-#' @param C The C value for adaptive thresholding.
-#' @param mode An integer scalar. The mode of thresholding.
+#' @param threshold A numeric scalar in `[0, 255]` specifying the fixed
+#'   threshold value.
+#' @param maxv A numeric scalar in `[0, 255]`.
+#' - For `thres()`: A numeric scalar in `[0, 255]` giving the value assigned to
+#'   "foreground" pixels.
+#' - For `adpthres()`: A numeric scalar in `[0, 255]`
+#'   specifying the output value for "foreground" pixels.
+#' @param bsize An integer scalar in `[1, 50]` giving the neighborhood radius.
+#' The actual window size is computed as `2 * bsize + 1`.
+#' @param C A numeric scalar subtracted from the local threshold
+#' (used by OpenCV). Controls how strong the threshold offset is.
+#' @param mode
+#' - For `thres()`: An integer scalar selecting the thresholding mode.
+#'   Must be one of `0–6`, corresponding to OpenCV's threshold flags.
+#' - For `adpthres()`: An integer scalar selecting the binary mode.
+#'   `0` (`THRESH_BINARY_INV`) or `1` (`THRESH_BINARY`).
 #' @param invert A logical scalar.
-#' Whether to invert the result in adaptive thresholding.
+#' If `TRUE`, invert the local thresholding result.
 #' @returns A `nativeRaster` object.
 #' @rdname thres
 #' @name thres

@@ -1,7 +1,7 @@
 #' Blur filters
 #'
 #' @details
-#' `border` refers to:
+#' `border` corresponds to the OpenCV extrapolation types:
 #'
 #' 0. cv::BORDER_CONSTANT
 #' 1. cv::BORDER_REPLICATE
@@ -10,14 +10,21 @@
 #' 4. cv::BORDER_ISOLATED
 #'
 #' @param nr A `nativeRaster` object.
-#' @param ksize,box_w,box_h A numeric scalar. The kernel size.
-#' @param sigma_x,sigma_y A numeric scalar.
-#' The standard deviation of the Gaussian kernel in X and Y direction.
-#' If both are 0, they are computed from `ksize`.
-#' @param normalize A logical scalar.
-#' Whether the kernel is normalized by its area or not.
-#' @param border An integer scalar.
-#' The type of pixel extrapolation method.
+#' @param ksize An integer scalar specifying the kernel size.
+#' The actual kernel size becomes `2 * ksize + 1`.
+#' @param box_w An integer scalar controlling the half-size of the kernel in
+#' the horizontal direction. The actual kernel width becomes `2 * box_w - 1`.
+#' @param box_h An integer scalar controlling the half-size of the kernel in
+#' the vertical direction. Defaults to `box_w`. The actual kernel height
+#' becomes `2 * box_h - 1`.
+#' @param normalize A logical scalar
+#' specifying whether the kernel is normalized by its area or not.
+#' Defaults to `TRUE`.
+#' @param sigma_x,sigma_y A numeric scalar giving the standard deviation of the
+#' Gaussian kernel along the x-axis. A value of `0` lets OpenCV compute it
+#' automatically from the kernel size.
+#' @param border An integer scalar specifying the border-handling mode.
+#' One of `0, 1, 2, 3, 4`, corresponding to OpenCV's border modes.
 #' @returns A `nativeRaster` object.
 #' @rdname blur
 #' @name blur
@@ -78,8 +85,14 @@ gaussian_blur <- function(
 
 #' Convolution with a custom kernel
 #'
+#' Applies a custom convolution kernel to a `nativeRaster` image.
+#' This function wraps OpenCV's `filter2D`,
+#' allowing arbitrary linear filters
+#' such as sharpening, blurring, or edge detection.
+#' Optionally, the same convolution can be applied to the alpha channel.
+#'
 #' @details
-#' `border` refers to:
+#' `border` corresponds to the OpenCV extrapolation types:
 #'
 #' 0. cv::BORDER_CONSTANT
 #' 1. cv::BORDER_REPLICATE
@@ -88,11 +101,16 @@ gaussian_blur <- function(
 #' 4. cv::BORDER_ISOLATED
 #'
 #' @param nr A `nativeRaster` object.
-#' @param kernel A numeric matrix that represents a kernel.
-#' @param border An integer scalar.
-#' The type of pixel extrapolation method.
+#' @param kernel A numeric matrix giving the convolution kernel.
+#' Larger or weighted matrices can be used to define custom filters.
+#' The matrix is  passed directly to OpenCV,
+#' which normalizes nothing automatically.
+#' @param border An integer scalar specifying the border-handling mode.
+#' One of `0, 1, 2, 3, 4`, corresponding to OpenCV's border modes.
+#' See package documentation for details.
 #' @param alphasync A logical scalar.
-#' If `TRUE`, filtering is applied separately to the alpha channel.
+#' If `TRUE`, the convolution is also applied to the alpha channel;
+#' if `FALSE`, the alpha channel is preserved as-is.
 #' @returns A `nativeRaster` object.
 #' @export
 convolve <- function(
@@ -166,12 +184,12 @@ kuwahara_filter <- function(
 
 #' Bilateral filter
 #'
-#' Applies bilateral filtering to an image.
-#' It can be used to reduce noise while keeping edges sharp.
-#' However, it is very slow compared to most filters.
+#' Apply a bilateral filter to a `nativeRaster` image. This edge-preserving
+#' smoothing technique reduces noise while retaining sharp boundaries by
+#' considering both spatial distance and color similarity.
 #'
 #' @details
-#' `border` refers to:
+#' `border` corresponds to the OpenCV extrapolation types:
 #'
 #' 0. cv::BORDER_CONSTANT
 #' 1. cv::BORDER_REPLICATE
@@ -180,23 +198,19 @@ kuwahara_filter <- function(
 #' 4. cv::BORDER_ISOLATED
 #'
 #' @param nr A `nativeRaster` object.
-#' @param d An integer scalar.
-#' Diameter of each pixel neighborhood that is used during filtering.
-#' If it is non-positive, it is computed from `sigmaspace`.
-#' @param sigmacolor A double scalar.
-#' Filter sigma in the color space.
-#' A larger value of the parameter means that farther colors
-#' within the pixel neighborhood will be mixed together,
-#' resulting in larger areas of semi-equal color.
-#' @param sigmaspace A double scalar.
-#' Filter sigma in the coordinate space.
-#' A larger value of the parameter means
-#' that farther pixels will influence each other
-#' as long as their colors are close enough.
-#' @param border An integer scalar.
-#' The type of pixel extrapolation method.
+#' @param d An integer scalar specifying the diameter of the pixel neighborhood
+#' used for filtering. If set to a non-positive value, OpenCV computes the
+#' diameter from the sigmas.
+#' @param sigmacolor A numeric scalar giving the filter sigma in color space.
+#' Larger values allow blending of pixels with greater color differences.
+#' @param sigmaspace A numeric scalar giving the filter sigma in coordinate
+#' space. Larger values increase the spatial extent of smoothing.
+#' @param border An integer scalar specifying the border-handling mode.
+#' One of `0, 1, 2, 3, 4`,
+#' corresponding to OpenCV's bilateral filter border modes.
 #' @param alphasync A logical scalar.
-#' If `TRUE`, filtering is applied separately to the alpha channel.
+#' If `TRUE`, the same bilateral filter is applied to the alpha channel;
+#' if `FALSE`, the alpha channel is preserved.
 #' @returns A `nativeRaster` object.
 #' @export
 bilateral_filter <- function(

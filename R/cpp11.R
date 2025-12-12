@@ -112,12 +112,32 @@ azny_morphologyrgb <- function(nr, height, width, ksize, ktype, mode, iterations
   .Call(`_aznyan_azny_morphologyrgb`, nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
 
+azny_det_enhance <- function(nr, height, width, sgmS, sgmR) {
+  .Call(`_aznyan_azny_det_enhance`, nr, height, width, sgmS, sgmR)
+}
+
+azny_hist_eq <- function(nr, height, width, gridW, gridH, limit, adp, color) {
+  .Call(`_aznyan_azny_hist_eq`, nr, height, width, gridW, gridH, limit, adp, color)
+}
+
 azny_meanshift <- function(nr, height, width, sp, sr, maxl) {
   .Call(`_aznyan_azny_meanshift`, nr, height, width, sp, sr, maxl)
 }
 
-azny_preserve_edges <- function(nr, height, width, sgmS, sgmR, mode) {
-  .Call(`_aznyan_azny_preserve_edges`, nr, height, width, sgmS, sgmR, mode)
+azny_oilpaint <- function(nr, height, width, size, ratio) {
+  .Call(`_aznyan_azny_oilpaint`, nr, height, width, size, ratio)
+}
+
+azny_pencilskc <- function(nr, height, width, sgmS, sgmR, shade, color) {
+  .Call(`_aznyan_azny_pencilskc`, nr, height, width, sgmS, sgmR, shade, color)
+}
+
+azny_preserving <- function(nr, height, width, sgmS, sgmR, mode) {
+  .Call(`_aznyan_azny_preserving`, nr, height, width, sgmS, sgmR, mode)
+}
+
+azny_stylize <- function(nr, height, width, sgmS, sgmR) {
+  .Call(`_aznyan_azny_stylize`, nr, height, width, sgmS, sgmR)
 }
 
 azny_thres <- function(nr, height, width, thres, maxv, mode) {

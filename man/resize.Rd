@@ -3,7 +3,7 @@
 \name{resize}
 \alias{resize}
 \alias{resample}
-\title{Resize and resample}
+\title{Resize or resample a \code{nativeRaster} image}
 \usage{
 resize(
   nr,
@@ -22,17 +22,46 @@ resample(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{wh}{A numeric vector of length 2. The width and height coef for reduction.}
+\item{wh}{A numeric vector of length 2.
+For \code{resize()}: scaling factors when \code{set_size = FALSE}, or target
+dimensions (\code{width}, \code{height}) when \code{set_size = TRUE}.
+For \code{resample()}: downsampling factors in each direction.}
 
-\item{resize_mode, resize_mode1, resize_mode2}{An integer scalar.
-The resize mode. For \code{resample} \code{1} is for reduction and \code{2} is for expansion.}
+\item{resize_mode}{An integer scalar selecting the interpolation mode for
+\code{resize()}.
+Must be one of \verb{0–6}, corresponding to OpenCV's interpolation flags.}
 
 \item{set_size}{A logical scalar.
-If \code{TRUE}, \code{wh} is treated as actual width and height instead of coef.}
+If \code{TRUE}, \code{wh} is interpreted as absolute output dimensions;
+if \code{FALSE}, \code{wh} is used as scaling factors.}
+
+\item{resize_mode1}{An integer scalar giving the interpolation mode for the
+downsampling step in \code{resample()}. Must be one of \verb{0–6}.}
+
+\item{resize_mode2}{An integer scalar giving the interpolation mode for the
+upsampling step in \code{resample()}. Must be one of \verb{0–6}.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Resize and resample
+These functions provide flexible image scaling based on OpenCV's
+\code{resize()}, supporting both direct resizing and two-stage
+downsample–upsample resampling. The operations apply to all BGRA channels.
+}
+\details{
+\subsection{\code{resize()}}{
+
+Resizes an image either by specifying a scaling factor (\code{wh}) or, when
+\code{set_size = TRUE}, by specifying a target width and height directly.
+Interpolation is controlled through \code{resize_mode}.
+}
+
+\subsection{\code{resample()}}{
+
+Downsamples and then upsamples an image, potentially using different
+interpolation modes for reduction and expansion. This can be used to create
+stylized pixelation or texture effects, depending on the scaling factors and
+interpolation methods.
+}
 }

@@ -1,10 +1,9 @@
 #include "aznyan_types.h"
 
-// ディフュージョン（拡散フィルタ）
 [[cpp11::register]]
 cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width,
-                               int iter, float decay_factor, float decay_offset,
-                               float gamma, int sigma) {
+                               int iter, double decay_factor, double decay_offset,
+                               double gamma, int sigma) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat tmpB;
   bgra[0].convertTo(tmpB, CV_32FC3, 1.0 / 255.0);

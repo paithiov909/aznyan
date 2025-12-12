@@ -1,7 +1,16 @@
-#' Swap channels
+#' Swap or remap image channels
+#'
+#' Remaps color or alpha channels of a `nativeRaster` image using arbitrary
+#' pairwise assignments. This function wraps OpenCV's `mixChannels`, allowing
+#' reordering or selective copying of the BGRA channels.
 #'
 #' @param nr A `nativeRaster` object.
-#' @param from,to An integer vector of length 4. The channels to swap from and to.
+#' @param from An integer vector of length 4 giving the source channel indices
+#' (`0 = B`, `1 = G`, `2 = R`, `3 = A`). Each element specifies which channel
+#' to read from.
+#' @param to An integer vector of length 4 giving the destination channel
+#' indices (`0 = B`, `1 = G`, `2 = R`, `3 = A`). Each element specifies where
+#' the corresponding `from` channel is written.
 #' @returns A `nativeRaster` object.
 #' @export
 swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
@@ -15,14 +24,40 @@ swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
   as_nr(out)
 }
 
-#' Resize and resample
+#' Resize or resample a `nativeRaster` image
+#'
+#' These functions provide flexible image scaling based on OpenCV's
+#' `resize()`, supporting both direct resizing and two-stage
+#' downsample–upsample resampling. The operations apply to all BGRA channels.
+#'
+#' ## `resize()`
+#'
+#' Resizes an image either by specifying a scaling factor (`wh`) or, when
+#' `set_size = TRUE`, by specifying a target width and height directly.
+#' Interpolation is controlled through `resize_mode`.
+#'
+#' ## `resample()`
+#'
+#' Downsamples and then upsamples an image, potentially using different
+#' interpolation modes for reduction and expansion. This can be used to create
+#' stylized pixelation or texture effects, depending on the scaling factors and
+#' interpolation methods.
 #'
 #' @param nr A `nativeRaster` object.
-#' @param wh A numeric vector of length 2. The width and height coef for reduction.
-#' @param resize_mode,resize_mode1,resize_mode2 An integer scalar.
-#' The resize mode. For `resample` `1` is for reduction and `2` is for expansion.
+#' @param wh A numeric vector of length 2.
+#' For `resize()`: scaling factors when `set_size = FALSE`, or target
+#' dimensions (`width`, `height`) when `set_size = TRUE`.
+#' For `resample()`: downsampling factors in each direction.
+#' @param resize_mode An integer scalar selecting the interpolation mode for
+#' `resize()`.
+#' Must be one of `0–6`, corresponding to OpenCV's interpolation flags.
 #' @param set_size A logical scalar.
-#' If `TRUE`, `wh` is treated as actual width and height instead of coef.
+#' If `TRUE`, `wh` is interpreted as absolute output dimensions;
+#' if `FALSE`, `wh` is used as scaling factors.
+#' @param resize_mode1 An integer scalar giving the interpolation mode for the
+#' downsampling step in `resample()`. Must be one of `0–6`.
+#' @param resize_mode2 An integer scalar giving the interpolation mode for the
+#' upsampling step in `resample()`. Must be one of `0–6`.
 #' @returns A `nativeRaster` object.
 #' @rdname resize
 #' @name resize

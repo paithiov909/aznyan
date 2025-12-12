@@ -14,22 +14,31 @@ convolve(
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{kernel}{A numeric matrix that represents a kernel.}
+\item{kernel}{A numeric matrix giving the convolution kernel.
+Larger or weighted matrices can be used to define custom filters.
+The matrix is  passed directly to OpenCV,
+which normalizes nothing automatically.}
 
-\item{border}{An integer scalar.
-The type of pixel extrapolation method.}
+\item{border}{An integer scalar specifying the border-handling mode.
+One of \verb{0, 1, 2, 3, 4}, corresponding to OpenCV's border modes.
+See package documentation for details.}
 
 \item{alphasync}{A logical scalar.
-If \code{TRUE}, filtering is applied separately to the alpha channel.}
+If \code{TRUE}, the convolution is also applied to the alpha channel;
+if \code{FALSE}, the alpha channel is preserved as-is.}
 }
 \value{
 A \code{nativeRaster} object.
 }
 \description{
-Convolution with a custom kernel
+Applies a custom convolution kernel to a \code{nativeRaster} image.
+This function wraps OpenCV's \code{filter2D},
+allowing arbitrary linear filters
+such as sharpening, blurring, or edge detection.
+Optionally, the same convolution can be applied to the alpha channel.
 }
 \details{
-\code{border} refers to:
+\code{border} corresponds to the OpenCV extrapolation types:
 \enumerate{
 \item cv::BORDER_CONSTANT
 \item cv::BORDER_REPLICATE

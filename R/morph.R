@@ -1,9 +1,27 @@
-#' Morphology
+#' Morphological operations (grayscale or RGB)
 #'
-#' @description
-#' Applies morphological transformations to an image.
+#' Applies morphological image-processing operations to a `nativeRaster` image.
+#' Depending on `use_rgb`, operations are applied either to the grayscale image
+#' masked by the alpha channel or independently to each RGB channel with
+#' per-channel structuring elements. Supported operations include erosion,
+#' dilation, opening, closing, gradient, and related transforms.
 #'
-#' `ktype` refers to:
+#' ## Kernel specification
+#' The shape of the structuring element is controlled by `ktype`, and its size
+#' is determined by `ksize`.
+#' - When `use_rgb = FALSE`, `ksize` must be a single non-negative integer.
+#' - When `use_rgb = TRUE`, `ksize` must be a length-3 integer vector, allowing
+#'   separate kernel sizes for the R, G, and B channels.
+#'
+#' The location of the anchor (kernel origin) can be specified via `anchor`.
+#' Use `c(-1, -1)` for the default centered anchor.
+#'
+#' ## Alpha handling
+#' If `alphasync = TRUE`, the same morphological operation is applied to the
+#' alpha channel. Otherwise, the alpha channel is preserved.
+#'
+#' ## Options
+#' `ktype` corresponds to:
 #'
 #' 0. cv::MORPH_RECT
 #' 1. cv::MORPH_CROSS
@@ -20,8 +38,7 @@
 #' 6. cv::MORPH_BLACKHAT
 #' 7. cv::MORPH_HITMISS
 #'
-#' @details
-#' `border` refers to:
+#' `border` corresponds to:
 #'
 #' 0. cv::BORDER_CONSTANT
 #' 1. cv::BORDER_REPLICATE
@@ -30,22 +47,25 @@
 #' 4. cv::BORDER_ISOLATED
 #'
 #' @param nr A `nativeRaster` object.
-#' @param ksize A numeric vector of length 3. The kernel size.
-#' @param ktype An integer scalar.
-#' The type of kernel. See description.
-#' @param mode An integer scalar.
-#' The type of morphological operation. See description.
-#' @param border An integer scalar.
-#' The type of pixel extrapolation method.
-#' @param iterations An integer scalar.
-#' Number of times to apply the transformation.
-#' @param alphasync A logical scalar.
-#' If `TRUE`, applies the transformation separately to the alpha channel.
-#' @param use_rgb A logical scalar.
-#' If `TRUE`, applies morphology separately for each color channel
-#' and combines them.
-#' @param anchor An integer vector of length 2.
-#' Anchor position with the kernel. The default value means the center of the kernel.
+#' @param ksize An integer vector specifying kernel size(s).
+#' - Length 1 (grayscale mode): kernel radius.
+#' - Length 3 (RGB mode): per-channel kernel radii.
+#' Must be non-negative.
+#' @param ktype An integer scalar selecting the structuring element shape.
+#' One of `0, 1, 2`, corresponding to OpenCV kernel types.
+#' @param mode An integer scalar selecting the morphological operation.
+#' One of `0–7`, mapped to OpenCV operation modes (`morphologyEx` operations).
+#' @param border An integer scalar selecting the border-handling mode.
+#' One of `0–4`, corresponding to OpenCV's border modes.
+#' @param iterations An integer scalar giving the number of repetitions of the
+#' operation. Must be grater than 0.
+#' @param alphasync A logical scalar. If `TRUE`, apply the morphological
+#' operation to the alpha channel as well.
+#' @param use_rgb A logical scalar. If `TRUE`, apply the operation independently
+#' to each RGB channel; if `FALSE`, apply it to a grayscale image derived from
+#' masked RGB.
+#' @param anchor An integer vector of length 2 specifying the anchor point
+#' (kernel origin). Use `c(-1, -1)` for the default centered anchor.
 #' @returns A `nativeRaster` object.
 #' @export
 morphology <- function(
