@@ -25,7 +25,6 @@
 NULL
 
 #' @rdname kernels
-#' @name make-kernels
 #' @export
 kernel_cone <- function(size) {
   if (size %% 2 != 1) {
@@ -39,7 +38,6 @@ kernel_cone <- function(size) {
 }
 
 #' @rdname kernels
-#' @name make-kernels
 #' @export
 kernel_disc <- function(size) {
   if (size %% 2 != 1) {
@@ -56,7 +54,6 @@ kernel_disc <- function(size) {
 }
 
 #' @rdname kernels
-#' @name make-kernels
 #' @export
 kernel_emboss <- function(theta, strength = 1) {
   k <- matrix(c(-1, -1, 0, -1, 0, 1, 0, 1, 1), 3, 3)
@@ -86,7 +83,6 @@ kernel_emboss <- function(theta, strength = 1) {
 }
 
 #' @rdname kernels
-#' @name make-kernels
 #' @export
 kernel_motion <- function(size, theta) {
   if (size %% 2 != 1) {
@@ -106,7 +102,6 @@ kernel_motion <- function(size, theta) {
 }
 
 #' @rdname kernels
-#' @name make-kernels
 #' @export
 kernel_ring <- function(size, thickness = 1) {
   if (size %% 2 != 1) {

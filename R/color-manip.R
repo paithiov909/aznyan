@@ -155,10 +155,12 @@ sepia <- function(nr, intensity = 1, depth = 20) {
 fill_with <- function(width, height, color) {
   packed_int <-
     grDevices::col2rgb(color[1], alpha = TRUE) |>
-    rlang::as_function(~ {
-      x <- as.double(.)
-      azny_pack_integers(x[1:3], x[4], 1, 1)
-    })()
+    rlang::as_function(
+      ~ {
+        x <- as.double(.)
+        azny_pack_integers(x[1:3], x[4], 1, 1)
+      }
+    )()
   out <- rep(packed_int, width * height)
   dim(out) <- c(height, width)
   as_nr(out)

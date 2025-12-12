@@ -32,3 +32,22 @@ test_that("gaussian_blur works", {
       as_recordedplot()
   )
 })
+
+test_that("convolve works", {
+  vdiffr::expect_doppelganger(
+    "convolve",
+    convolve(png, kernel_motion(13, 5 * pi / 6)) |>
+      as_recordedplot()
+  )
+})
+
+test_that("kuwahara_filter works", {
+  filter <-
+    matrix(c(0, -.111, 0, -.111, 1.777, -.111, 0, -.111, 0), 3, 3) |>
+    kronecker(matrix(1, 3, 3))
+  vdiffr::expect_doppelganger(
+    "kuwahara",
+    kuwahara_filter(png, kernel_disc(9), kernel2 = filter) |>
+      as_recordedplot()
+  )
+})
