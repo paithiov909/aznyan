@@ -104,12 +104,13 @@ fi
 echo "Using PKG_CFLAGS=$PKG_CFLAGS"
 echo "Using PKG_LIBS=$PKG_LIBS"
 
-# Use CXX17 if available (preferred for recent opencv)
-CXX17=`${R_HOME}/bin/R CMD config CXX17` || unset CXX17
+# Use CXX20 if available
+# NOTE: "captured structured bindings" requires C++20
+CXX20=`${R_HOME}/bin/R CMD config CXX20` || unset CXX20
 
-if [ "$CXX17" ]; then
-echo "Found C++17 compiler: $CXX17"
-CXXVER=CXX17
+if [ "$CXX20" ]; then
+echo "Found C++20 compiler: $CXX20"
+CXXVER=CXX20
 else
 echo "Using default compiler"
 CXXVER=CXX
