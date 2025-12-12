@@ -30,12 +30,13 @@ cpp11::integers azny_hist_eq(const cpp11::integers& nr, int height, int width,
     cv::equalizeHist(tmpB, tmpC);
   }
 
-  cv::Mat out(bgra[0].size(), CV_8UC3);
+  cv::Mat tmpD = bgra[0]; // NOTE: just trying to make checks happy...
+  cv::Mat out(tmpD.size(), CV_8UC3);
   if (color) {
     aznyan::parallel_for(0, height, [&](int32_t y) {
       auto pIN1 = tmpC.ptr<uchar>(y);
       auto pIN2 = tmpB.ptr<uchar>(y);
-      auto pIN3 = bgra[0].ptr<cv::Vec3b>(y);
+      auto pIN3 = tmpD.ptr<cv::Vec3b>(y);
       auto pOUT = out.ptr<cv::Vec3b>(y);
 
       for (auto x = 0; x < width; ++x) {
