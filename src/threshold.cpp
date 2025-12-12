@@ -10,8 +10,7 @@ cpp11::integers azny_thres(const cpp11::integers& nr, int height, int width,
   cv::threshold(tmpB, tmpC, thres, maxv, aznyan::thresmode[mode]);
 
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpC, tmpC, tmpC}, out);
   return aznyan::encode_nr(out, bgra[1]);
 }
 
@@ -30,7 +29,6 @@ cpp11::integers azny_adpthres(const cpp11::integers& nr, int height, int width,
   cv::adaptiveThreshold(tmpB, tmpC, maxv, adp_mode, thres_type, 2 * bsize + 1,
                         valC);
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpC, tmpC, tmpC}, out);
   return aznyan::encode_nr(out, bgra[1]);
 }

@@ -1,6 +1,6 @@
 #' Create color code while premultiplying alpha
 #'
-#' @param r,g,b,a Numeric scalars.
+#' @param r,g,b,a Numeric vectors.
 #' @param max An integer scalar. The maximum value of the color code.
 #' @returns A color code.
 #' @export
@@ -11,11 +11,12 @@ premul <- function(r, g, b, a, max = 255L) {
 
 #' Apply predefined color filter
 #'
-#' @description
 #' Applies one of the predefined color filters
 #' that are ported from [Rustagram](https://github.com/ha-shine/rustagram).
 #'
+#' ## Options
 #' The following filters are available:
+#'
 #' - 1977
 #' - aden
 #' - brannan

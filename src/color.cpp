@@ -131,7 +131,6 @@ cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width,
   } else {
     cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGR2GRAY, 1);
   }
-
   if (invmode) {
     cv::Mat tmp1 = cv::Mat::ones(tmpB.size(), CV_8UC1) * 255;
     cv::Mat tmp2 = cv::Mat::zeros(tmpB.size(), CV_8UC1);

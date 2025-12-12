@@ -34,9 +34,9 @@ sepia(nr, intensity = 1, depth = 20)
 \item{max}{An integer scalar. The maximum value of the color code.}
 
 \item{alpha}{A numeric scalar in range \verb{[0, 1]}.
-Alpha value to be reset for transparency.}
+The alpha value to be reset for transparency.}
 
-\item{rad}{A numeric scalar. Rotation angle in radian.}
+\item{rad}{A numeric scalar. The rotation angle in radians.}
 
 \item{intensity}{A numeric scalar.}
 

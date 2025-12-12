@@ -2,6 +2,7 @@
 
 export(adpthres)
 export(as_recordedplot)
+export(aznyan_num_threads)
 export(bilateral_filter)
 export(blend_add)
 export(blend_average)

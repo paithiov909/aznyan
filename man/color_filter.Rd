@@ -22,6 +22,9 @@ A \code{nativeRaster} object.
 \description{
 Applies one of the predefined color filters
 that are ported from \href{https://github.com/ha-shine/rustagram}{Rustagram}.
+}
+\details{
+\subsection{Options}{
 
 The following filters are available:
 \itemize{
@@ -48,5 +51,6 @@ The following filters are available:
 \item toaster
 \item valencia
 \item walden
+}
 }
 }

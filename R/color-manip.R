@@ -36,8 +36,8 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' @param intensity A numeric scalar.
 #' @param depth An integer scalar.
 #' @param alpha A numeric scalar in range `[0, 1]`.
-#' Alpha value to be reset for transparency.
-#' @param rad A numeric scalar. Rotation angle in radian.
+#' The alpha value to be reset for transparency.
+#' @param rad A numeric scalar. The rotation angle in radians.
 #' @param max An integer scalar. The maximum value of the color code.
 #' @returns A `nativeRaster` object.
 #' @rdname color-manip
@@ -126,7 +126,7 @@ saturate <- function(nr, intensity) {
 #' @rdname color-manip
 #' @export
 grayscale <- function(nr) {
-  # TODO: replace with cv::cvtColor
+  # TODO: replace with cv::cvtColor?
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
   rgb <- t(colSums(ret[1:3, ]) / 3) %x% c(1, 1, 1)

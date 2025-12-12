@@ -167,10 +167,10 @@ extern "C" SEXP _aznyan_azny_swap_channels(SEXP nr, SEXP height, SEXP width, SEX
   END_CPP11
 }
 // misc.cpp
-cpp11::integers azny_resize(const cpp11::integers& nr, int height, int width, cpp11::doubles wh, int resize_mode, bool set_size);
+cpp11::integers azny_resize(const cpp11::integers& nr, int height, int width, const cpp11::doubles& wh, int resize_mode, bool set_size);
 extern "C" SEXP _aznyan_azny_resize(SEXP nr, SEXP height, SEXP width, SEXP wh, SEXP resize_mode, SEXP set_size) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_resize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_mode), cpp11::as_cpp<cpp11::decay_t<bool>>(set_size)));
+    return cpp11::as_sexp(azny_resize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_mode), cpp11::as_cpp<cpp11::decay_t<bool>>(set_size)));
   END_CPP11
 }
 // misc.cpp
@@ -178,13 +178,6 @@ cpp11::integers azny_resample(const cpp11::integers& nr, int height, int width, 
 extern "C" SEXP _aznyan_azny_resample(SEXP nr, SEXP height, SEXP width, SEXP wh, SEXP resize_red, SEXP resize_exp) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_resample(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<cpp11::doubles>>(wh), cpp11::as_cpp<cpp11::decay_t<int>>(resize_red), cpp11::as_cpp<cpp11::decay_t<int>>(resize_exp)));
-  END_CPP11
-}
-// misc.cpp
-int get_num_threads();
-extern "C" SEXP _aznyan_get_num_threads() {
-  BEGIN_CPP11
-    return cpp11::as_sexp(get_num_threads());
   END_CPP11
 }
 // morph.cpp
@@ -250,6 +243,20 @@ extern "C" SEXP _aznyan_azny_stylize(SEXP nr, SEXP height, SEXP width, SEXP sgmS
     return cpp11::as_sexp(azny_stylize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR)));
   END_CPP11
 }
+// threads.cpp
+int get_num_threads();
+extern "C" SEXP _aznyan_get_num_threads() {
+  BEGIN_CPP11
+    return cpp11::as_sexp(get_num_threads());
+  END_CPP11
+}
+// threads.cpp
+int set_num_threads(int n);
+extern "C" SEXP _aznyan_set_num_threads(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(set_num_threads(cpp11::as_cpp<cpp11::decay_t<int>>(n)));
+  END_CPP11
+}
 // threshold.cpp
 cpp11::integers azny_thres(const cpp11::integers& nr, int height, int width, double thres, double maxv, int mode);
 extern "C" SEXP _aznyan_azny_thres(SEXP nr, SEXP height, SEXP width, SEXP thres, SEXP maxv, SEXP mode) {
@@ -304,6 +311,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
     {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},
     {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
+    {"_aznyan_set_num_threads",       (DL_FUNC) &_aznyan_set_num_threads,        1},
     {NULL, NULL, 0}
 };
 }

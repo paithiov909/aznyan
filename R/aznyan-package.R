@@ -6,6 +6,20 @@
 ## usethis namespace: end
 NULL
 
+#' Get or set number of OpenCV threads
+#'
+#' @param n An integer scalar larger than `1`.
+#' If missing, return the current number of threads.
+#' @returns Current number of threads used by OpenCV.
+#' @export
+#' @keywords internal
+aznyan_num_threads <- function(n) {
+  if (missing(n)) {
+    return(get_num_threads())
+  }
+  set_num_threads(n)
+}
+
 #' Convert image data into recorded plot
 #'
 #' @param nr A `nativeRaster` object.

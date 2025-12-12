@@ -100,10 +100,6 @@ azny_resample <- function(nr, height, width, wh, resize_red, resize_exp) {
   .Call(`_aznyan_azny_resample`, nr, height, width, wh, resize_red, resize_exp)
 }
 
-get_num_threads <- function() {
-  .Call(`_aznyan_get_num_threads`)
-}
-
 azny_morphologyfilter <- function(nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt) {
   .Call(`_aznyan_azny_morphologyfilter`, nr, height, width, ksize, ktype, mode, iterations, border, alphasync, pt)
 }
@@ -138,6 +134,14 @@ azny_preserving <- function(nr, height, width, sgmS, sgmR, mode) {
 
 azny_stylize <- function(nr, height, width, sgmS, sgmR) {
   .Call(`_aznyan_azny_stylize`, nr, height, width, sgmS, sgmR)
+}
+
+get_num_threads <- function() {
+  .Call(`_aznyan_get_num_threads`)
+}
+
+set_num_threads <- function(n) {
+  .Call(`_aznyan_set_num_threads`, n)
 }
 
 azny_thres <- function(nr, height, width, thres, maxv, mode) {

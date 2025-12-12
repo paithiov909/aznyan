@@ -10,11 +10,11 @@ cpp11::integers azny_cannyfilter(const cpp11::integers& nr, int height,
   cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGRA2GRAY);
   cv::Canny(tmpB, tmpC, thres1, thres2, 2 * asize - 1, gradient);
 
-  if (balp) cv::threshold(tmpC, bgra[1], 0.1, 255, cv::THRESH_BINARY);
-
+  if (balp) {
+    cv::threshold(tmpC, bgra[1], 0.1, 255, cv::THRESH_BINARY);
+  }
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpC, tmpC, tmpC}, out);
   return aznyan::encode_nr(out, bgra[1]);
 }
 
@@ -33,10 +33,10 @@ cpp11::integers azny_cannyrgb(const cpp11::integers& nr, int height, int width, 
     cv::Canny(ch_col[i], tmpC, thres1, thres2, 2 * asize - 1, gradient);
     cv::add(tmpB, tmpC, tmpB);
   }
-  if (balp) cv::threshold(tmpB, ch_col[3], 0.1, 255, cv::THRESH_BINARY);
-
+  if (balp) {
+    cv::threshold(tmpB, ch_col[3], 0.1, 255, cv::THRESH_BINARY);
+  }
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpB, tmpB, tmpB};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpB, tmpB, tmpB}, out);
   return aznyan::encode_nr(out, ch_col[3]);
 }

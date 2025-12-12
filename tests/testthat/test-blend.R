@@ -1,3 +1,6 @@
+skip_on_cran()
+skip_on_ci()
+
 vespa <- fastpng::read_png(
   system.file("images/vespa.png", package = "aznyan"),
   type = "nativeraster",

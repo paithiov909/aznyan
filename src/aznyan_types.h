@@ -1,11 +1,8 @@
 #pragma once
-#include <thread>
 #include <opencv2/opencv.hpp>
 #include <cpp11.hpp>
 
 namespace aznyan {
-
-// static const std::vector<int> params = {cv::IMWRITE_PNG_COMPRESSION, 1};
 
 /**
  * 0-4
@@ -65,8 +62,8 @@ static const std::vector<int> cmmode{
 
 template <class FUNC>
 inline void parallel_for(int st, int ed, FUNC func) {
-  int num_cpu = cv::getNumThreads();
-  int nstripes = (ed - st + num_cpu - 1) / num_cpu;
+  const int num_cpu = cv::getNumThreads();
+  const int nstripes = (ed - st + num_cpu - 1) / num_cpu;
   cv::parallel_for_(
       cv::Range(st, ed),
       [&func](const cv::Range& range) {
@@ -76,22 +73,6 @@ inline void parallel_for(int st, int ed, FUNC func) {
       },
       nstripes);
 }
-
-// template <class I, class FUNC>
-// inline void parallel_for_each(&I items, FUNC func) {
-//   auto begin = std::begin(items);
-//   auto size = std::distance(begin, std::end(items));
-//   int num_cpu = std::thread::hardware_concurrency();
-//   int nstripes = (size + num_cpu - 1) / num_cpu;
-//   cv::parallel_for_(
-//       cv::Range(0, size),
-//       [&func, begin](const cv::Range& range) {
-//         for (int idx = range.start; idx < range.end; idx++) {
-//           func(*(begin + idx));
-//         }
-//       },
-//       nstripes);
-// }
 
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
     const cv::Mat& img) {
@@ -114,8 +95,7 @@ inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 
-// NOTE:
-// rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
+// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
     const cpp11::integers& nr, int height, int width) {
   cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);

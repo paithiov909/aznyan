@@ -30,8 +30,7 @@ cpp11::integers azny_morphologyfilter(const cpp11::integers& nr, int height,
     tmpD = bgra[1].clone();
 
   cv::Mat out;
-  std::vector<cv::Mat> ch_out{tmpC, tmpC, tmpC};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpC, tmpC, tmpC}, out);
   return aznyan::encode_nr(out, tmpD);
 }
 
@@ -83,7 +82,6 @@ cpp11::integers azny_morphologyrgb(const cpp11::integers& nr, int height,
   }
 
   cv::Mat out;
-  std::vector ch_out{tmpD[0], tmpD[1], tmpD[2]};
-  cv::merge(ch_out, out);
+  cv::merge(std::vector<cv::Mat>{tmpD[0], tmpD[1], tmpD[2]}, out);
   return aznyan::encode_nr(out, tmpC);
 }

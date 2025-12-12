@@ -7,7 +7,7 @@
 premul(r, g, b, a, max = 255L)
 }
 \arguments{
-\item{r, g, b, a}{Numeric scalars.}
+\item{r, g, b, a}{Numeric vectors.}
 
 \item{max}{An integer scalar. The maximum value of the color code.}
 }
