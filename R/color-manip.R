@@ -19,6 +19,7 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' @param nr A `nativeRaster` object.
 #' @param intensity A numeric scalar.
 #' @param depth An integer scalar.
+#' @param color A character string; the color to be set.
 #' @param alpha A numeric scalar in range `[0, 1]`.
 #'  The alpha value to be reset for transparency.
 #' @param rad A numeric scalar. The rotation angle in radians.

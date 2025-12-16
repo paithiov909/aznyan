@@ -36,6 +36,8 @@ sepia(nr, intensity = 1, depth = 20)
 
 \item{max}{An integer scalar. The maximum value of the color code.}
 
+\item{color}{A character string; the color to be set.}
+
 \item{alpha}{A numeric scalar in range \verb{[0, 1]}.
 The alpha value to be reset for transparency.}
 
