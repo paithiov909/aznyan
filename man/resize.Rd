@@ -46,7 +46,7 @@ A \code{nativeRaster} object.
 }
 \description{
 These functions provide flexible image scaling based on OpenCV's
-\code{resize()}, supporting both direct resizing and two-stage
+\code{resize}, supporting both direct resizing and two-stage
 downsample–upsample resampling. The operations apply to all BGRA channels.
 }
 \details{

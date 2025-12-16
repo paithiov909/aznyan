@@ -12,7 +12,10 @@ NULL
 #' @noRd
 check_nr_dim <- function(src, dst) {
   if (!identical(dim(src), dim(dst))) {
-    rlang::abort("`src` and `dst` must have the same dimensions.")
+    rlang::abort(
+      "`src` and `dst` must have the same dimensions.",
+      call = rlang::caller_env()
+    )
   }
   invisible(NULL)
 }

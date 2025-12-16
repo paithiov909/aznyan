@@ -118,7 +118,7 @@ apply_aden <- function(nr) {
     contrast(-.1) |>
     saturate(-.2) |>
     brighten(.2) |>
-    restore_transparency()
+    reset_alpha()
 }
 
 #' @noRd
@@ -133,7 +133,7 @@ apply_brannan <- function(nr) {
 apply_brooklyn <- function(nr) {
   bg <- contrast(nr, -.1) |>
     brighten(.1) |>
-    restore_transparency()
+    reset_alpha()
   fg <- fill_with(ncol(nr), nrow(nr), premul(168, 223, 193, 150))
   blend_overlay(fg, bg)
 }
@@ -152,7 +152,7 @@ apply_earlybird <- function(nr) {
     sepia(.05)
   fg <- fill_with(ncol(nr), nrow(nr), premul(208, 186, 142, 150))
   out <- blend_overlay(bg, fg) # bg, fg
-  restore_transparency(out)
+  reset_alpha(out)
 }
 
 #' @noRd
@@ -170,7 +170,7 @@ apply_hudson <- function(nr) {
     saturate(.1)
   fg <- fill_with(ncol(nr), nrow(nr), premul(166, 177, 255, 208))
   out <- blend_multiply(fg, bg)
-  restore_transparency(out)
+  reset_alpha(out)
 }
 
 #' @noRd

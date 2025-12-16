@@ -3,7 +3,8 @@
 \name{color-manip}
 \alias{color-manip}
 \alias{unpremul}
-\alias{restore_transparency}
+\alias{set_matte}
+\alias{reset_alpha}
 \alias{hue_rotate}
 \alias{contrast}
 \alias{brighten}
@@ -14,7 +15,9 @@
 \usage{
 unpremul(nr, max = 255L)
 
-restore_transparency(nr, alpha = 1)
+set_matte(nr, color = "green")
+
+reset_alpha(nr, alpha = 1)
 
 hue_rotate(nr, rad)
 

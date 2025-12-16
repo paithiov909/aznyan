@@ -55,11 +55,24 @@ unpremul <- function(nr, max = 255L) {
 
 #' @rdname color-manip
 #' @export
-restore_transparency <- function(nr, alpha = 1) {
+set_matte <- function(nr, color = "green") {
+  rgb_int <-
+    grDevices::col2rgb(color[1], alpha = FALSE)
+  sz <- dim(nr)
+  ret <- nr_to_rgba(nr, "nr")
+  ret[1, ][ret[4, ] != 255] <- rgb_int[1, ] * 1
+  ret[2, ][ret[4, ] != 255] <- rgb_int[2, ] * 1
+  ret[3, ][ret[4, ] != 255] <- rgb_int[3, ] * 1
+  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
+}
+
+#' @rdname color-manip
+#' @export
+reset_alpha <- function(nr, alpha = 1) {
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
   ret[4, ] <- clamp(alpha * 255, 0, 255)
-  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
 }
 
 #' @rdname color-manip
@@ -126,7 +139,6 @@ saturate <- function(nr, intensity) {
 #' @rdname color-manip
 #' @export
 grayscale <- function(nr) {
-  # TODO: replace with cv::cvtColor?
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
   rgb <- t(colSums(ret[1:3, ]) / 3) %x% c(1, 1, 1)

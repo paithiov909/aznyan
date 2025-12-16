@@ -27,7 +27,7 @@ swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
 #' Resize or resample a `nativeRaster` image
 #'
 #' These functions provide flexible image scaling based on OpenCV's
-#' `resize()`, supporting both direct resizing and two-stage
+#' `resize`, supporting both direct resizing and two-stage
 #' downsample–upsample resampling. The operations apply to all BGRA channels.
 #'
 #' ## `resize()`

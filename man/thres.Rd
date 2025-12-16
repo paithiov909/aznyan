@@ -43,7 +43,7 @@ If \code{TRUE}, invert the local thresholding result.}
 A \code{nativeRaster} object.
 }
 \description{
-Perform global (fixed) thresholding or adaptive thresholding on a
+Performs global (fixed) thresholding or adaptive thresholding on a
 \code{nativeRaster} image.
 Both functions operate on a grayscale conversion of the input
 and return a 3-channel binary (0/\code{maxv}) image with the original alpha
@@ -52,7 +52,7 @@ preserved.
 \details{
 \subsection{\code{thres()}}{
 
-Apply a fixed threshold to the grayscale image.
+Applies a fixed threshold to the grayscale image.
 Pixels with values greater than \code{threshold}
 (depending on the thresholding mode) are set to \code{maxv};
 others are set to \code{0}.
@@ -62,7 +62,7 @@ OpenCV's threshold types.
 
 \subsection{\code{adpthres()}}{
 
-Apply adaptive thresholding, where the threshold value is computed locally
+Applies adaptive thresholding, where the threshold value is computed locally
 for each pixel based on a neighborhood mean or Gaussian-weighted sum. The
 block size and constant \code{C} adjust how the local threshold is computed.
 }

@@ -1,6 +1,6 @@
 #' Thresholding and adaptive thresholding
 #'
-#' Perform global (fixed) thresholding or adaptive thresholding on a
+#' Performs global (fixed) thresholding or adaptive thresholding on a
 #' `nativeRaster` image.
 #' Both functions operate on a grayscale conversion of the input
 #' and return a 3-channel binary (0/`maxv`) image with the original alpha
@@ -8,7 +8,7 @@
 #'
 #' ## `thres()`
 #'
-#' Apply a fixed threshold to the grayscale image.
+#' Applies a fixed threshold to the grayscale image.
 #' Pixels with values greater than `threshold`
 #' (depending on the thresholding mode) are set to `maxv`;
 #' others are set to `0`.
@@ -17,7 +17,7 @@
 #'
 #' ## `adpthres()`
 #'
-#' Apply adaptive thresholding, where the threshold value is computed locally
+#' Applies adaptive thresholding, where the threshold value is computed locally
 #' for each pixel based on a neighborhood mean or Gaussian-weighted sum. The
 #' block size and constant `C` adjust how the local threshold is computed.
 #'
@@ -34,7 +34,7 @@
 #'
 #' @param nr A `nativeRaster` object.
 #' @param threshold A numeric scalar in `[0, 255]` specifying the fixed
-#'   threshold value.
+#' threshold value.
 #' @param maxv A numeric scalar in `[0, 255]`.
 #' - For `thres()`: A numeric scalar in `[0, 255]` giving the value assigned to
 #'   "foreground" pixels.
