@@ -28,14 +28,6 @@ azny_blurhash <- function(nr, height, width, x_comps, y_comps) {
   .Call(`_aznyan_azny_blurhash`, nr, height, width, x_comps, y_comps)
 }
 
-azny_decode_rec709 <- function(in_vec) {
-  .Call(`_aznyan_azny_decode_rec709`, in_vec)
-}
-
-azny_encode_rec709 <- function(in_vec) {
-  .Call(`_aznyan_azny_encode_rec709`, in_vec)
-}
-
 azny_saturate_value <- function(in_vec, val) {
   .Call(`_aznyan_azny_saturate_value`, in_vec, val)
 }

@@ -55,20 +55,6 @@ extern "C" SEXP _aznyan_azny_blurhash(SEXP nr, SEXP height, SEXP width, SEXP x_c
   END_CPP11
 }
 // color.cpp
-cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec);
-extern "C" SEXP _aznyan_azny_decode_rec709(SEXP in_vec) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_decode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
-  END_CPP11
-}
-// color.cpp
-cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec);
-extern "C" SEXP _aznyan_azny_encode_rec709(SEXP in_vec) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_encode_rec709(cpp11::as_cpp<cpp11::decay_t<const std::vector<double>&>>(in_vec)));
-  END_CPP11
-}
-// color.cpp
 cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val);
 extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP val) {
   BEGIN_CPP11
@@ -282,10 +268,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          8},
     {"_aznyan_azny_color_map",        (DL_FUNC) &_aznyan_azny_color_map,         6},
     {"_aznyan_azny_convolve",         (DL_FUNC) &_aznyan_azny_convolve,          6},
-    {"_aznyan_azny_decode_rec709",    (DL_FUNC) &_aznyan_azny_decode_rec709,     1},
     {"_aznyan_azny_det_enhance",      (DL_FUNC) &_aznyan_azny_det_enhance,       5},
     {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
-    {"_aznyan_azny_encode_rec709",    (DL_FUNC) &_aznyan_azny_encode_rec709,     1},
     {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,      8},
     {"_aznyan_azny_hist_eq",          (DL_FUNC) &_aznyan_azny_hist_eq,           8},
     {"_aznyan_azny_hls_to_rgb",       (DL_FUNC) &_aznyan_azny_hls_to_rgb,        1},

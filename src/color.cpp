@@ -1,26 +1,6 @@
 #include "aznyan_types.h"
 
 [[cpp11::register]]
-cpp11::doubles azny_decode_rec709(const std::vector<double>& in_vec) {
-  std::vector<double> ret;
-  for (const auto& c : in_vec) {
-    ret.push_back((c < 0.081) ? (c / 4.5f)
-                              : std::pow((c + 0.099f) / 1.099f, 1.0f / 0.45f));
-  }
-  return cpp11::as_sexp(ret);
-}
-
-[[cpp11::register]]
-cpp11::doubles azny_encode_rec709(const std::vector<double>& in_vec) {
-  std::vector<double> ret;
-  for (const auto& c : in_vec) {
-    ret.push_back((c < 0.018) ? (c * 4.5f)
-                              : 1.099f * std::pow(c, 0.45f) - 0.099f);
-  }
-  return cpp11::as_sexp(ret);
-}
-
-[[cpp11::register]]
 cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val) {
   std::vector<double> ret;
   for (const auto& c : in_vec) {
