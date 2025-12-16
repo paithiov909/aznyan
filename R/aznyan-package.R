@@ -59,12 +59,12 @@ nr_to_rgba <- function(nr, nm) {
     azny_unpack_integers()
 }
 
-#' Check that `src` and `dst` have the same dimensions
+#' Check if two nativeRaster objects have the same dimensions
 #' @noRd
 check_nr_dim <- function(src, dst) {
   if (!identical(dim(src), dim(dst))) {
     rlang::abort(
-      "`src` and `dst` must have the same dimensions.",
+      "The two nativeRaster objects must have the same dimensions.",
       call = rlang::caller_env()
     )
   }

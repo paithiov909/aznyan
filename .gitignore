@@ -45,3 +45,5 @@ Meta
 .vscode/
 
 /.quarto/
+
+**/*.quarto_ipynb
