@@ -2,7 +2,7 @@
 % Please edit documentation in R/aznyan-package.R
 \name{as_recordedplot}
 \alias{as_recordedplot}
-\title{Convert image data into recorded plot}
+\title{Convert image data into a recorded plot}
 \usage{
 as_recordedplot(nr)
 }
@@ -13,6 +13,6 @@ as_recordedplot(nr)
 A recorded plot is invisibly returned.
 }
 \description{
-Convert image data into recorded plot
+Convert image data into a recorded plot
 }
 \keyword{internal}

@@ -1,8 +1,8 @@
-#' Create color code while premultiplying alpha
+#' Create color codes while premultiplying alpha
 #'
 #' @param r,g,b,a Numeric vectors.
 #' @param max An integer scalar. The maximum value of the color code.
-#' @returns A color code.
+#' @returns Color codes.
 #' @export
 premul <- function(r, g, b, a, max = 255L) {
   alpha <- a / max

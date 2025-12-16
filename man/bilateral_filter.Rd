@@ -38,9 +38,11 @@ if \code{FALSE}, the alpha channel is preserved.}
 A \code{nativeRaster} object.
 }
 \description{
-Apply a bilateral filter to a \code{nativeRaster} image. This edge-preserving
-smoothing technique reduces noise while retaining sharp boundaries by
-considering both spatial distance and color similarity.
+Applies a bilateral filter to a \code{nativeRaster} image.
+
+This edge-preserving smoothing technique reduces noise
+while retaining sharp boundaries
+by considering both spatial distance and color similarity.
 }
 \details{
 \code{border} corresponds to the OpenCV extrapolation types:

@@ -37,9 +37,11 @@ each RGB channel separately; if \code{FALSE}, operate on grayscale only.}
 A \code{nativeRaster} object.
 }
 \description{
-Apply a Laplacian filter to detect edges in a \code{nativeRaster} image.
+Applies a Laplacian filter to detect edges in a \code{nativeRaster} image.
+
 The Laplacian operator computes second-order derivatives,
 highlighting regions of rapid intensity change.
+
 The result is returned as a 3-channel grayscale image,
 with optional binary alpha masking.
 }

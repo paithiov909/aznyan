@@ -2,7 +2,7 @@
 % Please edit documentation in R/color-filters.R
 \name{premul}
 \alias{premul}
-\title{Create color code while premultiplying alpha}
+\title{Create color codes while premultiplying alpha}
 \usage{
 premul(r, g, b, a, max = 255L)
 }
@@ -12,8 +12,8 @@ premul(r, g, b, a, max = 255L)
 \item{max}{An integer scalar. The maximum value of the color code.}
 }
 \value{
-A color code.
+Color codes.
 }
 \description{
-Create color code while premultiplying alpha
+Create color codes while premultiplying alpha
 }

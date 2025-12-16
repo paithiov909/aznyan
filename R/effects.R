@@ -11,11 +11,11 @@
 #'
 #' @param nr A `nativeRaster` object.
 #' @param x_comps An integer scalar specifying the number of horizontal DCT
-#' components to use.
-#' Must be greater than `0`. Larger values capture more detail.
+#'  components to use.
+#'  Must be greater than `0`. Larger values capture more detail.
 #' @param y_comps An integer scalar specifying the number of vertical DCT
-#' components to use.
-#' Must be greater than `0`. Larger values capture more detail.
+#'  components to use.
+#'  Must be greater than `0`. Larger values capture more detail.
 #' @returns A `nativeRaster` object.
 #' @export
 blurhash <- function(nr, x_comps = 6, y_comps = 6) {
@@ -34,17 +34,17 @@ blurhash <- function(nr, x_comps = 6, y_comps = 6) {
 #'
 #' @param nr A `nativeRaster` object.
 #' @param factor A numeric scalar controlling the decay factor used at each
-#' iteration. Larger values reduce the contribution of later diffusion steps.
+#'  iteration. Larger values reduce the contribution of later diffusion steps.
 #' @param offset A numeric scalar added to the iteration index when computing
-#' the decaying gain. Helps adjust the early-iteration weighting.
+#'  the decaying gain. Helps adjust the early-iteration weighting.
 #' @param iter An integer scalar giving the number of diffusion iterations to
-#' perform. More iterations strengthen the smoothing and glow effects.
+#'  perform. More iterations strengthen the smoothing and glow effects.
 #' @param gamma A numeric scalar specifying the gamma exponent applied before
-#' diffusion (and inverted afterward). Values greater than `1` emphasize
-#' bright regions.
+#'  diffusion (and inverted afterward). Values greater than `1` emphasize
+#'  bright regions.
 #' @param sigma An integer scalar giving the initial Gaussian blur radius
-#' (converted to a standard deviation internally). The value is squared on
-#' each iteration, producing progressively wider diffusion.
+#'  (converted to a standard deviation internally). The value is squared on
+#'  each iteration, producing progressively wider diffusion.
 #' @returns A `nativeRaster` object.
 #' @export
 diffusion_filter <- function(

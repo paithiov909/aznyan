@@ -8,32 +8,6 @@
 #' @name blend-mode
 NULL
 
-#' Check that `src` and `dst` have the same dimensions
-#' @noRd
-check_nr_dim <- function(src, dst) {
-  if (!identical(dim(src), dim(dst))) {
-    rlang::abort(
-      "`src` and `dst` must have the same dimensions.",
-      call = rlang::caller_env()
-    )
-  }
-  invisible(NULL)
-}
-
-#' Cast native raster into 4*(w*h)-dimensional integer matrix
-#'
-#' @param nr A `nativeRaster` object.
-#' @param nm Name of `nr`
-#' @returns integer matrix
-#' @noRd
-nr_to_rgba <- function(nr, nm) {
-  if (missing(nm)) {
-    nm <- deparse1(substitute(nr))
-  }
-  cast_nr(nr, nm) |>
-    azny_unpack_integers()
-}
-
 #' Clip values between `min` and `max`
 #'
 #' @param x numerics

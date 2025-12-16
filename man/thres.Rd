@@ -23,7 +23,8 @@ threshold value.}
 specifying the output value for "foreground" pixels.
 }}
 
-\item{mode}{\itemize{
+\item{mode}{An integer scalar specifying the thresholding mode.
+\itemize{
 \item For \code{thres()}: An integer scalar selecting the thresholding mode.
 Must be one of \verb{0–6}, corresponding to OpenCV's threshold flags.
 \item For \code{adpthres()}: An integer scalar selecting the binary mode.

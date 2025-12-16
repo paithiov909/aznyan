@@ -16,9 +16,9 @@
 #' @param size An odd integer specifying the kernel size.
 #' @param theta A numeric value (in radians) specifying the orientation.
 #' @param thickness A numeric value controlling ring thickness.
-#' Defaults to `1`.
+#'  Defaults to `1`.
 #' @param strength A numeric value controlling emboss intensity.
-#' Defaults to `1`.
+#'  Defaults to `1`.
 #' @returns A numeric matrix.
 #' @rdname kernels
 #' @name make-kernels

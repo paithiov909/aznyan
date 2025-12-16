@@ -33,12 +33,12 @@
 #'
 #' @param nr A `nativeRaster` object.
 #' @param map An integer scalar specifying the colormap ID.
-#' Must be one of `0–21`, corresponding to OpenCV's built-in color maps.
+#'  Must be one of `0–21`, corresponding to OpenCV's built-in color maps.
 #' @param use_hsv A logical scalar.
-#' If `TRUE`, the hue channel (HSV_FULL) is used as the input to the colormap;
-#' if `FALSE`, a grayscale conversion is used instead.
+#'  If `TRUE`, the hue channel (HSV_FULL) is used as the input to the colormap;
+#'  if `FALSE`, a grayscale conversion is used instead.
 #' @param inverse A logical scalar. If `TRUE`, the input channel is inverted
-#' (`255 - value`) before applying the colormap.
+#'  (`255 - value`) before applying the colormap.
 #' @returns A `nativeRaster` object.
 #' @export
 color_map <- function(nr, map = 0, use_hsv = FALSE, inverse = FALSE) {

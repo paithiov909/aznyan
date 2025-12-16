@@ -36,21 +36,25 @@
 #' @param threshold A numeric scalar in `[0, 255]` specifying the fixed
 #' threshold value.
 #' @param maxv A numeric scalar in `[0, 255]`.
-#' - For `thres()`: A numeric scalar in `[0, 255]` giving the value assigned to
+#'
+#' * For `thres()`: A numeric scalar in `[0, 255]` giving the value assigned to
 #'   "foreground" pixels.
-#' - For `adpthres()`: A numeric scalar in `[0, 255]`
+#' * For `adpthres()`: A numeric scalar in `[0, 255]`
 #'   specifying the output value for "foreground" pixels.
+#'
 #' @param bsize An integer scalar in `[1, 50]` giving the neighborhood radius.
-#' The actual window size is computed as `2 * bsize + 1`.
+#'  The actual window size is computed as `2 * bsize + 1`.
 #' @param C A numeric scalar subtracted from the local threshold
-#' (used by OpenCV). Controls how strong the threshold offset is.
-#' @param mode
-#' - For `thres()`: An integer scalar selecting the thresholding mode.
+#'  (used by OpenCV). Controls how strong the threshold offset is.
+#' @param mode An integer scalar specifying the thresholding mode.
+#'
+#' * For `thres()`: An integer scalar selecting the thresholding mode.
 #'   Must be one of `0–6`, corresponding to OpenCV's threshold flags.
-#' - For `adpthres()`: An integer scalar selecting the binary mode.
+#' * For `adpthres()`: An integer scalar selecting the binary mode.
 #'   `0` (`THRESH_BINARY_INV`) or `1` (`THRESH_BINARY`).
+#'
 #' @param invert A logical scalar.
-#' If `TRUE`, invert the local thresholding result.
+#'  If `TRUE`, invert the local thresholding result.
 #' @returns A `nativeRaster` object.
 #' @rdname thres
 #' @name thres

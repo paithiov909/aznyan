@@ -9,6 +9,7 @@
 #' ## Kernel specification
 #' The shape of the structuring element is controlled by `ktype`, and its size
 #' is determined by `ksize`.
+#'
 #' - When `use_rgb = FALSE`, `ksize` must be a single non-negative integer.
 #' - When `use_rgb = TRUE`, `ksize` must be a length-3 integer vector, allowing
 #'   separate kernel sizes for the R, G, and B channels.
@@ -48,24 +49,26 @@
 #'
 #' @param nr A `nativeRaster` object.
 #' @param ksize An integer vector specifying kernel size(s).
-#' - Length 1 (grayscale mode): kernel radius.
-#' - Length 3 (RGB mode): per-channel kernel radii.
-#' Must be non-negative.
+#'
+#' * Length 1 (grayscale mode): kernel radius.
+#' * Length 3 (RGB mode): per-channel kernel radii.
+#'
+#'  Must be non-negative.
 #' @param ktype An integer scalar selecting the structuring element shape.
-#' One of `0, 1, 2`, corresponding to OpenCV kernel types.
+#'  One of `0, 1, 2`, corresponding to OpenCV kernel types.
 #' @param mode An integer scalar selecting the morphological operation.
-#' One of `0–7`, mapped to OpenCV operation modes (`morphologyEx` operations).
+#'  One of `0–7`, mapped to OpenCV operation modes (`morphologyEx` operations).
 #' @param border An integer scalar selecting the border-handling mode.
-#' One of `0–4`, corresponding to OpenCV's border modes.
+#'  One of `0–4`, corresponding to OpenCV's border modes.
 #' @param iterations An integer scalar giving the number of repetitions of the
-#' operation. Must be grater than 0.
+#'  operation. Must be grater than 0.
 #' @param alphasync A logical scalar. If `TRUE`, apply the morphological
-#' operation to the alpha channel as well.
+#'  operation to the alpha channel as well.
 #' @param use_rgb A logical scalar. If `TRUE`, apply the operation independently
-#' to each RGB channel; if `FALSE`, apply it to a grayscale image derived from
-#' masked RGB.
+#'  to each RGB channel; if `FALSE`, apply it to a grayscale image derived from
+#'  masked RGB.
 #' @param anchor An integer vector of length 2 specifying the anchor point
-#' (kernel origin). Use `c(-1, -1)` for the default centered anchor.
+#'  (kernel origin). Use `c(-1, -1)` for the default centered anchor.
 #' @returns A `nativeRaster` object.
 #' @export
 morphology <- function(

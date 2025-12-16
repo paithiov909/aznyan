@@ -9,7 +9,7 @@ NULL
 #' Get or set number of OpenCV threads
 #'
 #' @param n An integer scalar larger than `1`.
-#' If missing, return the current number of threads.
+#' If missing, returns the current number of threads.
 #' @returns Current number of threads used by OpenCV.
 #' @export
 #' @keywords internal
@@ -20,7 +20,7 @@ aznyan_num_threads <- function(n) {
   set_num_threads(n)
 }
 
-#' Convert image data into recorded plot
+#' Convert image data into a recorded plot
 #'
 #' @param nr A `nativeRaster` object.
 #' @returns A recorded plot is invisibly returned.
@@ -39,9 +39,36 @@ as_recordedplot <- function(nr) {
 cast_nr <- function(nr, nm = "nr") {
   if (!inherits(nr, "nativeRaster")) {
     msg <- glue::glue("`{nm}` must be a nativeRaster object.")
-    rlang::abort(msg)
+    rlang::abort(msg, call = rlang::caller_env())
   }
   as.integer(nr)
+}
+
+
+#' Cast native raster into 4*(w*h)-dimensional integer matrix
+#'
+#' @param nr A `nativeRaster` object.
+#' @param nm Name of `nr`
+#' @returns integer matrix
+#' @noRd
+nr_to_rgba <- function(nr, nm) {
+  if (missing(nm)) {
+    nm <- deparse1(substitute(nr))
+  }
+  cast_nr(nr, nm) |>
+    azny_unpack_integers()
+}
+
+#' Check that `src` and `dst` have the same dimensions
+#' @noRd
+check_nr_dim <- function(src, dst) {
+  if (!identical(dim(src), dim(dst))) {
+    rlang::abort(
+      "`src` and `dst` must have the same dimensions.",
+      call = rlang::caller_env()
+    )
+  }
+  invisible(NULL)
 }
 
 #' Take `x` and set its class as `nativeRaster`
@@ -63,7 +90,7 @@ int_match <- function(x, arg, values) {
     msg <- glue::glue(
       "`{arg}` must be one of {paste0(values, collapse = ', ')}. Got {x}."
     )
-    rlang::abort(msg)
+    rlang::abort(msg, call = rlang::caller_env())
   }
   tmp
 }

@@ -21,8 +21,7 @@ If \code{TRUE}, uses adaptive histogram equalization (CLAHE).
 If \code{FALSE}, applies standard histogram equalization.}
 
 \item{color}{A logical scalar.
-If \code{TRUE}, apply the equalized luminance back
-to the original BGR channels;
+If \code{TRUE}, apply the equalized luminance back to the original BGR channels;
 if \code{FALSE}, return a grayscale-based result.}
 }
 \value{

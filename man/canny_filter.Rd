@@ -38,8 +38,10 @@ A \code{nativeRaster} object.
 }
 \description{
 Applies the Canny edge detector to a \code{nativeRaster} image.
+
 The filter can operate either on a grayscale conversion
 or by aggregating edges detected independently from each RGB channel.
+
 The result is returned as a 3-channel
 binary edge map, with optional alpha masking.
 }

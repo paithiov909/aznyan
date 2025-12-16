@@ -8,7 +8,7 @@ aznyan_num_threads(n)
 }
 \arguments{
 \item{n}{An integer scalar larger than \code{1}.
-If missing, return the current number of threads.}
+If missing, returns the current number of threads.}
 }
 \value{
 Current number of threads used by OpenCV.

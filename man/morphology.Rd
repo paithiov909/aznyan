@@ -23,8 +23,9 @@ morphology(
 \itemize{
 \item Length 1 (grayscale mode): kernel radius.
 \item Length 3 (RGB mode): per-channel kernel radii.
-Must be non-negative.
-}}
+}
+
+Must be non-negative.}
 
 \item{ktype}{An integer scalar selecting the structuring element shape.
 One of \verb{0, 1, 2}, corresponding to OpenCV kernel types.}

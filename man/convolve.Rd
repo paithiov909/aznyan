@@ -16,8 +16,7 @@ convolve(
 
 \item{kernel}{A numeric matrix giving the convolution kernel.
 Larger or weighted matrices can be used to define custom filters.
-The matrix is  passed directly to OpenCV,
-which normalizes nothing automatically.}
+The matrix is  passed directly to OpenCV, which normalizes nothing automatically.}
 
 \item{border}{An integer scalar specifying the border-handling mode.
 One of \verb{0, 1, 2, 3, 4}, corresponding to OpenCV's border modes.
@@ -32,6 +31,7 @@ A \code{nativeRaster} object.
 }
 \description{
 Applies a custom convolution kernel to a \code{nativeRaster} image.
+
 This function wraps OpenCV's \code{filter2D},
 allowing arbitrary linear filters
 such as sharpening, blurring, or edge detection.

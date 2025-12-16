@@ -1,4 +1,4 @@
-#' Conversion between RGB and HLS colors
+#' Conversion between RGB and HLS color spaces
 #'
 #' @param x An integer matrix with 3 rows.
 #' @returns An integer matrix of the same size as `x`
@@ -20,7 +20,7 @@ hls2rgb <- function(x) azny_hls_to_rgb(x)
 #' @param intensity A numeric scalar.
 #' @param depth An integer scalar.
 #' @param alpha A numeric scalar in range `[0, 1]`.
-#' The alpha value to be reset for transparency.
+#'  The alpha value to be reset for transparency.
 #' @param rad A numeric scalar. The rotation angle in radians.
 #' @param max An integer scalar. The maximum value of the color code.
 #' @returns A `nativeRaster` object.
@@ -144,7 +144,7 @@ sepia <- function(nr, intensity = 1, depth = 20) {
   as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
 }
 
-#' Create native raster filled with color
+#' Create a native raster filled with a color
 #'
 #' @param width,height A positive integer scalar.
 #' @param color Color name or hex code.

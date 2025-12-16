@@ -23,12 +23,12 @@ resample(
 \item{nr}{A \code{nativeRaster} object.}
 
 \item{wh}{A numeric vector of length 2.
-For \code{resize()}: scaling factors when \code{set_size = FALSE}, or target
-dimensions (\code{width}, \code{height}) when \code{set_size = TRUE}.
-For \code{resample()}: downsampling factors in each direction.}
+\itemize{
+\item For \code{resize()}: scaling factors when \code{set_size = FALSE}, or target dimensions (\code{width}, \code{height}) when \code{set_size = TRUE}.
+\item For \code{resample()}: downsampling factors in each direction.
+}}
 
-\item{resize_mode}{An integer scalar selecting the interpolation mode for
-\code{resize()}.
+\item{resize_mode}{An integer scalar selecting the interpolation mode for \code{resize()}.
 Must be one of \verb{0–6}, corresponding to OpenCV's interpolation flags.}
 
 \item{set_size}{A logical scalar.

@@ -4,7 +4,7 @@
 \alias{rgb-hls}
 \alias{rgb2hls}
 \alias{hls2rgb}
-\title{Conversion between RGB and HLS colors}
+\title{Conversion between RGB and HLS color spaces}
 \usage{
 rgb2hls(x)
 
@@ -17,5 +17,5 @@ hls2rgb(x)
 An integer matrix of the same size as \code{x}
 }
 \description{
-Conversion between RGB and HLS colors
+Conversion between RGB and HLS color spaces
 }
