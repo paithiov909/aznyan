@@ -3,6 +3,7 @@
 ^\.devcontainer$
 ^\.github$
 ^\.vscode$
+^\.imgbotconfig$
 ^LICENSE\.md$
 ^README\.qmd$
 ^renovate\.json$
