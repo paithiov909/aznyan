@@ -38,8 +38,10 @@ as_recordedplot <- function(nr) {
 #' @noRd
 cast_nr <- function(nr, nm = "nr") {
   if (!inherits(nr, "nativeRaster")) {
-    msg <- glue::glue("`{nm}` must be a nativeRaster object.")
-    rlang::abort(msg, call = rlang::caller_env())
+    cli::cli_abort(
+      "`{nm}` must be a nativeRaster object.",
+      call = rlang::caller_env()
+    )
   }
   as.integer(nr)
 }
@@ -63,7 +65,7 @@ nr_to_rgba <- function(nr, nm) {
 #' @noRd
 check_nr_dim <- function(src, dst) {
   if (!identical(dim(src), dim(dst))) {
-    rlang::abort(
+    cli::cli_abort(
       "The two nativeRaster objects must have the same dimensions.",
       call = rlang::caller_env()
     )
@@ -87,10 +89,10 @@ as_nr <- function(x) {
 int_match <- function(x, arg, values) {
   tmp <- match(x[1], values) - 1L
   if (is.na(tmp)) {
-    msg <- glue::glue(
-      "`{arg}` must be one of {paste0(values, collapse = ', ')}. Got {x}."
+    cli::cli_abort(
+      "`{arg}` must be one of {paste0(values, collapse = ', ')}. Got {x}.",
+      call = rlang::caller_env()
     )
-    rlang::abort(msg, call = rlang::caller_env())
   }
   tmp
 }

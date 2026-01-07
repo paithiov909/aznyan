@@ -83,7 +83,7 @@ morphology <- function(
   anchor = c(-1, -1)
 ) {
   if (!all(ksize >= 0)) {
-    rlang::abort("ksize must be >= 0")
+    cli::cli_abort("ksize must be >= 0")
   }
   ktype <- int_match(ktype, "ktype", c(0, 1, 2))
   mode <- int_match(mode, "mode", c(0, 1, 2, 3, 4, 5, 6, 7))

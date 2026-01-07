@@ -28,7 +28,7 @@ NULL
 #' @export
 kernel_cone <- function(size) {
   if (size %% 2 != 1) {
-    rlang::abort("`size` must be an odd integer.")
+    cli::cli_abort("`size` must be an odd integer.")
   }
   r <- (size - 1) / 2
   xy <- expand.grid(-r:r, -r:r)
@@ -41,7 +41,7 @@ kernel_cone <- function(size) {
 #' @export
 kernel_disc <- function(size) {
   if (size %% 2 != 1) {
-    rlang::abort("`size` must be an odd integer.")
+    cli::cli_abort("`size` must be an odd integer.")
   }
   r <- (size - 1) / 2
 
@@ -86,7 +86,7 @@ kernel_emboss <- function(theta, strength = 1) {
 #' @export
 kernel_motion <- function(size, theta) {
   if (size %% 2 != 1) {
-    rlang::abort("`size` must be an odd integer.")
+    cli::cli_abort("`size` must be an odd integer.")
   }
   r <- (size - 1) / 2
   k <- matrix(0, size, size)
@@ -105,10 +105,10 @@ kernel_motion <- function(size, theta) {
 #' @export
 kernel_ring <- function(size, thickness = 1) {
   if (size %% 2 != 1) {
-    rlang::abort("`size` must be an odd integer.")
+    cli::cli_abort("`size` must be an odd integer.")
   }
   if (thickness < 1) {
-    rlang::abort("`thickness` must be at least 1.")
+    cli::cli_abort("`thickness` must be at least 1.")
   }
   r <- (size - 1) / 2
   yy <- rep(-r:r, each = size)

@@ -70,10 +70,10 @@ thres <- function(
   mode = c(0, 1, 2, 3, 4, 5, 6)
 ) {
   if (threshold < 0 || threshold > 255) {
-    rlang::abort("`threshold` must be in range [0, 255]")
+    cli::cli_abort("`threshold` must be in range [0, 255]")
   }
   if (maxv < 0 || maxv > 255) {
-    rlang::abort("`maxv` must be in range [0, 255]")
+    cli::cli_abort("`maxv` must be in range [0, 255]")
   }
   mode <- int_match(mode, "mode", c(0, 1, 2, 3, 4, 5, 6))
   out <- azny_thres(cast_nr(nr), nrow(nr), ncol(nr), threshold, maxv, mode)
@@ -91,10 +91,10 @@ adpthres <- function(
   invert = FALSE
 ) {
   if (maxv < 0 || maxv > 255) {
-    rlang::abort("`threshold` must be in range [0, 255]")
+    cli::cli_abort("`threshold` must be in range [0, 255]")
   }
   if (bsize < 1 || bsize > 50) {
-    rlang::abort("`bsize` must be in range [1, 50]")
+    cli::cli_abort("`bsize` must be in range [1, 50]")
   }
   mode <- int_match(mode, "mode", c(0, 1))
   out <- azny_adpthres(

@@ -145,6 +145,27 @@ extern "C" SEXP _aznyan_azny_sobelrgb(SEXP nr, SEXP height, SEXP width, SEXP ksi
     return cpp11::as_sexp(azny_sobelrgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(ksize), cpp11::as_cpp<cpp11::decay_t<bool>>(balp), cpp11::as_cpp<cpp11::decay_t<int>>(dx), cpp11::as_cpp<cpp11::decay_t<int>>(dy), cpp11::as_cpp<cpp11::decay_t<int>>(border), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<double>>(delta)));
   END_CPP11
 }
+// image-io.cpp
+cpp11::integers azny_read_still(const std::string& filename);
+extern "C" SEXP _aznyan_azny_read_still(SEXP filename) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_read_still(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(filename)));
+  END_CPP11
+}
+// image-io.cpp
+std::string azny_write_still(const std::string& filename, const cpp11::integers& nr, int height, int width);
+extern "C" SEXP _aznyan_azny_write_still(SEXP filename, SEXP nr, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_write_still(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(filename), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// image-io.cpp
+std::string azny_write_animation(const std::vector<std::string>& frames, const std::string& filename, int duration, int quality, int loop_count);
+extern "C" SEXP _aznyan_azny_write_animation(SEXP frames, SEXP filename, SEXP duration, SEXP quality, SEXP loop_count) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_write_animation(cpp11::as_cpp<cpp11::decay_t<const std::vector<std::string>&>>(frames), cpp11::as_cpp<cpp11::decay_t<const std::string&>>(filename), cpp11::as_cpp<cpp11::decay_t<int>>(duration), cpp11::as_cpp<cpp11::decay_t<int>>(quality), cpp11::as_cpp<cpp11::decay_t<int>>(loop_count)));
+  END_CPP11
+}
 // misc.cpp
 cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height, int width, const std::vector<int>& mapping);
 extern "C" SEXP _aznyan_azny_swap_channels(SEXP nr, SEXP height, SEXP width, SEXP mapping) {
@@ -284,6 +305,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     4},
     {"_aznyan_azny_pencilskc",        (DL_FUNC) &_aznyan_azny_pencilskc,         7},
     {"_aznyan_azny_preserving",       (DL_FUNC) &_aznyan_azny_preserving,        6},
+    {"_aznyan_azny_read_still",       (DL_FUNC) &_aznyan_azny_read_still,        1},
     {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
     {"_aznyan_azny_rgb_to_hls",       (DL_FUNC) &_aznyan_azny_rgb_to_hls,        1},
@@ -294,6 +316,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
     {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
     {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},
+    {"_aznyan_azny_write_animation",  (DL_FUNC) &_aznyan_azny_write_animation,   5},
+    {"_aznyan_azny_write_still",      (DL_FUNC) &_aznyan_azny_write_still,       4},
     {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
     {"_aznyan_set_num_threads",       (DL_FUNC) &_aznyan_set_num_threads,        1},
     {NULL, NULL, 0}

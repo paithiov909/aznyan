@@ -80,6 +80,18 @@ azny_sobelrgb <- function(nr, height, width, ksize, balp, dx, dy, border, scale,
   .Call(`_aznyan_azny_sobelrgb`, nr, height, width, ksize, balp, dx, dy, border, scale, delta)
 }
 
+azny_read_still <- function(filename) {
+  .Call(`_aznyan_azny_read_still`, filename)
+}
+
+azny_write_still <- function(filename, nr, height, width) {
+  .Call(`_aznyan_azny_write_still`, filename, nr, height, width)
+}
+
+azny_write_animation <- function(frames, filename, duration, quality, loop_count) {
+  .Call(`_aznyan_azny_write_animation`, frames, filename, duration, quality, loop_count)
+}
+
 azny_swap_channels <- function(nr, height, width, mapping) {
   .Call(`_aznyan_azny_swap_channels`, nr, height, width, mapping)
 }

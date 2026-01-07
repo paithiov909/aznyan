@@ -54,7 +54,7 @@ hist_eq <- function(
 ) {
   grid <- as.integer(grid)
   if (anyNA(grid)) {
-    rlang::abort("`grid` must be an integer vector of length 2.")
+    cli::cli_abort("`grid` must be an integer vector of length 2.")
   }
   out <- azny_hist_eq(
     cast_nr(nr),

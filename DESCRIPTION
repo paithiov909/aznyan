@@ -15,7 +15,7 @@ BugReports: https://github.com/paithiov909/aznyan/issues
 Depends:
     R (>= 4.2)
 Imports:
-    glue,
+    cli,
     grDevices,
     grid,
     rlang

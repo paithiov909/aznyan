@@ -26,7 +26,7 @@ write_cube <- function(
   domain_max = c(1.0, 1.0, 1.0)
 ) {
   if (ncol(x) != 3) {
-    rlang::abort("`x` must have 3 columns")
+    cli::cli_abort("`x` must have 3 columns")
   }
   header <-
     c(

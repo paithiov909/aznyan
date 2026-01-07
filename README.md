@@ -19,7 +19,7 @@ change.
 
 aznyan provides functions that take a `nativeRaster` of image data as
 their first argument and return a `nativeRaster` after applying the
-effect. All aznyan functions return a new `nativeRaster` and do not
+effect. All these functions return a new `nativeRaster` and do not
 modify the input object in place.
 
 A `nativeRaster` is a built-in datatype in R that stores image data as an
