@@ -34,6 +34,7 @@ object:
   - `jpeg::readJPEG(native = TRUE)`
   - `png::readPNG(native = TRUE)`
   - `fastpng::read_png(type = "nativeraster")`
+  - `aznyan::read_still()`
 
 For example, you can read a PNG image as a `nativeRaster` like this:
 
@@ -42,11 +43,7 @@ library(ggplot2)
 library(patchwork) # for layouting native rasters
 
 png <-
-  fastpng::read_png(
-    system.file("images/aznyan-256x256.png", package = "aznyan"),
-    type = "nativeraster",
-    rgba = TRUE
-  )
+  aznyan::read_still(system.file("images/aznyan-256x256.png", package = "aznyan"))
 ```
 
 This `png` object corresponds to the following image:

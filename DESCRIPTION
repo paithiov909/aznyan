@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 25.12.16
+Version: 26.01.07
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph")
@@ -20,7 +20,6 @@ Imports:
     grid,
     rlang
 Suggests:
-    fastpng,
     testthat (>= 3.0.0),
     vdiffr
 LinkingTo:

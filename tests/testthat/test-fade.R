@@ -1,13 +1,7 @@
 skip_on_cran()
 skip_on_ci()
 
-png <-
-  fastpng::read_png(
-    system.file("images/vespa.png", package = "aznyan"),
-    type = "nativeraster",
-    rgba = TRUE,
-    flags = 1L
-  )
+png <- read_still(system.file("images/vespa.png", package = "aznyan"))
 
 test_that("fade works", {
   vdiffr::expect_doppelganger(

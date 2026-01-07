@@ -1,21 +1,9 @@
 skip_on_cran()
 skip_on_ci()
 
-vespa <- fastpng::read_png(
-  system.file("images/vespa.png", package = "aznyan"),
-  type = "nativeraster",
-  rgba = TRUE
-)
-city <- fastpng::read_png(
-  system.file("images/city.png", package = "aznyan"),
-  type = "nativeraster",
-  rgba = TRUE
-)
-street <- fastpng::read_png(
-  system.file("images/street.png", package = "aznyan"),
-  type = "nativeraster",
-  rgba = TRUE
-)
+vespa <- read_still(system.file("images/vespa.png", package = "aznyan"))
+city <- read_still(system.file("images/city.png", package = "aznyan"))
+street <- read_still(system.file("images/street.png", package = "aznyan"))
 
 test_that("blend modes look good", {
   ## Darker

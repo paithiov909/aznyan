@@ -1,13 +1,7 @@
 skip_on_cran()
 skip_on_ci()
 
-png <-
-  fastpng::read_png(
-    system.file("images/painting.png", package = "aznyan"),
-    type = "nativeraster",
-    rgba = TRUE,
-    flags = 1L
-  )
+png <- read_still(system.file("images/painting.png", package = "aznyan"))
 
 test_that("diffusion works", {
   vdiffr::expect_doppelganger(
