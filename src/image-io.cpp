@@ -37,6 +37,11 @@ std::string azny_write_still(const std::string& filename,
 std::string azny_write_animation(const std::vector<std::string>& frames,
                                  const std::string& filename, int duration,
                                  int quality, int loop_count) {
+#ifndef HAVE_ANIMATION
+  cpp11::stop(
+      "Animation writing requires OpenCV >= 4.11, "
+      "but this package was built against an older version.");
+#else
   if (!cv::haveImageWriter(filename)) {
     cpp11::stop("Unsupported image format.");
   }
@@ -54,4 +59,5 @@ std::string azny_write_animation(const std::vector<std::string>& frames,
   cv::imwriteanimation(filename, anim, params);
 
   return filename;
+#endif
 }
