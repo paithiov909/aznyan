@@ -203,10 +203,10 @@ set_matte <- function(nr, color = "green") {
 #' @export
 solarize <- function(nr, threshold = 0.5) {
   sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
+  ret <- nr_to_rgba(nr, "nr") * 1
   intensity <- colSums(ret[1:3, ] / 255) / 3
-  rgb <- ifelse(intensity > threshold, 255 - ret[1:3, ], ret[1:3, ])
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  ret[1:3, intensity < threshold] <- (255L - ret[1:3, intensity < threshold])
+  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
 }
 
 #' @rdname color-manip
