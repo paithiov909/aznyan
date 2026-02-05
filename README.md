@@ -22,9 +22,9 @@ their first argument and return a `nativeRaster` after applying the
 effect. All these functions return a new `nativeRaster` and do not
 modify the input object in place.
 
-A `nativeRaster` is a built-in datatype in R that stores image data as an
-integer matrix. There are several common ways to obtain a `nativeRaster`
-object:
+A `nativeRaster` is a built-in datatype in R that stores image data as
+an integer matrix. There are several common ways to obtain a
+`nativeRaster` object:
 
 - Generate or manipulate a `nativeRaster` using
   [nara](https://github.com/coolbutuseless/nara)

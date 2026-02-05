@@ -76,17 +76,17 @@ extern "C" SEXP _aznyan_azny_unpack_integers(SEXP nr) {
   END_CPP11
 }
 // color.cpp
-cpp11::integers azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb);
+cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb);
 extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(rgb)));
+    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb)));
   END_CPP11
 }
 // color.cpp
-cpp11::integers azny_hls_to_rgb(const cpp11::integers_matrix<>& hls);
+cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls);
 extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers_matrix<>&>>(hls)));
+    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(hls)));
   END_CPP11
 }
 // color.cpp

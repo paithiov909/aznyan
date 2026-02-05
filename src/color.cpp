@@ -48,7 +48,7 @@ cpp11::integers azny_unpack_integers(const cpp11::integers& nr) {
 }
 
 [[cpp11::register]]
-cpp11::integers azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb) {
+cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb) {
   if (rgb.nrow() != 3) {
     cpp11::stop("RGB must have 3 rows.");
   }
@@ -73,7 +73,7 @@ cpp11::integers azny_rgb_to_hls(const cpp11::integers_matrix<>& rgb) {
 }
 
 [[cpp11::register]]
-cpp11::integers azny_hls_to_rgb(const cpp11::integers_matrix<>& hls) {
+cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls) {
   if (hls.nrow() != 3) {
     cpp11::stop("HLS must have 3 rows.");
   }

@@ -2,50 +2,67 @@
 % Please edit documentation in R/color-manip.R
 \name{color-manip}
 \alias{color-manip}
-\alias{unpremul}
-\alias{set_matte}
-\alias{reset_alpha}
-\alias{hue_rotate}
-\alias{contrast}
 \alias{brighten}
-\alias{saturate}
+\alias{contrast}
+\alias{duotone}
 \alias{grayscale}
+\alias{hue_rotate}
+\alias{invert}
+\alias{linocut}
+\alias{posterize}
+\alias{reset_alpha}
+\alias{saturate}
 \alias{sepia}
+\alias{set_matte}
+\alias{solarize}
+\alias{unpremul}
 \title{Color manipulation}
 \usage{
-unpremul(nr, max = 255L)
-
-set_matte(nr, color = "green")
-
-reset_alpha(nr, alpha = 1)
-
-hue_rotate(nr, rad)
+brighten(nr, intensity)
 
 contrast(nr, intensity)
 
-brighten(nr, intensity)
-
-saturate(nr, intensity)
+duotone(nr, color_a = "yellow", color_b = "navy", gamma = 2.2)
 
 grayscale(nr)
 
-sepia(nr, intensity = 1, depth = 20)
+hue_rotate(nr, rad)
+
+invert(nr)
+
+linocut(nr, ink = "navy", paper = "snow", threshold = 0.4)
+
+posterize(nr, shades = 4)
+
+reset_alpha(nr, alpha = 1)
+
+saturate(nr, intensity)
+
+sepia(nr, intensity, depth = 20)
+
+set_matte(nr, color = "green")
+
+solarize(nr, threshold = 0.5)
+
+unpremul(nr, max = 255L)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
 
-\item{max}{An integer scalar. The maximum value of the color code.}
+\item{intensity}{A numeric scalar.}
 
-\item{color}{A character string; the color to be set.}
-
-\item{alpha}{A numeric scalar in range \verb{[0, 1]}.
-The alpha value to be reset for transparency.}
+\item{gamma}{A numeric scalar. The gamma exponent.}
 
 \item{rad}{A numeric scalar. The rotation angle in radians.}
 
-\item{intensity}{A numeric scalar.}
+\item{alpha, threshold}{A numeric scalar in range \verb{[0, 1]}.}
 
-\item{depth}{An integer scalar.}
+\item{depth, shades}{A positive integer scalar.}
+
+\item{color, color_a, color_b, ink, paper}{A character string;
+color name or hex code.}
+
+\item{max}{An integer scalar. The maximum value of the color code.}
 }
 \value{
 A \code{nativeRaster} object.

@@ -18,6 +18,27 @@ clamp <- function(x, min, max) {
   pmin(pmax(x, min), max)
 }
 
+#' Lerp
+#'
+#' @param x,y numerics
+#' @param mask numeric scalar
+#' @returns numerics
+#' @noRd
+mix <- function(x, y, mask) {
+  mask <- clamp(mask, 0, 1)
+  x * mask + y * (1 - mask)
+}
+
+#' Step
+#'
+#' @param x,y numerics
+#' @param mask numeric scalar
+#' @returns numerics
+#' @noRd
+step <- function(x, mask) {
+  (x > mask) * 1
+}
+
 #' Alpha blending
 #'
 #' @param x1,x2 Alpha values.
