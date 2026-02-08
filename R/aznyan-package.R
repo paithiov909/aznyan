@@ -77,7 +77,7 @@ check_nr_dim <- function(src, dst) {
 #' @param x Object to be set class.
 #' @noRd
 as_nr <- function(x) {
-  class(x) <- c("nativeRaster", class(x))
+  class(x) <- "nativeRaster"
   x
 }
 

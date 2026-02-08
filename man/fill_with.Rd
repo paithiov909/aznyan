@@ -4,12 +4,12 @@
 \alias{fill_with}
 \title{Create a native raster filled with a color}
 \usage{
-fill_with(width, height, color)
+fill_with(color, width, height)
 }
 \arguments{
-\item{width, height}{A positive integer scalar.}
-
 \item{color}{Color name or hex code.}
+
+\item{width, height}{A positive integer scalar.}
 }
 \value{
 A \code{nativeRaster} object.

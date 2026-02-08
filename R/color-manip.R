@@ -16,21 +16,13 @@ hls2rgb <- function(x) azny_hls_to_rgb(floor(x))
 
 #' Create a native raster filled with a color
 #'
-#' @param width,height A positive integer scalar.
 #' @param color Color name or hex code.
+#' @param width,height A positive integer scalar.
 #' @returns A `nativeRaster` object.
 #' @export
-fill_with <- function(width, height, color) {
-  packed_int <-
-    grDevices::col2rgb(color[1], alpha = TRUE) |>
-    rlang::as_function(
-      ~ {
-        x <- as.double(.)
-        azny_pack_integers(x[1:3], x[4], 1, 1)
-      }
-    )()
-  out <- rep_len(packed_int, width * height)
-  dim(out) <- c(height, width)
+fill_with <- function(color, width, height) {
+  packed_int <- colorfast::col_to_int(color[1])
+  out <- matrix(packed_int, nrow = height, ncol = width)
   as_nr(out)
 }
 
@@ -72,8 +64,8 @@ contrast <- function(nr, intensity) {
 #' @export
 duotone <- function(nr, color_a = "yellow", color_b = "navy", gamma = 2.2) {
   sz <- dim(nr)
-  color_a <- fill_with(sz[1], sz[2], color_a) |> nr_to_rgba("color_a")
-  color_b <- fill_with(sz[1], sz[2], color_b) |> nr_to_rgba("color_b")
+  color_a <- fill_with(color_a, sz[1], sz[2]) |> nr_to_rgba("color_a")
+  color_b <- fill_with(color_b, sz[1], sz[2]) |> nr_to_rgba("color_b")
   ret <- nr_to_rgba(nr, "nr")
   luminance <- clamp(gray(ret[1:3, ])^(1 / gamma), 0, 1)
   rgb <- mix(color_a[1:3, ], color_b[1:3, ], luminance)
@@ -132,8 +124,8 @@ invert <- function(nr) {
 #' @export
 linocut <- function(nr, ink = "navy", paper = "snow", threshold = 0.4) {
   sz <- dim(nr)
-  ink <- fill_with(sz[1], sz[2], ink) |> nr_to_rgba("ink")
-  paper <- fill_with(sz[1], sz[2], paper) |> nr_to_rgba("paper")
+  ink <- fill_with(ink, sz[1], sz[2]) |> nr_to_rgba("ink")
+  paper <- fill_with(paper, sz[1], sz[2]) |> nr_to_rgba("paper")
   ret <- nr_to_rgba(nr, "nr")
   luminance <- step(gray(ret[1:3, ]), threshold)
   rgb <- mix(paper[1:3, ], ink[1:3, ], luminance)
@@ -189,8 +181,7 @@ sepia <- function(nr, intensity, depth = 20) {
 #' @rdname color-manip
 #' @export
 set_matte <- function(nr, color = "green") {
-  rgb_int <-
-    grDevices::col2rgb(color[1], alpha = FALSE)
+  rgb_int <- colorfast::col_to_rgb(color[1])
   sz <- dim(nr)
   ret <- nr_to_rgba(nr, "nr")
   ret[1, ][ret[4, ] != 255] <- rgb_int[1, ] * 1

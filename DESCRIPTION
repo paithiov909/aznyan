@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 26.02.05
+Version: 26.02.09
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph")
@@ -16,6 +16,7 @@ Depends:
     R (>= 4.2)
 Imports:
     cli,
+    colorfast,
     grDevices,
     grid,
     rlang

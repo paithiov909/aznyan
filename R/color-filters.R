@@ -108,7 +108,7 @@ apply_1977 <- function(nr) {
     contrast(nr, .1) |>
     brighten(.1) |>
     saturate(.3)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(243, 106, 188, 76))
+  fg <- fill_with(premul(243, 106, 188, 76), ncol(nr), nrow(nr))
   blend_screen(bg, fg) # bg, fg
 }
 
@@ -125,7 +125,7 @@ apply_aden <- function(nr) {
 apply_brannan <- function(nr) {
   bg <- sepia(nr, .2) |>
     contrast(.2)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(161, 44, 199, 59))
+  fg <- fill_with(premul(161, 44, 199, 59), ncol(nr), nrow(nr))
   blend_lighten(fg, bg)
 }
 
@@ -134,7 +134,7 @@ apply_brooklyn <- function(nr) {
   bg <- contrast(nr, -.1) |>
     brighten(.1) |>
     reset_alpha()
-  fg <- fill_with(ncol(nr), nrow(nr), premul(168, 223, 193, 150))
+  fg <- fill_with(premul(168, 223, 193, 150), ncol(nr), nrow(nr))
   blend_overlay(fg, bg)
 }
 
@@ -142,7 +142,7 @@ apply_brooklyn <- function(nr) {
 apply_clarendon <- function(nr) {
   bg <- contrast(nr, .2) |>
     saturate(.35)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(127, 187, 227, 101))
+  fg <- fill_with(premul(127, 187, 227, 101), ncol(nr), nrow(nr))
   blend_overlay(fg, bg)
 }
 
@@ -150,7 +150,7 @@ apply_clarendon <- function(nr) {
 apply_earlybird <- function(nr) {
   bg <- contrast(nr, -.1) |>
     sepia(.05)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(208, 186, 142, 150))
+  fg <- fill_with(premul(208, 186, 142, 150), ncol(nr), nrow(nr))
   out <- blend_overlay(bg, fg) # bg, fg
   reset_alpha(out)
 }
@@ -159,7 +159,7 @@ apply_earlybird <- function(nr) {
 apply_gingham <- function(nr) {
   bg <- brighten(nr, .05) |>
     hue_rotate(-.1745329) # -10 deg
-  fg <- fill_with(ncol(nr), nrow(nr), premul(230, 230, 230, 255))
+  fg <- fill_with(premul(230, 230, 230, 255), ncol(nr), nrow(nr))
   blend_softlight(fg, bg)
 }
 
@@ -168,7 +168,7 @@ apply_hudson <- function(nr) {
   bg <- brighten(nr, .5) |>
     contrast(-.1) |>
     saturate(.1)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(166, 177, 255, 208))
+  fg <- fill_with(premul(166, 177, 255, 208), ncol(nr), nrow(nr))
   out <- blend_multiply(fg, bg)
   reset_alpha(out)
 }
@@ -186,9 +186,9 @@ apply_kelvin <- function(nr) {
   bg <-
     blend_colordodge(
       nr,
-      fill_with(ncol(nr), nrow(nr), premul(56, 44, 52, 255))
+      fill_with(premul(56, 44, 52, 255), ncol(nr), nrow(nr))
     )
-  fg <- fill_with(ncol(nr), nrow(nr), premul(183, 125, 33, 255))
+  fg <- fill_with(premul(183, 125, 33, 255), ncol(nr), nrow(nr))
   blend_overlay(fg, bg)
 }
 
@@ -196,9 +196,9 @@ apply_kelvin <- function(nr) {
 apply_lark <- function(nr) {
   bg <- contrast(nr, -.1) |>
     blend_colordodge(
-      fill_with(ncol(nr), nrow(nr), premul(34, 37, 63, 255))
+      fill_with(premul(34, 37, 63, 255), ncol(nr), nrow(nr))
     )
-  fg <- fill_with(ncol(nr), nrow(nr), premul(242, 242, 242, 204))
+  fg <- fill_with(premul(242, 242, 242, 204), ncol(nr), nrow(nr))
   blend_darken(fg, bg)
 }
 
@@ -222,7 +222,7 @@ apply_maven <- function(nr) {
 apply_mayfair <- function(nr) {
   bg <- contrast(nr, .1) |>
     saturate(.1)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(255, 200, 200, 153))
+  fg <- fill_with(premul(255, 200, 200, 153), ncol(nr), nrow(nr))
   blend_overlay(fg, bg)
 }
 
@@ -231,10 +231,10 @@ apply_moon <- function(nr) {
   bg <- contrast(nr, .1) |>
     brighten(.1) |>
     blend_softlight(
-      fill_with(ncol(nr), nrow(nr), premul(160, 160, 160, 255)),
+      fill_with(premul(160, 160, 160, 255), ncol(nr), nrow(nr)),
       dst = _
     )
-  fg <- fill_with(ncol(nr), nrow(nr), premul(56, 56, 56, 255))
+  fg <- fill_with(premul(56, 56, 56, 255), ncol(nr), nrow(nr))
   out <- blend_lighten(fg, bg)
   grayscale(out)
 }
@@ -246,10 +246,10 @@ apply_nashville <- function(nr) {
     brighten(.05) |>
     saturate(.2) |>
     blend_darken(
-      fill_with(ncol(nr), nrow(nr), premul(247, 176, 153, 243)),
+      fill_with(premul(247, 176, 153, 243), ncol(nr), nrow(nr)),
       dst = _
     )
-  fg <- fill_with(ncol(nr), nrow(nr), premul(0, 70, 150, 230))
+  fg <- fill_with(premul(0, 70, 150, 230), ncol(nr), nrow(nr))
   blend_lighten(fg, bg)
 }
 
@@ -259,7 +259,7 @@ apply_reyes <- function(nr) {
     brighten(.1) |>
     contrast(-.15) |>
     saturate(-.25)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(239, 205, 173, 10))
+  fg <- fill_with(premul(239, 205, 173, 10), ncol(nr), nrow(nr))
   blend_over(fg, bg)
 }
 
@@ -269,9 +269,9 @@ apply_rise <- function(nr) {
     sepia(.05) |>
     contrast(-.1) |>
     saturate(-.1)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(236, 205, 169, 240))
+  fg <- fill_with(premul(236, 205, 169, 240), ncol(nr), nrow(nr))
   bg <- blend_multiply(fg, bg)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(232, 197, 152, 10))
+  fg <- fill_with(premul(232, 197, 152, 10), ncol(nr), nrow(nr))
   fg <- blend_overlay(fg, bg)
   blend_over(fg, nr)
 }
@@ -280,9 +280,9 @@ apply_rise <- function(nr) {
 apply_slumber <- function(nr) {
   bg <- saturate(nr, -.34) |>
     brighten(-.05)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(69, 41, 12, 102))
+  fg <- fill_with(premul(69, 41, 12, 102), ncol(nr), nrow(nr))
   bg <- blend_lighten(fg, bg)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(125, 105, 24, 128))
+  fg <- fill_with(premul(125, 105, 24, 128), ncol(nr), nrow(nr))
   blend_softlight(fg, bg)
 }
 
@@ -291,7 +291,7 @@ apply_stinson <- function(nr) {
   bg <- contrast(nr, -.25) |>
     saturate(-.15) |>
     brighten(.15)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(240, 149, 128, 51))
+  fg <- fill_with(premul(240, 149, 128, 51), ncol(nr), nrow(nr))
   blend_softlight(fg, bg)
 }
 
@@ -299,7 +299,7 @@ apply_stinson <- function(nr) {
 apply_toaster <- function(nr) {
   bg <- contrast(nr, .2) |>
     brighten(-.1)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(128, 78, 15, 140))
+  fg <- fill_with(premul(128, 78, 15, 140), ncol(nr), nrow(nr))
   blend_screen(fg, bg)
 }
 
@@ -308,7 +308,7 @@ apply_valencia <- function(nr) {
   bg <- contrast(nr, .08) |>
     brighten(.08) |>
     sepia(.08)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(58, 3, 57, 128))
+  fg <- fill_with(premul(58, 3, 57, 128), ncol(nr), nrow(nr))
   blend_exclusion(fg, bg)
 }
 
@@ -318,6 +318,6 @@ apply_walden <- function(nr) {
     hue_rotate(-.1745329) |> # -10 deg
     saturate(.6) |>
     sepia(.05)
-  fg <- fill_with(ncol(nr), nrow(nr), premul(0, 88, 244, 77))
+  fg <- fill_with(premul(0, 88, 244, 77), ncol(nr), nrow(nr))
   blend_screen(fg, bg)
 }
