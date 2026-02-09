@@ -53,11 +53,13 @@ contribute more strongly to triggering.}
 \item \code{2} = bottom-to-top
 }}
 }
+\value{
+A \code{nativeRaster} object.
+}
 \description{
 Weaves short line segments across an image by scanning pixels and triggering
 strokes based on accumulated luminance.
-}
-\details{
+
 This effect walks through the image in the selected \code{direction}.
 At each pixel, luminance is accumulated and compared with \code{phase}.
 When the threshold is reached,

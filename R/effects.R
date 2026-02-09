@@ -70,10 +70,10 @@ diffusion_filter <- function(
 
 #' Modulation filter
 #'
+#' @description
 #' Weaves short line segments across an image by scanning pixels and triggering
 #' strokes based on accumulated luminance.
 #'
-#' @details
 #' This effect walks through the image in the selected `direction`.
 #' At each pixel, luminance is accumulated and compared with `phase`.
 #' When the threshold is reached,
@@ -103,6 +103,7 @@ diffusion_filter <- function(
 #'  * `0` = right-to-left
 #'  * `1` = top-to-bottom
 #'  * `2` = bottom-to-top
+#' @returns A `nativeRaster` object.
 #' @export
 lineweave <- function(
   nr,
@@ -135,8 +136,8 @@ lineweave <- function(
     as.integer(step),
     invert,
     direction,
-    cast_nr(fg),
-    cast_nr(bg)
+    cast_nr(fg, "fg"),
+    cast_nr(bg, "bg")
   )
   as_nr(out)
 }

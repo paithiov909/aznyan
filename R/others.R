@@ -14,7 +14,7 @@
 #'  Valid range: `0–1`.
 #' @returns A `nativeRaster` object.
 #' @export
-detail_enchance <- function(
+detail_enhance <- function(
   nr,
   sgmS = 10, # nolint
   sgmR = 0.15 # nolint
