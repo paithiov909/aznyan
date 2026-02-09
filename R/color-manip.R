@@ -64,8 +64,8 @@ contrast <- function(nr, intensity) {
 #' @export
 duotone <- function(nr, color_a = "yellow", color_b = "navy", gamma = 2.2) {
   sz <- dim(nr)
-  color_a <- fill_with(color_a, sz[1], sz[2]) |> nr_to_rgba("color_a")
-  color_b <- fill_with(color_b, sz[1], sz[2]) |> nr_to_rgba("color_b")
+  color_a <- fill_with(color_a, sz[2], sz[1]) |> nr_to_rgba("color_a")
+  color_b <- fill_with(color_b, sz[2], sz[1]) |> nr_to_rgba("color_b")
   ret <- nr_to_rgba(nr, "nr")
   luminance <- clamp(gray(ret[1:3, ])^(1 / gamma), 0, 1)
   rgb <- mix(color_a[1:3, ], color_b[1:3, ], luminance)
@@ -124,8 +124,8 @@ invert <- function(nr) {
 #' @export
 linocut <- function(nr, ink = "navy", paper = "snow", threshold = 0.4) {
   sz <- dim(nr)
-  ink <- fill_with(ink, sz[1], sz[2]) |> nr_to_rgba("ink")
-  paper <- fill_with(paper, sz[1], sz[2]) |> nr_to_rgba("paper")
+  ink <- fill_with(ink, sz[2], sz[1]) |> nr_to_rgba("ink")
+  paper <- fill_with(paper, sz[2], sz[1]) |> nr_to_rgba("paper")
   ret <- nr_to_rgba(nr, "nr")
   luminance <- step(gray(ret[1:3, ]), threshold)
   rgb <- mix(paper[1:3, ], ink[1:3, ], luminance)
