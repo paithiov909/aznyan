@@ -166,6 +166,13 @@ extern "C" SEXP _aznyan_azny_write_animation(SEXP frames, SEXP filename, SEXP du
     return cpp11::as_sexp(azny_write_animation(cpp11::as_cpp<cpp11::decay_t<const std::vector<std::string>&>>(frames), cpp11::as_cpp<cpp11::decay_t<const std::string&>>(filename), cpp11::as_cpp<cpp11::decay_t<int>>(duration), cpp11::as_cpp<cpp11::decay_t<int>>(quality), cpp11::as_cpp<cpp11::decay_t<int>>(loop_count)));
   END_CPP11
 }
+// lineweave.cpp
+cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width, double omega, double phase, int dist1, int dist2, int dist3, bool invert, int direction, const cpp11::integers& fg, const cpp11::integers& bg);
+extern "C" SEXP _aznyan_azny_lineweave(SEXP nr, SEXP height, SEXP width, SEXP omega, SEXP phase, SEXP dist1, SEXP dist2, SEXP dist3, SEXP invert, SEXP direction, SEXP fg, SEXP bg) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_lineweave(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(omega), cpp11::as_cpp<cpp11::decay_t<double>>(phase), cpp11::as_cpp<cpp11::decay_t<int>>(dist1), cpp11::as_cpp<cpp11::decay_t<int>>(dist2), cpp11::as_cpp<cpp11::decay_t<int>>(dist3), cpp11::as_cpp<cpp11::decay_t<bool>>(invert), cpp11::as_cpp<cpp11::decay_t<int>>(direction), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(fg), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(bg)));
+  END_CPP11
+}
 // misc.cpp
 cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height, int width, const std::vector<int>& mapping);
 extern "C" SEXP _aznyan_azny_swap_channels(SEXP nr, SEXP height, SEXP width, SEXP mapping) {
@@ -297,6 +304,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_kuwahara",         (DL_FUNC) &_aznyan_azny_kuwahara,          7},
     {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,   8},
     {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,      8},
+    {"_aznyan_azny_lineweave",        (DL_FUNC) &_aznyan_azny_lineweave,        12},
     {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,         6},
     {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,        4},
     {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 10},

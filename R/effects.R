@@ -67,3 +67,76 @@ diffusion_filter <- function(
   )
   as_nr(out)
 }
+
+#' Modulation filter
+#'
+#' Weaves short line segments across an image by scanning pixels and triggering
+#' strokes based on accumulated luminance.
+#'
+#' @details
+#' This effect walks through the image in the selected `direction`.
+#' At each pixel, luminance is accumulated and compared with `phase`.
+#' When the threshold is reached,
+#' a stroke event may start depending on `init` and `interval`,
+#' and `step` pixels are drawn from `fg`; otherwise pixels are taken from `bg`.
+#'
+#' @param nr A `nativeRaster` object.
+#' @param fg A `nativeRaster` object used as the foreground source
+#'  for stroke pixels. It must have the same dimensions as `nr`.
+#' @param bg A `nativeRaster` object used as the background source
+#'  for non-stroke pixels. It must have the same dimensions as `nr`.
+#' @param omega A positive numeric scalar scaling
+#'  how fast luminance accumulates per pixel.
+#' @param phase A positive numeric scalar giving the luminance threshold
+#'  for triggering events.
+#' @param init A positive integer scalar
+#'  giving the number of stroke events to emit in one cycle.
+#' @param interval A non-negative integer scalar
+#'  giving the number of trigger events to skip between cycles.
+#' @param step A non-negative integer scalar
+#'  giving the stroke length in pixels for each event.
+#' @param invert A logical scalar
+#'  indicating whether bright pixels (instead of dark pixels)
+#'  contribute more strongly to triggering.
+#' @param direction An integer giving the scan direction
+#'  * `3` = left-to-right
+#'  * `0` = right-to-left
+#'  * `1` = top-to-bottom
+#'  * `2` = bottom-to-top
+#' @export
+lineweave <- function(
+  nr,
+  fg = nr,
+  bg = blurhash(nr, 3, 3),
+  omega = 10,
+  phase = 5,
+  init = 1,
+  interval = 1,
+  step = 2,
+  invert = FALSE,
+  direction = c(3, 0, 1, 2)
+) {
+  check_nr_dim(nr, fg)
+  check_nr_dim(nr, bg)
+  if (init <= 0) {
+    cli::cli_abort("`init` must be a positive integer.")
+  }
+
+  direction <- int_match(direction, "direction", c(0, 1, 2, 3))
+
+  out <- azny_lineweave(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    omega,
+    phase,
+    as.integer(init),
+    as.integer(interval),
+    as.integer(step),
+    invert,
+    direction,
+    cast_nr(fg),
+    cast_nr(bg)
+  )
+  as_nr(out)
+}

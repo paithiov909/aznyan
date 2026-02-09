@@ -92,6 +92,10 @@ azny_write_animation <- function(frames, filename, duration, quality, loop_count
   .Call(`_aznyan_azny_write_animation`, frames, filename, duration, quality, loop_count)
 }
 
+azny_lineweave <- function(nr, height, width, omega, phase, dist1, dist2, dist3, invert, direction, fg, bg) {
+  .Call(`_aznyan_azny_lineweave`, nr, height, width, omega, phase, dist1, dist2, dist3, invert, direction, fg, bg)
+}
+
 azny_swap_channels <- function(nr, height, width, mapping) {
   .Call(`_aznyan_azny_swap_channels`, nr, height, width, mapping)
 }

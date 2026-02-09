@@ -1,15 +1,5 @@
 #include "aznyan_types.h"
 
-inline float srgb_to_linear(float x) {
-  if (x <= 0.04045f) return x / 12.92f;
-  return std::pow((x + 0.055f) / 1.055f, 2.4f);
-}
-
-inline float linear_to_srgb(float x) {
-  if (x <= 0.0031308f) return x * 12.92f;
-  return 1.055f * std::pow(x, 1.0f / 2.4f) - 0.055f;
-}
-
 [[cpp11::register]]
 cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width,
                               int x_comps, int y_comps) {
