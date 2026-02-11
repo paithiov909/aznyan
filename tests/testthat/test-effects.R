@@ -26,3 +26,12 @@ test_that("lineweave works", {
       as_recordedplot()
   )
 })
+
+test_that("screen_tone works", {
+  texture <- tile_matrix(blue_noise_64x64 * 255, ncol(png), nrow(png))
+  vdiffr::expect_doppelganger(
+    "screen_tone",
+    screen_tone(png, texture) |>
+      as_recordedplot()
+  )
+})
