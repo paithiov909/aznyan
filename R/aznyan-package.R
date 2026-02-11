@@ -6,6 +6,16 @@
 ## usethis namespace: end
 NULL
 
+#' Blue noise pattern
+#'
+#' @description
+#' Blue noise pattern of size 64x64
+#' generated with `ambient::noise_blue(c(64, 64))`.
+#'
+#' Range: `[0, 1]`
+#'
+"blue_noise_64x64"
+
 #' Get or set number of OpenCV threads
 #'
 #' @param n An integer scalar larger than `1`.
