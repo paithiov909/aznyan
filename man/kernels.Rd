@@ -2,13 +2,17 @@
 % Please edit documentation in R/kernels.R
 \name{make-kernels}
 \alias{make-kernels}
+\alias{kernel_bayer}
 \alias{kernel_cone}
 \alias{kernel_disc}
 \alias{kernel_emboss}
 \alias{kernel_motion}
 \alias{kernel_ring}
+\alias{kernel_stripe}
 \title{Generate common convolution kernels}
 \usage{
+kernel_bayer(n, normalize = TRUE)
+
 kernel_cone(size)
 
 kernel_disc(size)
@@ -18,8 +22,15 @@ kernel_emboss(theta, strength = 1)
 kernel_motion(size, theta)
 
 kernel_ring(size, thickness = 1)
+
+kernel_stripe(n, mod, step = 1)
 }
 \arguments{
+\item{n}{An integer specifying the number of rows and columns.}
+
+\item{normalize}{A logical scalar specifying whether the kernel should be
+divided by its sum. Set to \code{FALSE} in case you use the kernel as a mask.}
+
 \item{size}{An odd integer specifying the kernel size.}
 
 \item{theta}{A numeric value (in radians) specifying the orientation.}
@@ -29,6 +40,10 @@ Defaults to \code{1}.}
 
 \item{thickness}{A numeric value controlling ring thickness.
 Defaults to \code{1}.}
+
+\item{mod}{An integer specifying the pattern modulus.}
+
+\item{step}{An integer specifying the pattern step size.}
 }
 \value{
 A numeric matrix.
@@ -41,10 +56,12 @@ and other filtering operations in this package.
 \details{
 The following kernel constructors are available:
 \itemize{
+\item \code{kernel_bayer}: A Bayer pattern kernel.
 \item \code{kernel_cone}: A cone-shaped, radially weighted kernel.
 \item \code{kernel_disc}: A uniformly weighted disc kernel.
 \item \code{kernel_emboss}: A direction-aware emboss kernel.
 \item \code{kernel_motion}: A linear motion kernel oriented by \code{theta}.
 \item \code{kernel_ring}: A ring-shaped (donut-like) kernel.
+\item \code{kernel_stripe}: A stripe pattern kernel.
 }
 }

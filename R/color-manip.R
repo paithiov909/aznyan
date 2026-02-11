@@ -157,8 +157,7 @@ saturate <- function(nr, intensity) {
   ret <- nr_to_rgba(nr, "nr")
   hls <- rgb2hls(ret[1:3, ])
   hls[2, ] <- (azny_saturate_value(hls[2, ] / 255, intensity) * 255) |>
-    clamp(0, 255) |>
-    as.integer()
+    clamp(0, 255)
   rgb <- hls2rgb(hls)
   as_nr(azny_pack_integers(rgb * 1, ret[4, ] * 1, sz[1], sz[2]))
 }

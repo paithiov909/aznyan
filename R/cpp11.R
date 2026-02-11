@@ -144,6 +144,14 @@ azny_stylize <- function(nr, height, width, sgmS, sgmR) {
   .Call(`_aznyan_azny_stylize`, nr, height, width, sgmS, sgmR)
 }
 
+bayer_mat <- function(n) {
+  .Call(`_aznyan_bayer_mat`, n)
+}
+
+azny_screen_tone <- function(nr, height, width, cutoff, lift, bias, pattern) {
+  .Call(`_aznyan_azny_screen_tone`, nr, height, width, cutoff, lift, bias, pattern)
+}
+
 get_num_threads <- function() {
   .Call(`_aznyan_get_num_threads`)
 }

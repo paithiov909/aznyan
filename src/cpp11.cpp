@@ -257,6 +257,20 @@ extern "C" SEXP _aznyan_azny_stylize(SEXP nr, SEXP height, SEXP width, SEXP sgmS
     return cpp11::as_sexp(azny_stylize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR)));
   END_CPP11
 }
+// screen-tone.cpp
+cpp11::integers_matrix<> bayer_mat(const uint8_t& n);
+extern "C" SEXP _aznyan_bayer_mat(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(bayer_mat(cpp11::as_cpp<cpp11::decay_t<const uint8_t&>>(n)));
+  END_CPP11
+}
+// screen-tone.cpp
+cpp11::integers azny_screen_tone(const cpp11::integers& nr, int height, int width, int cutoff, int lift, int bias, const cpp11::integers& pattern);
+extern "C" SEXP _aznyan_azny_screen_tone(SEXP nr, SEXP height, SEXP width, SEXP cutoff, SEXP lift, SEXP bias, SEXP pattern) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_screen_tone(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(cutoff), cpp11::as_cpp<cpp11::decay_t<int>>(lift), cpp11::as_cpp<cpp11::decay_t<int>>(bias), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(pattern)));
+  END_CPP11
+}
 // threads.cpp
 int get_num_threads();
 extern "C" SEXP _aznyan_get_num_threads() {
@@ -318,6 +332,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
     {"_aznyan_azny_rgb_to_hls",       (DL_FUNC) &_aznyan_azny_rgb_to_hls,        1},
     {"_aznyan_azny_saturate_value",   (DL_FUNC) &_aznyan_azny_saturate_value,    2},
+    {"_aznyan_azny_screen_tone",      (DL_FUNC) &_aznyan_azny_screen_tone,       7},
     {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      10},
     {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
     {"_aznyan_azny_stylize",          (DL_FUNC) &_aznyan_azny_stylize,           5},
@@ -326,6 +341,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},
     {"_aznyan_azny_write_animation",  (DL_FUNC) &_aznyan_azny_write_animation,   5},
     {"_aznyan_azny_write_still",      (DL_FUNC) &_aznyan_azny_write_still,       4},
+    {"_aznyan_bayer_mat",             (DL_FUNC) &_aznyan_bayer_mat,              1},
     {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
     {"_aznyan_set_num_threads",       (DL_FUNC) &_aznyan_set_num_threads,        1},
     {NULL, NULL, 0}

@@ -141,3 +141,44 @@ lineweave <- function(
   )
   as_nr(out)
 }
+
+#' Apply a screen-tone texture using a threshold map
+#'
+#' @description
+#' Applies a tiled tone/texture to an image using a grayscale
+#' threshold map (`pattern`). For each pixel, the input intensity is compared
+#' with the corresponding value in `pattern` (plus `cutoff`), and then either
+#' `lift` or `bias` is added to the pixel value.
+#'
+#' This is useful for creating retro print-like textures, ordered-tone patterns,
+#' or "screen tone" overlays when `pattern` is a tiled image.
+#'
+#' @param nr A `nativeRaster` object.
+#' @param pattern A `nativeRaster` image used as a threshold map. Typically this
+#'  is created by tiling a small matrix (e.g. Bayer matrix) to match `nr`.
+#' @param bias Integer. Value to add to pixels that do *not* pass the threshold.
+#'  Larger values brighten the corresponding regions (clamped to `[0, 255]`).
+#' @param lift Integer. Value to add to pixels that *pass* the threshold.
+#'  Larger values brighten the corresponding regions (clamped to `[0, 255]`).
+#' @param cutoff Integer. Offset added to `pattern` before thresholding.
+#'  Increase this to make it harder for pixels to pass the threshold.
+#' @returns A `nativeRaster` object.
+#' @export
+screen_tone <- function(nr, pattern, bias = 0L, lift = 60L, cutoff = 8L) {
+  check_nr_dim(nr, pattern)
+
+  if (!all(is.finite(c(bias, lift, cutoff)))) {
+    cli::cli_abort("`bias`, `lift`, and `cutoff` must be finite numbers.")
+  }
+
+  out <- azny_screen_tone(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    as.integer(cutoff[1]),
+    as.integer(lift[1]),
+    as.integer(bias[1]),
+    cast_nr(pattern, "pattern")
+  )
+  as_nr(out)
+}
