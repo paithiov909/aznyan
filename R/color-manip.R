@@ -45,20 +45,12 @@ NULL
 #' @rdname color-manip
 #' @export
 brighten <- function(nr, intensity) {
-  # sz <- dim(nr)
-  # ret <- nr_to_rgba(nr, "nr")
-  # rgb <- clamp(ret[1:3, ] * (1 + intensity), 0, 255)
-  # as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
   as_nr(azny_brighten(nr, nrow(nr), ncol(nr), intensity))
 }
 
 #' @rdname color-manip
 #' @export
 contrast <- function(nr, intensity) {
-  # sz <- dim(nr)
-  # ret <- nr_to_rgba(nr, "nr")
-  # rgb <- clamp((ret[1:3, ] / 255 - 0.5) * (1 + intensity) + 0.5, 0, 1) * 255
-  # as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
   as_nr(azny_contrast(nr, nrow(nr), ncol(nr), intensity))
 }
 

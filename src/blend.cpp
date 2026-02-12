@@ -8,6 +8,7 @@ inline float alpha_blend(float x1, float x2) {
   return clamp01(x1 + x2 * (1.0f - x1));
 }
 
+// FIXME: This should return luma as a scalar value, be applied to all channels.
 inline cv::Vec3f gray_value(const cv::Vec3b& v) {
   return cv::Vec3f((v[2] * 0.299f) / 255.0f, (v[1] * 0.587f) / 255.0f,
                    (v[0] * 0.114f) / 255.0f);
@@ -19,6 +20,7 @@ inline uchar to_uchar(float v) {
 
 }  // namespace
 
+// NOTE: Different than the traditional Porter-Duff over compositing.
 [[cpp11::register]]
 cpp11::integers azny_blend_over(const cpp11::integers& src,
                                 const cpp11::integers& dst, int height,

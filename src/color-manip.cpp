@@ -6,6 +6,7 @@ inline float clampf(float v, float lo, float hi) {
   return std::min(std::max(v, lo), hi);
 }
 
+// FIXME: Use luma as a scalar value.
 inline float gray_channel(float v, float weight) {
   return (v * weight) / 255.0f;
 }
