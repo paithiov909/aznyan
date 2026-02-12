@@ -105,7 +105,6 @@ inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 
-// NOTE: rasterはrow-majorらしいので、integer_matrix<>で受け取るとアクセスがうまくいかないっぽい
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(
     const cpp11::integers& nr, int height, int width) {
   cv::Mat bgr(height, width, CV_8UC3), alpha(height, width, CV_8UC1);

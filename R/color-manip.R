@@ -45,165 +45,121 @@ NULL
 #' @rdname color-manip
 #' @export
 brighten <- function(nr, intensity) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp(ret[1:3, ] * (1 + intensity), 0, 255)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  # sz <- dim(nr)
+  # ret <- nr_to_rgba(nr, "nr")
+  # rgb <- clamp(ret[1:3, ] * (1 + intensity), 0, 255)
+  # as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_brighten(nr, nrow(nr), ncol(nr), intensity))
 }
 
 #' @rdname color-manip
 #' @export
 contrast <- function(nr, intensity) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- clamp((ret[1:3, ] / 255 - 0.5) * (1 + intensity) + 0.5, 0, 1) * 255
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  # sz <- dim(nr)
+  # ret <- nr_to_rgba(nr, "nr")
+  # rgb <- clamp((ret[1:3, ] / 255 - 0.5) * (1 + intensity) + 0.5, 0, 1) * 255
+  # as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_contrast(nr, nrow(nr), ncol(nr), intensity))
 }
 
 #' @rdname color-manip
 #' @export
 duotone <- function(nr, color_a = "yellow", color_b = "navy", gamma = 2.2) {
-  sz <- dim(nr)
-  color_a <- fill_with(color_a, sz[2], sz[1]) |> nr_to_rgba("color_a")
-  color_b <- fill_with(color_b, sz[2], sz[1]) |> nr_to_rgba("color_b")
-  ret <- nr_to_rgba(nr, "nr")
-  luminance <- clamp(gray(ret[1:3, ])^(1 / gamma), 0, 1)
-  rgb <- mix(color_a[1:3, ], color_b[1:3, ], luminance)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  color_a <- colorfast::col_to_rgb(color_a[1])
+  color_b <- colorfast::col_to_rgb(color_b[1])
+  as_nr(
+    azny_duotone(
+      nr,
+      nrow(nr),
+      ncol(nr),
+      as.integer(color_a[, 1]),
+      as.integer(color_b[, 1]),
+      gamma
+    )
+  )
 }
 
 #' @rdname color-manip
 #' @export
 grayscale <- function(nr) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- t(colSums(ret[1:3, ]) / 3) %x% c(1, 1, 1)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_grayscale(nr, nrow(nr), ncol(nr)))
 }
 
 #' @rdname color-manip
 #' @export
 hue_rotate <- function(nr, rad) {
-  cosv <- cos(rad)
-  sinv <- sin(rad)
-  mat <- c(
-    # Reds
-    0.213 + cosv * 0.787 - sinv * 0.213,
-    0.715 - cosv * 0.715 - sinv * 0.715,
-    0.072 - cosv * 0.072 + sinv * 0.928,
-    # Greens
-    0.213 - cosv * 0.213 + sinv * 0.143,
-    0.715 + cosv * 0.285 + sinv * 0.140,
-    0.072 - cosv * 0.072 - sinv * 0.283,
-    # Blues
-    0.213 - cosv * 0.213 - sinv * 0.787,
-    0.715 - cosv * 0.715 + sinv * 0.715,
-    0.072 + cosv * 0.928 + sinv * 0.072
-  )
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- rbind(
-    mat[1] * ret[1, ] + mat[2] * ret[2, ] + mat[3] * ret[3, ],
-    mat[4] * ret[1, ] + mat[5] * ret[2, ] + mat[6] * ret[3, ],
-    mat[7] * ret[1, ] + mat[8] * ret[2, ] + mat[9] * ret[3, ]
-  ) |>
-    clamp(0, 255)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_hue_rotate(nr, nrow(nr), ncol(nr), rad))
 }
 
 #' @rdname color-manip
 #' @export
 invert <- function(nr) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- 255 - ret[1:3, ]
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_invert(nr, nrow(nr), ncol(nr)))
 }
 
 #' @rdname color-manip
 #' @export
 linocut <- function(nr, ink = "navy", paper = "snow", threshold = 0.4) {
-  sz <- dim(nr)
-  ink <- fill_with(ink, sz[2], sz[1]) |> nr_to_rgba("ink")
-  paper <- fill_with(paper, sz[2], sz[1]) |> nr_to_rgba("paper")
-  ret <- nr_to_rgba(nr, "nr")
-  luminance <- step(gray(ret[1:3, ]), threshold)
-  rgb <- mix(paper[1:3, ], ink[1:3, ], luminance)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  ink <- colorfast::col_to_rgb(ink[1])
+  paper <- colorfast::col_to_rgb(paper[1])
+  as_nr(
+    azny_linocut(
+      nr,
+      nrow(nr),
+      ncol(nr),
+      as.integer(ink[, 1]),
+      as.integer(paper[, 1]),
+      threshold
+    )
+  )
 }
 
 #' @rdname color-manip
 #' @export
 posterize <- function(nr, shades = 4) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- floor(ret[1:3, ] / 255 * shades) / as.integer(shades - 1)
-  as_nr(azny_pack_integers(rgb * 255, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_posterize(nr, nrow(nr), ncol(nr), shades))
 }
 
 #' @rdname color-manip
 #' @export
 reset_alpha <- function(nr, alpha = 1) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  ret[4, ] <- clamp(alpha * 255, 0, 255)
-  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
+  as_nr(azny_reset_alpha(nr, nrow(nr), ncol(nr), alpha))
 }
 
 #' @rdname color-manip
 #' @export
 saturate <- function(nr, intensity) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  hls <- rgb2hls(ret[1:3, ])
-  hls[2, ] <- (azny_saturate_value(hls[2, ] / 255, intensity) * 255) |>
-    clamp(0, 255)
-  rgb <- hls2rgb(hls)
-  as_nr(azny_pack_integers(rgb * 1, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_saturate(nr, nrow(nr), ncol(nr), intensity))
 }
 
 #' @rdname color-manip
 #' @export
 sepia <- function(nr, intensity, depth = 20) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- rbind(
-    ret[1, ] + depth * 2,
-    ret[2, ] + depth,
-    colSums(ret[1:3, ]) / 3
-  ) |>
-    clamp(0, 255)
-  rgb[3, ] <- clamp(rgb[3, ] - (rgb[3, ] * intensity), 0, 255)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_sepia(nr, nrow(nr), ncol(nr), intensity, depth))
 }
 
 #' @rdname color-manip
 #' @export
 set_matte <- function(nr, color = "green") {
   rgb_int <- colorfast::col_to_rgb(color[1])
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  ret[1, ][ret[4, ] != 255] <- rgb_int[1, ] * 1
-  ret[2, ][ret[4, ] != 255] <- rgb_int[2, ] * 1
-  ret[3, ][ret[4, ] != 255] <- rgb_int[3, ] * 1
-  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
+  as_nr(
+    azny_set_matte(
+      nr,
+      nrow(nr),
+      ncol(nr),
+      as.integer(rgb_int[, 1])
+    )
+  )
 }
 
 #' @rdname color-manip
 #' @export
 solarize <- function(nr, threshold = 0.5) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr") * 1
-  intensity <- colSums(ret[1:3, ] / 255) / 3
-  ret[1:3, intensity < threshold] <- (255L - ret[1:3, intensity < threshold])
-  as_nr(azny_pack_integers(ret[1:3, ], ret[4, ], sz[1], sz[2]))
+  as_nr(azny_solarize(nr, nrow(nr), ncol(nr), threshold))
 }
 
 #' @rdname color-manip
 #' @export
 unpremul <- function(nr, max = 255L) {
-  sz <- dim(nr)
-  ret <- nr_to_rgba(nr, "nr")
-  rgb <- ret[1:3, ] / (ret[4, ] / max)
-  as_nr(azny_pack_integers(rgb, ret[4, ] * 1, sz[1], sz[2]))
+  as_nr(azny_unpremul(nr, nrow(nr), ncol(nr), max))
 }
