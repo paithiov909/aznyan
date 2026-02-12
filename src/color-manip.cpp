@@ -59,7 +59,7 @@ cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
@@ -87,7 +87,7 @@ cpp11::integers azny_grayscale(const cpp11::integers& nr, int height,
   cv::Mat out = bgra[0].clone();
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float avg = (v[0] + v[1] + v[2]) / 3.0f;
       const uchar u = to_uchar(avg);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(u, u, u);
@@ -117,7 +117,7 @@ cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
@@ -137,7 +137,7 @@ cpp11::integers azny_invert(const cpp11::integers& nr, int height, int width) {
   cv::Mat out = bgra[0].clone();
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(255 - v[0], 255 - v[1], 255 - v[2]);
     }
   });
@@ -159,7 +159,7 @@ cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
@@ -184,7 +184,7 @@ cpp11::integers azny_posterize(const cpp11::integers& nr, int height, int width,
   const int denom = std::max(shades - 1, 1);
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = std::floor((v[2] / 255.0f) * shades) / denom * 255.0f;
       const float g = std::floor((v[1] / 255.0f) * shades) / denom * 255.0f;
       const float b = std::floor((v[0] / 255.0f) * shades) / denom * 255.0f;
@@ -238,7 +238,7 @@ cpp11::integers azny_sepia(const cpp11::integers& nr, int height, int width,
   const float intf = static_cast<float>(intensity);
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
@@ -282,7 +282,7 @@ cpp11::integers azny_solarize(const cpp11::integers& nr, int height, int width,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
@@ -305,7 +305,7 @@ cpp11::integers azny_unpremul(const cpp11::integers& nr, int height, int width,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const auto v = bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& v = bgra[0].at<cv::Vec3b>(i, j);
       const float a = bgra[1].at<uchar>(i, j) / maxf;
       if (a <= 0.0f) {
         out.at<cv::Vec3b>(i, j) = cv::Vec3b(0, 0, 0);
