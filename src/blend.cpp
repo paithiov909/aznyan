@@ -10,8 +10,9 @@ inline float alpha_blend(float x1, float x2) {
   return clamp01(x1 + x2 * (1.0f - x1));
 }
 
-inline float gray_value(const cv::Vec3b& v) {
-  return (v[2] * 0.299f + v[1] * 0.587f + v[0] * 0.114f) / 255.0f;
+inline cv::Vec3f gray_value(const cv::Vec3b& v) {
+  return cv::Vec3f((v[2] * 0.299f) / 255.0f, (v[1] * 0.587f) / 255.0f,
+                   (v[0] * 0.114f) / 255.0f);
 }
 
 inline uchar to_uchar(float v) {
@@ -733,14 +734,14 @@ cpp11::integers azny_blend_luminosity(const cpp11::integers& src,
     for (int j = 0; j < width; j++) {
       const auto s = src_bgra[0].at<cv::Vec3b>(i, j);
       const auto d = dst_bgra[0].at<cv::Vec3b>(i, j);
-      const float gs = gray_value(s);
-      const float gd = gray_value(d);
+      const cv::Vec3f gs = gray_value(s);
+      const cv::Vec3f gd = gray_value(d);
       const float dr = d[2] / 255.0f;
       const float dg = d[1] / 255.0f;
       const float db = d[0] / 255.0f;
-      const float rr = clamp01(gs + dr - gd);
-      const float rg = clamp01(gs + dg - gd);
-      const float rb = clamp01(gs + db - gd);
+      const float rr = clamp01(gs[0] + dr - gd[0]);
+      const float rg = clamp01(gs[1] + dg - gd[1]);
+      const float rb = clamp01(gs[2] + db - gd[2]);
       out.at<cv::Vec3b>(i, j) =
           cv::Vec3b(to_uchar(rb * 255.0f), to_uchar(rg * 255.0f),
                     to_uchar(rr * 255.0f));
@@ -767,17 +768,17 @@ cpp11::integers azny_blend_ghosting(const cpp11::integers& src,
     for (int j = 0; j < width; j++) {
       const auto s = src_bgra[0].at<cv::Vec3b>(i, j);
       const auto d = dst_bgra[0].at<cv::Vec3b>(i, j);
-      const float gs = gray_value(s);
-      const float gd = gray_value(d);
+      const cv::Vec3f gs = gray_value(s);
+      const cv::Vec3f gd = gray_value(d);
       const float dr = d[2] / 255.0f;
       const float dg = d[1] / 255.0f;
       const float db = d[0] / 255.0f;
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
-      const float rr = clamp01(gd - gs + dr + sr / 5.0f);
-      const float rg = clamp01(gd - gs + dg + sg / 5.0f);
-      const float rb = clamp01(gd - gs + db + sb / 5.0f);
+      const float rr = clamp01(gd[0] - gs[0] + dr + sr / 5.0f);
+      const float rg = clamp01(gd[1] - gs[1] + dg + sg / 5.0f);
+      const float rb = clamp01(gd[2] - gs[2] + db + sb / 5.0f);
       out.at<cv::Vec3b>(i, j) =
           cv::Vec3b(to_uchar(rb * 255.0f), to_uchar(rg * 255.0f),
                     to_uchar(rr * 255.0f));
