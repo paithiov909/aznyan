@@ -70,7 +70,7 @@ test_that("posterize works", {
 test_that("saturate works", {
   vdiffr::expect_doppelganger(
     "saturate",
-    saturate(png, 1.2) |>
+    saturate(png, -.5) |>
       as_recordedplot()
   )
 })

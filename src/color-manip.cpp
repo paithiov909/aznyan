@@ -21,7 +21,8 @@ inline uchar to_uchar(float v) {
 }  // namespace
 
 [[cpp11::register]]
-cpp11::integers azny_brighten(const cpp11::integers& nr, int height, int width, double intensity) {
+cpp11::integers azny_brighten(const cpp11::integers& nr, int height, int width,
+                              double intensity) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat tmp;
   cv::convertScaleAbs(bgra[0], tmp, 1.0 + intensity);
@@ -29,7 +30,8 @@ cpp11::integers azny_brighten(const cpp11::integers& nr, int height, int width, 
 }
 
 [[cpp11::register]]
-cpp11::integers azny_contrast(const cpp11::integers& nr, int height, int width, double intensity) {
+cpp11::integers azny_contrast(const cpp11::integers& nr, int height, int width,
+                              double intensity) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat tmp;
   bgra[0].convertTo(tmp, CV_32F, 1.0 / 255.0);
@@ -60,14 +62,17 @@ cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width,
       const float r = v[2];
       const float g = v[1];
       const float b = v[0];
-      const float lr = clampf(std::pow(gray_channel(r, 0.299f), inv_gamma), 0.0f, 1.0f);
-      const float lg = clampf(std::pow(gray_channel(g, 0.587f), inv_gamma), 0.0f, 1.0f);
-      const float lb = clampf(std::pow(gray_channel(b, 0.114f), inv_gamma), 0.0f, 1.0f);
+      const float lr =
+          clampf(std::pow(gray_channel(r, 0.299f), inv_gamma), 0.0f, 1.0f);
+      const float lg =
+          clampf(std::pow(gray_channel(g, 0.587f), inv_gamma), 0.0f, 1.0f);
+      const float lb =
+          clampf(std::pow(gray_channel(b, 0.114f), inv_gamma), 0.0f, 1.0f);
       const float out_r = ar * lr + br * (1.0f - lr);
       const float out_g = ag * lg + bg * (1.0f - lg);
       const float out_b = ab * lb + bb * (1.0f - lb);
-      out.at<cv::Vec3b>(i, j) = cv::Vec3b(to_uchar(out_b), to_uchar(out_g),
-                                          to_uchar(out_r));
+      out.at<cv::Vec3b>(i, j) =
+          cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
     }
   });
 
@@ -75,7 +80,8 @@ cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width,
 }
 
 [[cpp11::register]]
-cpp11::integers azny_grayscale(const cpp11::integers& nr, int height, int width) {
+cpp11::integers azny_grayscale(const cpp11::integers& nr, int height,
+                               int width) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat out = bgra[0].clone();
   aznyan::parallel_for(0, height, [&](int i) {
@@ -90,8 +96,8 @@ cpp11::integers azny_grayscale(const cpp11::integers& nr, int height, int width)
 }
 
 [[cpp11::register]]
-cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height, int width,
-                                double rad) {
+cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height,
+                                int width, double rad) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat out = bgra[0].clone();
   const float cosv = std::cos(rad);
@@ -117,8 +123,8 @@ cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height, int width
       const float nr = m[0] * r + m[1] * g + m[2] * b;
       const float ng = m[3] * r + m[4] * g + m[5] * b;
       const float nb = m[6] * r + m[7] * g + m[8] * b;
-      out.at<cv::Vec3b>(i, j) = cv::Vec3b(to_uchar(nb), to_uchar(ng),
-                                          to_uchar(nr));
+      out.at<cv::Vec3b>(i, j) =
+          cv::Vec3b(to_uchar(nb), to_uchar(ng), to_uchar(nr));
     }
   });
   return aznyan::encode_nr(out, bgra[1]);
@@ -162,8 +168,8 @@ cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width,
       const float out_r = pr * lr + ir * (1.0f - lr);
       const float out_g = pg * lg + ig * (1.0f - lg);
       const float out_b = pb * lb + ib * (1.0f - lb);
-      out.at<cv::Vec3b>(i, j) = cv::Vec3b(to_uchar(out_b), to_uchar(out_g),
-                                          to_uchar(out_r));
+      out.at<cv::Vec3b>(i, j) =
+          cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
     }
   });
   return aznyan::encode_nr(out, bgra[1]);
@@ -181,8 +187,8 @@ cpp11::integers azny_posterize(const cpp11::integers& nr, int height, int width,
       const float r = std::floor((v[2] / 255.0f) * shades) / denom * 255.0f;
       const float g = std::floor((v[1] / 255.0f) * shades) / denom * 255.0f;
       const float b = std::floor((v[0] / 255.0f) * shades) / denom * 255.0f;
-      out.at<cv::Vec3b>(i, j) = cv::Vec3b(to_uchar(b), to_uchar(g),
-                                          to_uchar(r));
+      out.at<cv::Vec3b>(i, j) =
+          cv::Vec3b(to_uchar(b), to_uchar(g), to_uchar(r));
     }
   });
   return aznyan::encode_nr(out, bgra[1]);
@@ -209,9 +215,9 @@ cpp11::integers azny_saturate(const cpp11::integers& nr, int height, int width,
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       auto v = hls.at<cv::Vec3b>(i, j);
-      float l = v[1] / 255.0f;
-      l = clampf(saturate_value(l, static_cast<float>(intensity)), 0.0f, 1.0f);
-      v[1] = to_uchar(l * 255.0f);
+      float s = v[2] / 255.0f;
+      s = clampf(saturate_value(s, static_cast<float>(intensity)), 0.0f, 1.0f);
+      v[2] = to_uchar(s * 255.0f);
       hls.at<cv::Vec3b>(i, j) = v;
     }
   });
@@ -239,8 +245,8 @@ cpp11::integers azny_sepia(const cpp11::integers& nr, int height, int width,
       float ng = clampf(g + d, 0.0f, 255.0f);
       float nb = clampf((r + g + b) / 3.0f, 0.0f, 255.0f);
       nb = clampf(nb - nb * intf, 0.0f, 255.0f);
-      out.at<cv::Vec3b>(i, j) = cv::Vec3b(to_uchar(nb), to_uchar(ng),
-                                          to_uchar(nr));
+      out.at<cv::Vec3b>(i, j) =
+          cv::Vec3b(to_uchar(nb), to_uchar(ng), to_uchar(nr));
     }
   });
   return aznyan::encode_nr(out, bgra[1]);
