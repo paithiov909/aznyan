@@ -27,13 +27,17 @@ cpp11::integers azny_blend_over(const cpp11::integers& src,
                                 int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -61,13 +65,17 @@ cpp11::integers azny_blend_darken(const cpp11::integers& src,
                                   int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           std::min(s[0], d[0]), std::min(s[1], d[1]), std::min(s[2], d[2]));
 
@@ -86,13 +94,17 @@ cpp11::integers azny_blend_multiply(const cpp11::integers& src,
                                     int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -118,13 +130,17 @@ cpp11::integers azny_blend_colorburn(const cpp11::integers& src,
                                      int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -152,13 +168,17 @@ cpp11::integers azny_blend_lighten(const cpp11::integers& src,
                                    int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           std::max(s[0], d[0]), std::max(s[1], d[1]), std::max(s[2], d[2]));
 
@@ -177,13 +197,17 @@ cpp11::integers azny_blend_screen(const cpp11::integers& src,
                                   int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -211,13 +235,17 @@ cpp11::integers azny_blend_add(const cpp11::integers& src,
                                int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -243,13 +271,17 @@ cpp11::integers azny_blend_colordodge(const cpp11::integers& src,
                                       int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -277,13 +309,17 @@ cpp11::integers azny_blend_hardlight(const cpp11::integers& src,
                                      int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -315,13 +351,17 @@ cpp11::integers azny_blend_softlight(const cpp11::integers& src,
                                      int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -359,13 +399,17 @@ cpp11::integers azny_blend_overlay(const cpp11::integers& src,
                                    int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -397,13 +441,17 @@ cpp11::integers azny_blend_hardmix(const cpp11::integers& src,
                                    int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -429,13 +477,17 @@ cpp11::integers azny_blend_linearlight(const cpp11::integers& src,
                                        int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -462,13 +514,17 @@ cpp11::integers azny_blend_vividlight(const cpp11::integers& src,
                                       int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -503,13 +559,17 @@ cpp11::integers azny_blend_pinlight(const cpp11::integers& src,
                                     int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -543,13 +603,17 @@ cpp11::integers azny_blend_average(const cpp11::integers& src,
                                    int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -576,13 +640,17 @@ cpp11::integers azny_blend_exclusion(const cpp11::integers& src,
                                      int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -610,13 +678,17 @@ cpp11::integers azny_blend_difference(const cpp11::integers& src,
                                       int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -642,13 +714,17 @@ cpp11::integers azny_blend_divide(const cpp11::integers& src,
                                   int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -676,13 +752,17 @@ cpp11::integers azny_blend_subtract(const cpp11::integers& src,
                                     int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
@@ -710,13 +790,17 @@ cpp11::integers azny_blend_luminosity(const cpp11::integers& src,
                                       int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const cv::Vec3f gs = gray_value(s);
       const cv::Vec3f gd = gray_value(d);
       const float dr = d[2] / 255.0f;
@@ -743,13 +827,17 @@ cpp11::integers azny_blend_ghosting(const cpp11::integers& src,
                                     int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
+
+  const cv::Mat& src_bgr = src_bgra[0];
+  const cv::Mat& dst_bgr = dst_bgra[0];
+
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      const cv::Vec3b& s = src_bgra[0].at<cv::Vec3b>(i, j);
-      const cv::Vec3b& d = dst_bgra[0].at<cv::Vec3b>(i, j);
+      const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
+      const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
       const cv::Vec3f gs = gray_value(s);
       const cv::Vec3f gd = gray_value(d);
       const float dr = d[2] / 255.0f;
