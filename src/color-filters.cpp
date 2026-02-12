@@ -27,11 +27,12 @@ cpp11::integers azny_saturate(const cpp11::integers& nr, int height, int width,
                               double intensity);
 cpp11::integers azny_sepia(const cpp11::integers& nr, int height, int width,
                            double intensity, int depth);
-cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height, int width,
-                                double rad);
-cpp11::integers azny_grayscale(const cpp11::integers& nr, int height, int width);
-cpp11::integers azny_reset_alpha(const cpp11::integers& nr, int height, int width,
-                                 double alpha);
+cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height,
+                                int width, double rad);
+cpp11::integers azny_grayscale(const cpp11::integers& nr, int height,
+                               int width);
+cpp11::integers azny_reset_alpha(const cpp11::integers& nr, int height,
+                                 int width, double alpha);
 
 cpp11::integers azny_blend_screen(const cpp11::integers& src,
                                   const cpp11::integers& dst, int height,
@@ -133,8 +134,8 @@ cpp11::integers azny_color_filter(const cpp11::integers& nr, int height,
     }
     case 10: {  // lark
       auto bg = azny_contrast(nr, height, width, -0.1f);
-      bg = azny_blend_colordodge(
-          solid_premul(width, height, 34, 37, 63, 255), bg, height, width);
+      bg = azny_blend_colordodge(solid_premul(width, height, 34, 37, 63, 255),
+                                 bg, height, width);
       auto fg = solid_premul(width, height, 242, 242, 242, 204);
       return azny_blend_darken(fg, bg, height, width);
     }
@@ -157,8 +158,8 @@ cpp11::integers azny_color_filter(const cpp11::integers& nr, int height,
     case 14: {  // moon
       auto bg = azny_contrast(nr, height, width, 0.1f);
       bg = azny_brighten(bg, height, width, 0.1f);
-      bg = azny_blend_softlight(
-          solid_premul(width, height, 160, 160, 160, 255), bg, height, width);
+      bg = azny_blend_softlight(solid_premul(width, height, 160, 160, 160, 255),
+                                bg, height, width);
       auto fg = solid_premul(width, height, 56, 56, 56, 255);
       auto out = azny_blend_lighten(fg, bg, height, width);
       return azny_grayscale(out, height, width);
@@ -168,8 +169,8 @@ cpp11::integers azny_color_filter(const cpp11::integers& nr, int height,
       bg = azny_contrast(bg, height, width, 0.2f);
       bg = azny_brighten(bg, height, width, 0.05f);
       bg = azny_saturate(bg, height, width, 0.2);
-      bg = azny_blend_darken(
-          solid_premul(width, height, 247, 176, 153, 243), bg, height, width);
+      bg = azny_blend_darken(solid_premul(width, height, 247, 176, 153, 243),
+                             bg, height, width);
       auto fg = solid_premul(width, height, 0, 70, 150, 230);
       return azny_blend_lighten(fg, bg, height, width);
     }

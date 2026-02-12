@@ -74,30 +74,34 @@ color_filter <- function(
   )
 ) {
   filter <- rlang::arg_match(filter)
-  filter_id <- match(filter, c(
-    "1977",
-    "aden",
-    "brannan",
-    "brooklyn",
-    "clarendon",
-    "earlybird",
-    "gingham",
-    "hudson",
-    "inkwell",
-    "kelvin",
-    "lark",
-    "lofi",
-    "maven",
-    "mayfair",
-    "moon",
-    "nashville",
-    "reyes",
-    "rise",
-    "slumber",
-    "stinson",
-    "toaster",
-    "valencia",
-    "walden"
-  )) - 1L
+  filter_id <- match(
+    filter,
+    c(
+      "1977",
+      "aden",
+      "brannan",
+      "brooklyn",
+      "clarendon",
+      "earlybird",
+      "gingham",
+      "hudson",
+      "inkwell",
+      "kelvin",
+      "lark",
+      "lofi",
+      "maven",
+      "mayfair",
+      "moon",
+      "nashville",
+      "reyes",
+      "rise",
+      "slumber",
+      "stinson",
+      "toaster",
+      "valencia",
+      "walden"
+    )
+  ) -
+    1L
   as_nr(azny_color_filter(nr, nrow(nr), ncol(nr), filter_id))
 }
