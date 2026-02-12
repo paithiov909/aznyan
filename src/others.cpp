@@ -30,16 +30,16 @@ cpp11::integers azny_hist_eq(const cpp11::integers& nr, int height, int width,
     cv::equalizeHist(tmpB, tmpC);
   }
 
-  cv::Mat tmpD = bgra[0]; // NOTE: just trying to make checks happy...
+  cv::Mat tmpD = bgra[0];
   cv::Mat out(tmpD.size(), CV_8UC3);
   if (color) {
-    aznyan::parallel_for(0, height, [&](int32_t y) {
-      auto pIN1 = tmpC.ptr<uchar>(y);
-      auto pIN2 = tmpB.ptr<uchar>(y);
-      auto pIN3 = tmpD.ptr<cv::Vec3b>(y);
-      auto pOUT = out.ptr<cv::Vec3b>(y);
+    aznyan::parallel_for(0, height, [&](int y) {
+      uchar* pIN1 = tmpC.ptr<uchar>(y);
+      uchar* pIN2 = tmpB.ptr<uchar>(y);
+      cv::Vec3b* pIN3 = tmpD.ptr<cv::Vec3b>(y);
+      cv::Vec3b* pOUT = out.ptr<cv::Vec3b>(y);
 
-      for (auto x = 0; x < width; ++x) {
+      for (int x = 0; x < width; ++x) {
         double coef = 0;
         if (pIN2[x] != 0) {
           coef = ((double)pIN1[x]) / pIN2[x];

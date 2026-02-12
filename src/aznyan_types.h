@@ -129,7 +129,7 @@ inline cpp11::integers encode_nr(const cv::Mat& bgr, const cv::Mat& alpha) {
   parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
-      const uchar a = alpha.at<uchar>(i, j);
+      const uchar& a = alpha.at<uchar>(i, j);
       dat[i * width + j] = pack_into_int(v[2], v[1], v[0], a);
     }
   });

@@ -36,10 +36,10 @@ cpp11::integers azny_screen_tone(const cpp11::integers& nr, int height,
   cv::cvtColor(bgra_pat[0], gray_pat, cv::COLOR_BGR2GRAY);
   cv::Mat out(gray.size(), CV_8UC1);
 
-  aznyan::parallel_for(0, height, [&](int32_t y) {
-    auto pIN = gray.ptr<uchar>(y);
-    auto pMAP = gray_pat.ptr<uchar>(y);
-    for (int32_t x = 0; x < width; ++x) {
+  aznyan::parallel_for(0, height, [&](int y) {
+    uchar* pIN = gray.ptr<uchar>(y);
+    uchar* pMAP = gray_pat.ptr<uchar>(y);
+    for (int x = 0; x < width; ++x) {
       out.at<uchar>(y, x) = pIN[x] > (pMAP[x] + cutoff)
                                 ? cv::saturate_cast<uchar>(pIN[x] + lift)
                                 : cv::saturate_cast<uchar>(pIN[x] + bias);

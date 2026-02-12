@@ -62,7 +62,7 @@ cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb) {
 
   std::vector<uchar> ret(3 * rgb.ncol());
   aznyan::parallel_for(0, rgb.ncol(), [&](int i) {
-    const auto hls = tmp.at<cv::Vec3b>(0, i);
+    const cv::Vec3b& hls = tmp.at<cv::Vec3b>(0, i);
     ret[i * 3 + 0] = hls[0];
     ret[i * 3 + 1] = hls[1];
     ret[i * 3 + 2] = hls[2];
@@ -87,7 +87,7 @@ cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls) {
 
   std::vector<uchar> ret(3 * hls.ncol());
   aznyan::parallel_for(0, hls.ncol(), [&](int i) {
-    const auto rgb = tmp.at<cv::Vec3b>(0, i);
+    const cv::Vec3b& rgb = tmp.at<cv::Vec3b>(0, i);
     ret[i * 3 + 0] = rgb[0];
     ret[i * 3 + 1] = rgb[1];
     ret[i * 3 + 2] = rgb[2];
@@ -112,7 +112,7 @@ cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width,
     cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGR2GRAY, 1);
   }
   if (invmode) {
-    cv::Mat tmp1 = cv::Mat::ones(tmpB.size(), CV_8UC1) * 255;
+    cv::Mat tmp1 = cv::Mat::ones(tmpB.size(), CV_8UC1) * 255.0f;
     cv::Mat tmp2 = cv::Mat::zeros(tmpB.size(), CV_8UC1);
     cv::subtract(tmp1, tmpB, tmp2);
     tmpB = tmp2.clone();

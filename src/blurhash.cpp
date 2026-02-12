@@ -13,8 +13,8 @@ cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width,
 
   cv::Mat imgLin(tmpB.size(), CV_32FC3);
   aznyan::parallel_for(0, height, [&](int y) {
-    for (auto x = 0; x < width; x++) {
-      const cv::Vec3f px = tmpB.at<cv::Vec3f>(y, x);
+    for (int x = 0; x < width; x++) {
+      const cv::Vec3f& px = tmpB.at<cv::Vec3f>(y, x);
       imgLin.at<cv::Vec3f>(y, x) = cv::Vec3f(srgb_to_linear(px[2]),  // R
                                              srgb_to_linear(px[1]),  // G
                                              srgb_to_linear(px[0])   // B
@@ -23,9 +23,9 @@ cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width,
   });
 
   cv::Mat currents = cv::Mat::zeros(y_comps, x_comps, CV_32FC3);
-  for (auto j = 0; j < y_comps; j++) {
-    for (auto i = 0; i < x_comps; i++) {
-      int nthreads = cv::getNumThreads();
+  for (int j = 0; j < y_comps; j++) {
+    for (int i = 0; i < x_comps; i++) {
+      const int nthreads = cv::getNumThreads();
       std::vector<cv::Vec3f> partial(nthreads, cv::Vec3f(0, 0, 0));
 
       aznyan::parallel_for(0, height, [&](int y) {
@@ -35,11 +35,11 @@ cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width,
         const float fy = (y + .5f) / height;
         const float cy = std::cos(M_PI * j * fy);
 
-        for (auto x = 0; x < width; x++) {
+        for (int x = 0; x < width; x++) {
           const float fx = (x + .5f) / width;
           const float cx = std::cos(M_PI * i * fx);
           const float basis = cx * cy;
-          const cv::Vec3f px = imgLin.at<cv::Vec3f>(y, x);
+          const cv::Vec3f& px = imgLin.at<cv::Vec3f>(y, x);
           local += px * basis;
         }
 
@@ -57,23 +57,23 @@ cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width,
   }
 
   cv::Mat outBGR(tmpB.size(), CV_8UC3);
-  aznyan::parallel_for(0, height, [&](int32_t y) {
+  aznyan::parallel_for(0, height, [&](int y) {
     const float fy = (y + .5f) / height;
 
-    for (auto x = 0; x < width; x++) {
+    for (int x = 0; x < width; x++) {
       const float fx = (x + .5f) / width;
 
       // --- 1. DCT reconstruction （Linear RGB） ---
       float r = 0.f, g = 0.f, b = 0.f;
 
-      for (auto j = 0; j < y_comps; j++) {
+      for (int j = 0; j < y_comps; j++) {
         const float cy = std::cos((float)M_PI * j * fy);
 
-        for (auto i = 0; i < x_comps; i++) {
+        for (int i = 0; i < x_comps; i++) {
           const float cx = std::cos((float)M_PI * i * fx);
           const float basis = cx * cy;
 
-          const cv::Vec3f c = currents.at<cv::Vec3f>(j, i);  // Linear RGB
+          const cv::Vec3f& c = currents.at<cv::Vec3f>(j, i);  // Linear RGB
           r += c[0] * basis;
           g += c[1] * basis;
           b += c[2] * basis;

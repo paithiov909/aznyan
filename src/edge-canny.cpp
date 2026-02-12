@@ -28,7 +28,7 @@ cpp11::integers azny_cannyrgb(const cpp11::integers& nr, int height, int width, 
   ch_col.push_back(bgra[1]);
 
   cv::Mat tmpB = cv::Mat::zeros(bgra[0].size(), CV_8U);
-  for (auto i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     cv::Mat tmpC;
     cv::Canny(ch_col[i], tmpC, thres1, thres2, 2 * asize - 1, gradient);
     cv::add(tmpB, tmpC, tmpB);

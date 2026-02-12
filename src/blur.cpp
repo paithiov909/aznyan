@@ -26,8 +26,8 @@ cpp11::integers azny_gaussianblur(const cpp11::integers& nr, int height,
                                   int width, int boxW, int boxH, double sigmaX,
                                   double sigmaY, int border) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
-  int kx = std::max(2 * boxW - 1, 0);
-  int ky = std::max(2 * boxH - 1, 0);
+  const int kx = std::max(2 * boxW - 1, 0);
+  const int ky = std::max(2 * boxH - 1, 0);
   cv::Mat out;
   cv::GaussianBlur(bgra[0], out, cv::Size(kx, ky), sigmaX, sigmaY,
                    aznyan::mode_a[border]);

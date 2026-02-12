@@ -8,56 +8,6 @@
 #' @name blend-mode
 NULL
 
-#' Clip values between `min` and `max`
-#'
-#' @param x numerics
-#' @param min,max numeric scalar
-#' @returns numerics
-#' @noRd
-clamp <- function(x, min, max) {
-  pmin(pmax(x, min), max)
-}
-
-#' Lerp
-#'
-#' @param x,y numerics
-#' @param mask numeric scalar
-#' @returns numerics
-#' @noRd
-mix <- function(x, y, mask) {
-  mask <- clamp(mask, 0, 1)
-  x * mask + y * (1 - mask)
-}
-
-#' Step
-#'
-#' @param x,y numerics
-#' @param mask numeric scalar
-#' @returns numerics
-#' @noRd
-step <- function(x, mask) {
-  (x > mask) * 1
-}
-
-#' Alpha blending
-#'
-#' @param x1,x2 Alpha values.
-#' @returns doubles
-#' @noRd
-alpha <- function(x1, x2) {
-  clamp(x1 + x2 * (1 - x1), 0, 1)
-}
-
-#' NTSC grayscale
-#'
-#' @param x 3-channel matrix
-#' @returns doubles
-#' @noRd
-gray <- function(x) {
-  x <- x * c(0.299, 0.587, 0.114)
-  x / 255
-}
-
 #' @rdname blend
 #' @export
 blend_over <- function(src, dst) {
