@@ -264,6 +264,7 @@ cpp11::integers azny_sepia(const cpp11::integers& nr, int height, int width,
 cpp11::integers azny_set_matte(const cpp11::integers& nr, int height, int width,
                                const cpp11::integers& color) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  const cv::Mat& alpha = bgra[1];
   cv::Mat out = bgra[0].clone();
   const uchar r = static_cast<uchar>(color[0]);
   const uchar g = static_cast<uchar>(color[1]);
@@ -271,7 +272,7 @@ cpp11::integers azny_set_matte(const cpp11::integers& nr, int height, int width,
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
-      if (bgra[1].at<uchar>(i, j) != 255) {
+      if (alpha.at<uchar>(i, j) != 255) {
         out.at<cv::Vec3b>(i, j) = cv::Vec3b(b, g, r);
       }
     }
@@ -309,13 +310,14 @@ cpp11::integers azny_unpremul(const cpp11::integers& nr, int height, int width,
                               int max) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   const cv::Mat& bgr = bgra[0];
+  const cv::Mat& alpha = bgra[1];
   cv::Mat out = bgr.clone();
   const float maxf = static_cast<float>(max);
 
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
-      const float a = bgra[1].at<uchar>(i, j) / maxf;
+      const float a = alpha.at<uchar>(i, j) / maxf;
       if (a <= 0.0f) {
         out.at<cv::Vec3b>(i, j) = cv::Vec3b(0, 0, 0);
         continue;
