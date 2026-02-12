@@ -21,7 +21,7 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
   cv::Mat out(gray.size(), CV_8UC3);
 
   auto step_state = [&](double& lumisum, int& drawpx, int& drawing,
-                        int& interval, uint8_t g) {
+                        int& interval, uchar g) {
     // g: 0..255
     double lumi = srgb_to_linear(static_cast<double>(g) / 255.0);
     lumisum += (invert) ? lumi * omega : (1.0 - lumi) * omega;
@@ -44,19 +44,19 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
   const bool innerReverse = (direction == 0 || direction == 2);
 
   if (outerIsRow) {
-    aznyan::parallel_for(0, height, [&](int32_t y) {
+    aznyan::parallel_for(0, height, [&](int y) {
       double lumisum = 0;
       int drawpx = 0;
       int drawing = dist1;
       int interval = 0;
 
-      const uint8_t* gRow = gray.ptr<uint8_t>(y);
+      const uchar* gRow = gray.ptr<uchar>(y);
       const cv::Vec3b* fgRow = tmp_fg.ptr<cv::Vec3b>(y);
       const cv::Vec3b* bgRow = tmp_bg.ptr<cv::Vec3b>(y);
       cv::Vec3b* outRow = out.ptr<cv::Vec3b>(y);
 
       if (!innerReverse) {
-        for (int32_t x = 0; x < width; ++x) {
+        for (int x = 0; x < width; ++x) {
           step_state(lumisum, drawpx, drawing, interval, gRow[x]);
           if (drawpx > 0) {
             outRow[x] = fgRow[x];
@@ -66,7 +66,7 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
           }
         }
       } else {
-        for (int32_t x = width - 1; x >= 0; --x) {
+        for (int x = width - 1; x >= 0; --x) {
           step_state(lumisum, drawpx, drawing, interval, gRow[x]);
           if (drawpx > 0) {
             outRow[x] = fgRow[x];
@@ -79,15 +79,15 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
     });
 
   } else {
-    aznyan::parallel_for(0, width, [&](int32_t x) {
+    aznyan::parallel_for(0, width, [&](int x) {
       double lumisum = 0;
       int drawpx = 0;
       int drawing = dist1;
       int interval = 0;
 
       if (!innerReverse) {
-        for (int32_t y = 0; y < height; ++y) {
-          const uint8_t* gRow = gray.ptr<uint8_t>(y);
+        for (int y = 0; y < height; ++y) {
+          const uchar* gRow = gray.ptr<uchar>(y);
           const cv::Vec3b* fgRow = tmp_fg.ptr<cv::Vec3b>(y);
           const cv::Vec3b* bgRow = tmp_bg.ptr<cv::Vec3b>(y);
           cv::Vec3b* outRow = out.ptr<cv::Vec3b>(y);
@@ -101,8 +101,8 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
           }
         }
       } else {
-        for (int32_t y = height - 1; y >= 0; --y) {
-          const uint8_t* gRow = gray.ptr<uint8_t>(y);
+        for (int y = height - 1; y >= 0; --y) {
+          const uchar* gRow = gray.ptr<uchar>(y);
           const cv::Vec3b* fgRow = tmp_fg.ptr<cv::Vec3b>(y);
           const cv::Vec3b* bgRow = tmp_bg.ptr<cv::Vec3b>(y);
           cv::Vec3b* outRow = out.ptr<cv::Vec3b>(y);

@@ -56,7 +56,7 @@ cpp11::integers azny_morphologyrgb(const cpp11::integers& nr, int height,
     cpp11::stop("Invalid kernel size.");
   }
   std::vector<cv::Mat> kernel;
-  for (auto i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     cv::Mat tmpB = getStructuringElement(
         aznyan::kshape[ktype], cv::Size(2 * ksize[i] - 1, 2 * ksize[i] - 1),
         anchor);
@@ -67,14 +67,14 @@ cpp11::integers azny_morphologyrgb(const cpp11::integers& nr, int height,
   cv::Mat tmpC = cv::Mat::zeros(bgra[0].size(), CV_8UC1);
   std::vector<cv::Mat> tmpD(6, tmpC);
   iterations = std::max(iterations, 1);
-  aznyan::parallel_for(0, 6, [&](int32_t j) {
+  aznyan::parallel_for(0, 6, [&](int j) {
     cv::Mat tmpE;
     cv::morphologyEx(col_ch[j], tmpE, aznyan::opmode[mode], kernel[j % 3],
                      anchor, iterations, aznyan::mode_a[border]);
     tmpD[j] = tmpE.clone();
   });
   if (alphasync) {
-    for (auto i = 0; i < 3; ++i) {
+    for (int i = 0; i < 3; ++i) {
       cv::add(tmpC, tmpD[3 + i], tmpC);
     }
   } else {

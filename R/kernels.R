@@ -43,7 +43,9 @@ kernel_bayer <- function(n, normalize = TRUE) {
     cli::cli_abort("`n` must be [2, 16] for this function.")
   }
   k <- bayer_mat(n) / den * (1 / pow)
-  if (!normalize) return(k)
+  if (!normalize) {
+    return(k)
+  }
   k / sum(k)
 }
 

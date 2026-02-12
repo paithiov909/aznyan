@@ -5,6 +5,160 @@
 #include "cpp11/declarations.hpp"
 #include <R_ext/Visibility.h>
 
+// blend.cpp
+cpp11::integers azny_blend_over(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_over(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_over(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_darken(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_darken(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_darken(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_multiply(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_multiply(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_multiply(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_colorburn(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_colorburn(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_colorburn(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_lighten(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_lighten(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_lighten(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_screen(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_screen(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_screen(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_add(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_add(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_add(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_colordodge(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_colordodge(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_colordodge(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_hardlight(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_hardlight(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_hardlight(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_softlight(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_softlight(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_softlight(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_overlay(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_overlay(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_overlay(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_hardmix(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_hardmix(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_hardmix(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_linearlight(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_linearlight(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_linearlight(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_vividlight(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_vividlight(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_vividlight(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_pinlight(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_pinlight(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_pinlight(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_average(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_average(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_average(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_exclusion(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_exclusion(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_exclusion(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_difference(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_difference(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_difference(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_divide(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_divide(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_divide(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_subtract(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_subtract(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_subtract(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_luminosity(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_luminosity(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_luminosity(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// blend.cpp
+cpp11::integers azny_blend_ghosting(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_ghosting(SEXP src, SEXP dst, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_blend_ghosting(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
 // blur.cpp
 cpp11::integers azny_medianblur(const cpp11::integers& nr, int height, int width, int ksize);
 extern "C" SEXP _aznyan_azny_medianblur(SEXP nr, SEXP height, SEXP width, SEXP ksize) {
@@ -52,6 +206,111 @@ cpp11::integers azny_blurhash(const cpp11::integers& nr, int height, int width, 
 extern "C" SEXP _aznyan_azny_blurhash(SEXP nr, SEXP height, SEXP width, SEXP x_comps, SEXP y_comps) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_blurhash(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(x_comps), cpp11::as_cpp<cpp11::decay_t<int>>(y_comps)));
+  END_CPP11
+}
+// color-filters.cpp
+cpp11::integers azny_color_filter(const cpp11::integers& nr, int height, int width, int filter_id);
+extern "C" SEXP _aznyan_azny_color_filter(SEXP nr, SEXP height, SEXP width, SEXP filter_id) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_color_filter(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(filter_id)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_brighten(const cpp11::integers& nr, int height, int width, double intensity);
+extern "C" SEXP _aznyan_azny_brighten(SEXP nr, SEXP height, SEXP width, SEXP intensity) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_brighten(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(intensity)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_contrast(const cpp11::integers& nr, int height, int width, double intensity);
+extern "C" SEXP _aznyan_azny_contrast(SEXP nr, SEXP height, SEXP width, SEXP intensity) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_contrast(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(intensity)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width, const cpp11::integers& color_a, const cpp11::integers& color_b, double gamma);
+extern "C" SEXP _aznyan_azny_duotone(SEXP nr, SEXP height, SEXP width, SEXP color_a, SEXP color_b, SEXP gamma) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_duotone(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(color_a), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(color_b), cpp11::as_cpp<cpp11::decay_t<double>>(gamma)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_grayscale(const cpp11::integers& nr, int height, int width);
+extern "C" SEXP _aznyan_azny_grayscale(SEXP nr, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_grayscale(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_hue_rotate(const cpp11::integers& nr, int height, int width, double rad);
+extern "C" SEXP _aznyan_azny_hue_rotate(SEXP nr, SEXP height, SEXP width, SEXP rad) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_hue_rotate(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(rad)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_invert(const cpp11::integers& nr, int height, int width);
+extern "C" SEXP _aznyan_azny_invert(SEXP nr, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_invert(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width, const cpp11::integers& ink, const cpp11::integers& paper, double threshold);
+extern "C" SEXP _aznyan_azny_linocut(SEXP nr, SEXP height, SEXP width, SEXP ink, SEXP paper, SEXP threshold) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_linocut(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(ink), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(paper), cpp11::as_cpp<cpp11::decay_t<double>>(threshold)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_posterize(const cpp11::integers& nr, int height, int width, int shades);
+extern "C" SEXP _aznyan_azny_posterize(SEXP nr, SEXP height, SEXP width, SEXP shades) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_posterize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(shades)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_reset_alpha(const cpp11::integers& nr, int height, int width, double alpha);
+extern "C" SEXP _aznyan_azny_reset_alpha(SEXP nr, SEXP height, SEXP width, SEXP alpha) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_reset_alpha(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(alpha)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_saturate(const cpp11::integers& nr, int height, int width, double intensity);
+extern "C" SEXP _aznyan_azny_saturate(SEXP nr, SEXP height, SEXP width, SEXP intensity) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_saturate(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(intensity)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_sepia(const cpp11::integers& nr, int height, int width, double intensity, int depth);
+extern "C" SEXP _aznyan_azny_sepia(SEXP nr, SEXP height, SEXP width, SEXP intensity, SEXP depth) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_sepia(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(intensity), cpp11::as_cpp<cpp11::decay_t<int>>(depth)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_set_matte(const cpp11::integers& nr, int height, int width, const cpp11::integers& color);
+extern "C" SEXP _aznyan_azny_set_matte(SEXP nr, SEXP height, SEXP width, SEXP color) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_set_matte(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(color)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_solarize(const cpp11::integers& nr, int height, int width, double threshold);
+extern "C" SEXP _aznyan_azny_solarize(SEXP nr, SEXP height, SEXP width, SEXP threshold) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_solarize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(threshold)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_unpremul(const cpp11::integers& nr, int height, int width, int max);
+extern "C" SEXP _aznyan_azny_unpremul(SEXP nr, SEXP height, SEXP width, SEXP max) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_unpremul(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(max)));
   END_CPP11
 }
 // color.cpp
@@ -302,48 +561,85 @@ extern "C" SEXP _aznyan_azny_adpthres(SEXP nr, SEXP height, SEXP width, SEXP adp
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_aznyan_azny_adpthres",         (DL_FUNC) &_aznyan_azny_adpthres,          8},
-    {"_aznyan_azny_bilateral",        (DL_FUNC) &_aznyan_azny_bilateral,         8},
-    {"_aznyan_azny_blurhash",         (DL_FUNC) &_aznyan_azny_blurhash,          5},
-    {"_aznyan_azny_boxblur",          (DL_FUNC) &_aznyan_azny_boxblur,           7},
-    {"_aznyan_azny_cannyfilter",      (DL_FUNC) &_aznyan_azny_cannyfilter,       8},
-    {"_aznyan_azny_cannyrgb",         (DL_FUNC) &_aznyan_azny_cannyrgb,          8},
-    {"_aznyan_azny_color_map",        (DL_FUNC) &_aznyan_azny_color_map,         6},
-    {"_aznyan_azny_convolve",         (DL_FUNC) &_aznyan_azny_convolve,          6},
-    {"_aznyan_azny_det_enhance",      (DL_FUNC) &_aznyan_azny_det_enhance,       5},
-    {"_aznyan_azny_diffusion",        (DL_FUNC) &_aznyan_azny_diffusion,         8},
-    {"_aznyan_azny_gaussianblur",     (DL_FUNC) &_aznyan_azny_gaussianblur,      8},
-    {"_aznyan_azny_hist_eq",          (DL_FUNC) &_aznyan_azny_hist_eq,           8},
-    {"_aznyan_azny_hls_to_rgb",       (DL_FUNC) &_aznyan_azny_hls_to_rgb,        1},
-    {"_aznyan_azny_kuwahara",         (DL_FUNC) &_aznyan_azny_kuwahara,          7},
-    {"_aznyan_azny_laplacianfilter",  (DL_FUNC) &_aznyan_azny_laplacianfilter,   8},
-    {"_aznyan_azny_laplacianrgb",     (DL_FUNC) &_aznyan_azny_laplacianrgb,      8},
-    {"_aznyan_azny_lineweave",        (DL_FUNC) &_aznyan_azny_lineweave,        12},
-    {"_aznyan_azny_meanshift",        (DL_FUNC) &_aznyan_azny_meanshift,         6},
-    {"_aznyan_azny_medianblur",       (DL_FUNC) &_aznyan_azny_medianblur,        4},
-    {"_aznyan_azny_morphologyfilter", (DL_FUNC) &_aznyan_azny_morphologyfilter, 10},
-    {"_aznyan_azny_morphologyrgb",    (DL_FUNC) &_aznyan_azny_morphologyrgb,    10},
-    {"_aznyan_azny_oilpaint",         (DL_FUNC) &_aznyan_azny_oilpaint,          5},
-    {"_aznyan_azny_pack_integers",    (DL_FUNC) &_aznyan_azny_pack_integers,     4},
-    {"_aznyan_azny_pencilskc",        (DL_FUNC) &_aznyan_azny_pencilskc,         7},
-    {"_aznyan_azny_preserving",       (DL_FUNC) &_aznyan_azny_preserving,        6},
-    {"_aznyan_azny_read_still",       (DL_FUNC) &_aznyan_azny_read_still,        1},
-    {"_aznyan_azny_resample",         (DL_FUNC) &_aznyan_azny_resample,          6},
-    {"_aznyan_azny_resize",           (DL_FUNC) &_aznyan_azny_resize,            6},
-    {"_aznyan_azny_rgb_to_hls",       (DL_FUNC) &_aznyan_azny_rgb_to_hls,        1},
-    {"_aznyan_azny_saturate_value",   (DL_FUNC) &_aznyan_azny_saturate_value,    2},
-    {"_aznyan_azny_screen_tone",      (DL_FUNC) &_aznyan_azny_screen_tone,       7},
-    {"_aznyan_azny_sobelfilter",      (DL_FUNC) &_aznyan_azny_sobelfilter,      10},
-    {"_aznyan_azny_sobelrgb",         (DL_FUNC) &_aznyan_azny_sobelrgb,         10},
-    {"_aznyan_azny_stylize",          (DL_FUNC) &_aznyan_azny_stylize,           5},
-    {"_aznyan_azny_swap_channels",    (DL_FUNC) &_aznyan_azny_swap_channels,     4},
-    {"_aznyan_azny_thres",            (DL_FUNC) &_aznyan_azny_thres,             6},
-    {"_aznyan_azny_unpack_integers",  (DL_FUNC) &_aznyan_azny_unpack_integers,   1},
-    {"_aznyan_azny_write_animation",  (DL_FUNC) &_aznyan_azny_write_animation,   5},
-    {"_aznyan_azny_write_still",      (DL_FUNC) &_aznyan_azny_write_still,       4},
-    {"_aznyan_bayer_mat",             (DL_FUNC) &_aznyan_bayer_mat,              1},
-    {"_aznyan_get_num_threads",       (DL_FUNC) &_aznyan_get_num_threads,        0},
-    {"_aznyan_set_num_threads",       (DL_FUNC) &_aznyan_set_num_threads,        1},
+    {"_aznyan_azny_adpthres",          (DL_FUNC) &_aznyan_azny_adpthres,           8},
+    {"_aznyan_azny_bilateral",         (DL_FUNC) &_aznyan_azny_bilateral,          8},
+    {"_aznyan_azny_blend_add",         (DL_FUNC) &_aznyan_azny_blend_add,          4},
+    {"_aznyan_azny_blend_average",     (DL_FUNC) &_aznyan_azny_blend_average,      4},
+    {"_aznyan_azny_blend_colorburn",   (DL_FUNC) &_aznyan_azny_blend_colorburn,    4},
+    {"_aznyan_azny_blend_colordodge",  (DL_FUNC) &_aznyan_azny_blend_colordodge,   4},
+    {"_aznyan_azny_blend_darken",      (DL_FUNC) &_aznyan_azny_blend_darken,       4},
+    {"_aznyan_azny_blend_difference",  (DL_FUNC) &_aznyan_azny_blend_difference,   4},
+    {"_aznyan_azny_blend_divide",      (DL_FUNC) &_aznyan_azny_blend_divide,       4},
+    {"_aznyan_azny_blend_exclusion",   (DL_FUNC) &_aznyan_azny_blend_exclusion,    4},
+    {"_aznyan_azny_blend_ghosting",    (DL_FUNC) &_aznyan_azny_blend_ghosting,     4},
+    {"_aznyan_azny_blend_hardlight",   (DL_FUNC) &_aznyan_azny_blend_hardlight,    4},
+    {"_aznyan_azny_blend_hardmix",     (DL_FUNC) &_aznyan_azny_blend_hardmix,      4},
+    {"_aznyan_azny_blend_lighten",     (DL_FUNC) &_aznyan_azny_blend_lighten,      4},
+    {"_aznyan_azny_blend_linearlight", (DL_FUNC) &_aznyan_azny_blend_linearlight,  4},
+    {"_aznyan_azny_blend_luminosity",  (DL_FUNC) &_aznyan_azny_blend_luminosity,   4},
+    {"_aznyan_azny_blend_multiply",    (DL_FUNC) &_aznyan_azny_blend_multiply,     4},
+    {"_aznyan_azny_blend_over",        (DL_FUNC) &_aznyan_azny_blend_over,         4},
+    {"_aznyan_azny_blend_overlay",     (DL_FUNC) &_aznyan_azny_blend_overlay,      4},
+    {"_aznyan_azny_blend_pinlight",    (DL_FUNC) &_aznyan_azny_blend_pinlight,     4},
+    {"_aznyan_azny_blend_screen",      (DL_FUNC) &_aznyan_azny_blend_screen,       4},
+    {"_aznyan_azny_blend_softlight",   (DL_FUNC) &_aznyan_azny_blend_softlight,    4},
+    {"_aznyan_azny_blend_subtract",    (DL_FUNC) &_aznyan_azny_blend_subtract,     4},
+    {"_aznyan_azny_blend_vividlight",  (DL_FUNC) &_aznyan_azny_blend_vividlight,   4},
+    {"_aznyan_azny_blurhash",          (DL_FUNC) &_aznyan_azny_blurhash,           5},
+    {"_aznyan_azny_boxblur",           (DL_FUNC) &_aznyan_azny_boxblur,            7},
+    {"_aznyan_azny_brighten",          (DL_FUNC) &_aznyan_azny_brighten,           4},
+    {"_aznyan_azny_cannyfilter",       (DL_FUNC) &_aznyan_azny_cannyfilter,        8},
+    {"_aznyan_azny_cannyrgb",          (DL_FUNC) &_aznyan_azny_cannyrgb,           8},
+    {"_aznyan_azny_color_filter",      (DL_FUNC) &_aznyan_azny_color_filter,       4},
+    {"_aznyan_azny_color_map",         (DL_FUNC) &_aznyan_azny_color_map,          6},
+    {"_aznyan_azny_contrast",          (DL_FUNC) &_aznyan_azny_contrast,           4},
+    {"_aznyan_azny_convolve",          (DL_FUNC) &_aznyan_azny_convolve,           6},
+    {"_aznyan_azny_det_enhance",       (DL_FUNC) &_aznyan_azny_det_enhance,        5},
+    {"_aznyan_azny_diffusion",         (DL_FUNC) &_aznyan_azny_diffusion,          8},
+    {"_aznyan_azny_duotone",           (DL_FUNC) &_aznyan_azny_duotone,            6},
+    {"_aznyan_azny_gaussianblur",      (DL_FUNC) &_aznyan_azny_gaussianblur,       8},
+    {"_aznyan_azny_grayscale",         (DL_FUNC) &_aznyan_azny_grayscale,          3},
+    {"_aznyan_azny_hist_eq",           (DL_FUNC) &_aznyan_azny_hist_eq,            8},
+    {"_aznyan_azny_hls_to_rgb",        (DL_FUNC) &_aznyan_azny_hls_to_rgb,         1},
+    {"_aznyan_azny_hue_rotate",        (DL_FUNC) &_aznyan_azny_hue_rotate,         4},
+    {"_aznyan_azny_invert",            (DL_FUNC) &_aznyan_azny_invert,             3},
+    {"_aznyan_azny_kuwahara",          (DL_FUNC) &_aznyan_azny_kuwahara,           7},
+    {"_aznyan_azny_laplacianfilter",   (DL_FUNC) &_aznyan_azny_laplacianfilter,    8},
+    {"_aznyan_azny_laplacianrgb",      (DL_FUNC) &_aznyan_azny_laplacianrgb,       8},
+    {"_aznyan_azny_lineweave",         (DL_FUNC) &_aznyan_azny_lineweave,         12},
+    {"_aznyan_azny_linocut",           (DL_FUNC) &_aznyan_azny_linocut,            6},
+    {"_aznyan_azny_meanshift",         (DL_FUNC) &_aznyan_azny_meanshift,          6},
+    {"_aznyan_azny_medianblur",        (DL_FUNC) &_aznyan_azny_medianblur,         4},
+    {"_aznyan_azny_morphologyfilter",  (DL_FUNC) &_aznyan_azny_morphologyfilter,  10},
+    {"_aznyan_azny_morphologyrgb",     (DL_FUNC) &_aznyan_azny_morphologyrgb,     10},
+    {"_aznyan_azny_oilpaint",          (DL_FUNC) &_aznyan_azny_oilpaint,           5},
+    {"_aznyan_azny_pack_integers",     (DL_FUNC) &_aznyan_azny_pack_integers,      4},
+    {"_aznyan_azny_pencilskc",         (DL_FUNC) &_aznyan_azny_pencilskc,          7},
+    {"_aznyan_azny_posterize",         (DL_FUNC) &_aznyan_azny_posterize,          4},
+    {"_aznyan_azny_preserving",        (DL_FUNC) &_aznyan_azny_preserving,         6},
+    {"_aznyan_azny_read_still",        (DL_FUNC) &_aznyan_azny_read_still,         1},
+    {"_aznyan_azny_resample",          (DL_FUNC) &_aznyan_azny_resample,           6},
+    {"_aznyan_azny_reset_alpha",       (DL_FUNC) &_aznyan_azny_reset_alpha,        4},
+    {"_aznyan_azny_resize",            (DL_FUNC) &_aznyan_azny_resize,             6},
+    {"_aznyan_azny_rgb_to_hls",        (DL_FUNC) &_aznyan_azny_rgb_to_hls,         1},
+    {"_aznyan_azny_saturate",          (DL_FUNC) &_aznyan_azny_saturate,           4},
+    {"_aznyan_azny_saturate_value",    (DL_FUNC) &_aznyan_azny_saturate_value,     2},
+    {"_aznyan_azny_screen_tone",       (DL_FUNC) &_aznyan_azny_screen_tone,        7},
+    {"_aznyan_azny_sepia",             (DL_FUNC) &_aznyan_azny_sepia,              5},
+    {"_aznyan_azny_set_matte",         (DL_FUNC) &_aznyan_azny_set_matte,          4},
+    {"_aznyan_azny_sobelfilter",       (DL_FUNC) &_aznyan_azny_sobelfilter,       10},
+    {"_aznyan_azny_sobelrgb",          (DL_FUNC) &_aznyan_azny_sobelrgb,          10},
+    {"_aznyan_azny_solarize",          (DL_FUNC) &_aznyan_azny_solarize,           4},
+    {"_aznyan_azny_stylize",           (DL_FUNC) &_aznyan_azny_stylize,            5},
+    {"_aznyan_azny_swap_channels",     (DL_FUNC) &_aznyan_azny_swap_channels,      4},
+    {"_aznyan_azny_thres",             (DL_FUNC) &_aznyan_azny_thres,              6},
+    {"_aznyan_azny_unpack_integers",   (DL_FUNC) &_aznyan_azny_unpack_integers,    1},
+    {"_aznyan_azny_unpremul",          (DL_FUNC) &_aznyan_azny_unpremul,           4},
+    {"_aznyan_azny_write_animation",   (DL_FUNC) &_aznyan_azny_write_animation,    5},
+    {"_aznyan_azny_write_still",       (DL_FUNC) &_aznyan_azny_write_still,        4},
+    {"_aznyan_bayer_mat",              (DL_FUNC) &_aznyan_bayer_mat,               1},
+    {"_aznyan_get_num_threads",        (DL_FUNC) &_aznyan_get_num_threads,         0},
+    {"_aznyan_set_num_threads",        (DL_FUNC) &_aznyan_set_num_threads,         1},
     {NULL, NULL, 0}
 };
 }

@@ -38,7 +38,7 @@ cpp11::integers azny_laplacianrgb(const cpp11::integers& nr, int height,
 
   cv::Mat tmpC = cv::Mat::zeros(bgra[0].size(), CV_32F);
   cv::Mat tmpD, tmpF;
-  for (auto i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     cv::Mat tmpE;
     cv::Laplacian(ch_col[i], tmpE, -1, ksize, scale, delta,
                   aznyan::mode_a[border]);

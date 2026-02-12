@@ -39,7 +39,7 @@ cpp11::integers azny_sobelrgb(const cpp11::integers& nr, int height, int width,
 
   cv::Mat tmpC = cv::Mat::zeros(bgra[0].size(), CV_32F);
   cv::Mat tmpD, tmpF;
-  for (auto i = 0; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     cv::Mat tmpE;
     cv::Sobel(ch_col[i], tmpE, -1, dx, dy, ksize, scale, delta,
               aznyan::mode_a[border]);

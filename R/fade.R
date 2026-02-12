@@ -75,6 +75,16 @@ fade_with <- function(
   )
 }
 
+#' NTSC grayscale
+#'
+#' @param x 3-channel matrix
+#' @returns doubles
+#' @noRd
+gray <- function(x) {
+  x <- x * c(0.299, 0.587, 0.114)
+  x / 255
+}
+
 #' @noRd
 fader_with_luma <- function(mask) {
   t(colSums(gray(mask[1:3, ])))

@@ -43,6 +43,7 @@ as_recordedplot <- function(nr) {
 }
 
 #' Cast `x` into integers if it's a `nativeRaster` object
+#'
 #' @param nr A `nativeRaster` object.
 #' @param nm Name of `nr`
 #' @noRd
@@ -55,7 +56,6 @@ cast_nr <- function(nr, nm = "nr") {
   }
   as.integer(nr)
 }
-
 
 #' Cast native raster into 4*(w*h)-dimensional integer matrix
 #'
@@ -72,6 +72,7 @@ nr_to_rgba <- function(nr, nm) {
 }
 
 #' Check if two nativeRaster objects have the same dimensions
+#'
 #' @noRd
 check_nr_dim <- function(src, dst) {
   if (!identical(dim(src), dim(dst))) {
@@ -84,6 +85,7 @@ check_nr_dim <- function(src, dst) {
 }
 
 #' Take `x` and set its class as `nativeRaster`
+#'
 #' @param x Object to be set class.
 #' @noRd
 as_nr <- function(x) {
@@ -92,6 +94,7 @@ as_nr <- function(x) {
 }
 
 #' Match `x` to `values`
+#'
 #' @param x Object to be matched.
 #' @param arg Argument name.
 #' @param values Possible values.
@@ -105,4 +108,35 @@ int_match <- function(x, arg, values) {
     )
   }
   tmp
+}
+
+#' Clip values between `min` and `max`
+#'
+#' @param x numerics
+#' @param min,max numeric scalar
+#' @returns numerics
+#' @noRd
+clamp <- function(x, min, max) {
+  pmin(pmax(x, min), max)
+}
+
+#' Lerp
+#'
+#' @param x,y numerics
+#' @param mask numeric scalar
+#' @returns numerics
+#' @noRd
+mix <- function(x, y, mask) {
+  mask <- clamp(mask, 0, 1)
+  x * mask + y * (1 - mask)
+}
+
+#' Step
+#'
+#' @param x,y numerics
+#' @param mask numeric scalar
+#' @returns numerics
+#' @noRd
+step <- function(x, mask) {
+  (x > mask) * 1
 }
