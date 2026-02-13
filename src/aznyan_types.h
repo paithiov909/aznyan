@@ -2,6 +2,8 @@
 #include <opencv2/opencv.hpp>
 #include <cpp11.hpp>
 
+namespace {
+
 inline float srgb_to_linear(float x) {
   if (x <= 0.04045f) return x / 12.92f;
   return std::pow((x + 0.055f) / 1.055f, 2.4f);
@@ -11,6 +13,15 @@ inline float linear_to_srgb(float x) {
   if (x <= 0.0031308f) return x * 12.92f;
   return 1.055f * std::pow(x, 1.0f / 2.4f) - 0.055f;
 }
+
+inline float gray_value(const cv::Vec3b& v) {
+  const float r = static_cast<float>(v[2]) * 0.299f;
+  const float g = static_cast<float>(v[1]) * 0.587f;
+  const float b = static_cast<float>(v[0]) * 0.114f;
+  return (r + g + b) / 255.0f;
+}
+
+}; // namespace
 
 namespace aznyan {
 

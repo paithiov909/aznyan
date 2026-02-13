@@ -6,10 +6,10 @@
 #include <R_ext/Visibility.h>
 
 // blend.cpp
-cpp11::integers azny_blend_over(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
-extern "C" SEXP _aznyan_azny_blend_over(SEXP src, SEXP dst, SEXP height, SEXP width) {
+cpp11::integers azny_blend_alpha(const cpp11::integers& src, const cpp11::integers& dst, int height, int width);
+extern "C" SEXP _aznyan_azny_blend_alpha(SEXP src, SEXP dst, SEXP height, SEXP width) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_blend_over(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+    return cpp11::as_sexp(azny_blend_alpha(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
   END_CPP11
 }
 // blend.cpp
@@ -564,6 +564,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_adpthres",          (DL_FUNC) &_aznyan_azny_adpthres,           8},
     {"_aznyan_azny_bilateral",         (DL_FUNC) &_aznyan_azny_bilateral,          8},
     {"_aznyan_azny_blend_add",         (DL_FUNC) &_aznyan_azny_blend_add,          4},
+    {"_aznyan_azny_blend_alpha",       (DL_FUNC) &_aznyan_azny_blend_alpha,        4},
     {"_aznyan_azny_blend_average",     (DL_FUNC) &_aznyan_azny_blend_average,      4},
     {"_aznyan_azny_blend_colorburn",   (DL_FUNC) &_aznyan_azny_blend_colorburn,    4},
     {"_aznyan_azny_blend_colordodge",  (DL_FUNC) &_aznyan_azny_blend_colordodge,   4},
@@ -578,7 +579,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_blend_linearlight", (DL_FUNC) &_aznyan_azny_blend_linearlight,  4},
     {"_aznyan_azny_blend_luminosity",  (DL_FUNC) &_aznyan_azny_blend_luminosity,   4},
     {"_aznyan_azny_blend_multiply",    (DL_FUNC) &_aznyan_azny_blend_multiply,     4},
-    {"_aznyan_azny_blend_over",        (DL_FUNC) &_aznyan_azny_blend_over,         4},
     {"_aznyan_azny_blend_overlay",     (DL_FUNC) &_aznyan_azny_blend_overlay,      4},
     {"_aznyan_azny_blend_pinlight",    (DL_FUNC) &_aznyan_azny_blend_pinlight,     4},
     {"_aznyan_azny_blend_screen",      (DL_FUNC) &_aznyan_azny_blend_screen,       4},

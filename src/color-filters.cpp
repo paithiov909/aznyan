@@ -58,7 +58,7 @@ cpp11::integers azny_blend_darken(const cpp11::integers& src,
 cpp11::integers azny_blend_exclusion(const cpp11::integers& src,
                                      const cpp11::integers& dst, int height,
                                      int width);
-cpp11::integers azny_blend_over(const cpp11::integers& src,
+cpp11::integers azny_blend_alpha(const cpp11::integers& src,
                                 const cpp11::integers& dst, int height,
                                 int width);
 
@@ -180,7 +180,7 @@ cpp11::integers azny_color_filter(const cpp11::integers& nr, int height,
       bg = azny_contrast(bg, height, width, -0.15f);
       bg = azny_saturate(bg, height, width, -0.25);
       auto fg = solid_premul(width, height, 239, 205, 173, 10);
-      return azny_blend_over(fg, bg, height, width);
+      return azny_blend_alpha(fg, bg, height, width);
     }
     case 17: {  // rise
       auto bg = azny_brighten(nr, height, width, 0.05f);
@@ -191,7 +191,7 @@ cpp11::integers azny_color_filter(const cpp11::integers& nr, int height,
       bg = azny_blend_multiply(fg, bg, height, width);
       fg = solid_premul(width, height, 232, 197, 152, 10);
       fg = azny_blend_overlay(fg, bg, height, width);
-      return azny_blend_over(fg, nr, height, width);
+      return azny_blend_alpha(fg, nr, height, width);
     }
     case 18: {  // slumber
       auto bg = azny_saturate(nr, height, width, -0.34);

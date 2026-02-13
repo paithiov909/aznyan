@@ -10,9 +10,9 @@ NULL
 
 #' @rdname blend
 #' @export
-blend_over <- function(src, dst) {
+blend_alpha <- function(src, dst) {
   check_nr_dim(src, dst)
-  as_nr(azny_blend_over(src, dst, nrow(src), ncol(src)))
+  as_nr(azny_blend_alpha(src, dst, nrow(src), ncol(src)))
 }
 
 #' @rdname blend

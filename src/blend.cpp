@@ -8,28 +8,24 @@ inline float alpha_blend(float x1, float x2) {
   return clamp01(x1 + x2 * (1.0f - x1));
 }
 
-// FIXME: This should return luma as a scalar value, be applied to all channels.
-inline cv::Vec3f gray_value(const cv::Vec3b& v) {
-  return cv::Vec3f((v[2] * 0.299f) / 255.0f, (v[1] * 0.587f) / 255.0f,
-                   (v[0] * 0.114f) / 255.0f);
-}
-
 inline uchar to_uchar(float v) {
   return static_cast<uchar>(std::min(std::max(v, 0.0f), 255.0f));
 }
 
 }  // namespace
 
-// NOTE: Different than the traditional Porter-Duff over compositing.
+// interpolated alpha
 [[cpp11::register]]
-cpp11::integers azny_blend_over(const cpp11::integers& src,
-                                const cpp11::integers& dst, int height,
-                                int width) {
+cpp11::integers azny_blend_alpha(const cpp11::integers& src,
+                                 const cpp11::integers& dst, int height,
+                                 int width) {
   auto [src_bgra, src_ch] = aznyan::decode_nr(src, height, width);
   auto [dst_bgra, dst_ch] = aznyan::decode_nr(dst, height, width);
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -50,8 +46,8 @@ cpp11::integers azny_blend_over(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) =
           cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -68,6 +64,8 @@ cpp11::integers azny_blend_darken(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -79,8 +77,8 @@ cpp11::integers azny_blend_darken(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           std::min(s[0], d[0]), std::min(s[1], d[1]), std::min(s[2], d[2]));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -97,6 +95,8 @@ cpp11::integers azny_blend_multiply(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -115,8 +115,8 @@ cpp11::integers azny_blend_multiply(const cpp11::integers& src,
           cv::Vec3b(to_uchar(sb * db * 255.0f), to_uchar(sg * dg * 255.0f),
                     to_uchar(sr * dr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -133,6 +133,8 @@ cpp11::integers azny_blend_colorburn(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -153,8 +155,8 @@ cpp11::integers azny_blend_colorburn(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -171,6 +173,8 @@ cpp11::integers azny_blend_lighten(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -182,8 +186,8 @@ cpp11::integers azny_blend_lighten(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           std::max(s[0], d[0]), std::max(s[1], d[1]), std::max(s[2], d[2]));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -200,6 +204,8 @@ cpp11::integers azny_blend_screen(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -220,8 +226,8 @@ cpp11::integers azny_blend_screen(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -238,6 +244,8 @@ cpp11::integers azny_blend_add(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -256,8 +264,8 @@ cpp11::integers azny_blend_add(const cpp11::integers& src,
                                           to_uchar(clamp01(sg + dg) * 255.0f),
                                           to_uchar(clamp01(sr + dr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -274,6 +282,8 @@ cpp11::integers azny_blend_colordodge(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -294,8 +304,8 @@ cpp11::integers azny_blend_colordodge(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -312,6 +322,8 @@ cpp11::integers azny_blend_hardlight(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -336,8 +348,8 @@ cpp11::integers azny_blend_hardlight(const cpp11::integers& src,
                                           to_uchar(clamp01(rg) * 255.0f),
                                           to_uchar(clamp01(rr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -354,6 +366,8 @@ cpp11::integers azny_blend_softlight(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -384,8 +398,8 @@ cpp11::integers azny_blend_softlight(const cpp11::integers& src,
                                           to_uchar(clamp01(rg) * 255.0f),
                                           to_uchar(clamp01(rr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -402,6 +416,8 @@ cpp11::integers azny_blend_overlay(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -426,8 +442,8 @@ cpp11::integers azny_blend_overlay(const cpp11::integers& src,
                                           to_uchar(clamp01(rg) * 255.0f),
                                           to_uchar(clamp01(rr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -444,6 +460,8 @@ cpp11::integers azny_blend_hardmix(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -462,8 +480,8 @@ cpp11::integers azny_blend_hardmix(const cpp11::integers& src,
           cv::Vec3b(sb <= (1.0f - db) ? 0 : 255, sg <= (1.0f - dg) ? 0 : 255,
                     sr <= (1.0f - dr) ? 0 : 255);
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -480,6 +498,8 @@ cpp11::integers azny_blend_linearlight(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -499,8 +519,8 @@ cpp11::integers azny_blend_linearlight(const cpp11::integers& src,
                     to_uchar(clamp01(dg + 2.0f * sg - 1.0f) * 255.0f),
                     to_uchar(clamp01(dr + 2.0f * sr - 1.0f) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -517,6 +537,8 @@ cpp11::integers azny_blend_vividlight(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -544,8 +566,8 @@ cpp11::integers azny_blend_vividlight(const cpp11::integers& src,
                                           to_uchar(clamp01(rg) * 255.0f),
                                           to_uchar(clamp01(rr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -562,6 +584,8 @@ cpp11::integers azny_blend_pinlight(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -588,8 +612,8 @@ cpp11::integers azny_blend_pinlight(const cpp11::integers& src,
                                           to_uchar(clamp01(rg) * 255.0f),
                                           to_uchar(clamp01(rr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -606,6 +630,8 @@ cpp11::integers azny_blend_average(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -625,8 +651,8 @@ cpp11::integers azny_blend_average(const cpp11::integers& src,
                     to_uchar(((sg + dg) / 2.0f) * 255.0f),
                     to_uchar(((sr + dr) / 2.0f) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -643,6 +669,8 @@ cpp11::integers azny_blend_exclusion(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -663,8 +691,8 @@ cpp11::integers azny_blend_exclusion(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -681,6 +709,8 @@ cpp11::integers azny_blend_difference(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -699,8 +729,8 @@ cpp11::integers azny_blend_difference(const cpp11::integers& src,
                                           to_uchar(std::abs(dg - sg) * 255.0f),
                                           to_uchar(std::abs(dr - sr) * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -717,6 +747,8 @@ cpp11::integers azny_blend_divide(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -737,8 +769,8 @@ cpp11::integers azny_blend_divide(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -755,6 +787,8 @@ cpp11::integers azny_blend_subtract(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -775,8 +809,8 @@ cpp11::integers azny_blend_subtract(const cpp11::integers& src,
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -793,6 +827,8 @@ cpp11::integers azny_blend_luminosity(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -801,19 +837,19 @@ cpp11::integers azny_blend_luminosity(const cpp11::integers& src,
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
       const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
-      const cv::Vec3f gs = gray_value(s);
-      const cv::Vec3f gd = gray_value(d);
+      const float gs = gray_value(s);
+      const float gd = gray_value(d);
       const float dr = d[2] / 255.0f;
       const float dg = d[1] / 255.0f;
       const float db = d[0] / 255.0f;
-      const float rr = clamp01(gs[0] + dr - gd[0]);
-      const float rg = clamp01(gs[1] + dg - gd[1]);
-      const float rb = clamp01(gs[2] + db - gd[2]);
+      const float rr = clamp01(gs + dr - gd);
+      const float rg = clamp01(gs + dg - gd);
+      const float rb = clamp01(gs + db - gd);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });
@@ -830,6 +866,8 @@ cpp11::integers azny_blend_ghosting(const cpp11::integers& src,
 
   const cv::Mat& src_bgr = src_bgra[0];
   const cv::Mat& dst_bgr = dst_bgra[0];
+  const cv::Mat& src_a = src_bgra[1];
+  const cv::Mat& dst_a = dst_bgra[1];
 
   cv::Mat out(height, width, CV_8UC3);
   cv::Mat out_a(height, width, CV_8UC1);
@@ -838,22 +876,22 @@ cpp11::integers azny_blend_ghosting(const cpp11::integers& src,
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& s = src_bgr.at<cv::Vec3b>(i, j);
       const cv::Vec3b& d = dst_bgr.at<cv::Vec3b>(i, j);
-      const cv::Vec3f gs = gray_value(s);
-      const cv::Vec3f gd = gray_value(d);
+      const float gs = gray_value(s);
+      const float gd = gray_value(d);
       const float dr = d[2] / 255.0f;
       const float dg = d[1] / 255.0f;
       const float db = d[0] / 255.0f;
       const float sr = s[2] / 255.0f;
       const float sg = s[1] / 255.0f;
       const float sb = s[0] / 255.0f;
-      const float rr = clamp01(gd[0] - gs[0] + dr + sr / 5.0f);
-      const float rg = clamp01(gd[1] - gs[1] + dg + sg / 5.0f);
-      const float rb = clamp01(gd[2] - gs[2] + db + sb / 5.0f);
+      const float rr = clamp01(gd - gs + dr + sr / 5.0f);
+      const float rg = clamp01(gd - gs + dg + sg / 5.0f);
+      const float rb = clamp01(gd - gs + db + sb / 5.0f);
       out.at<cv::Vec3b>(i, j) = cv::Vec3b(
           to_uchar(rb * 255.0f), to_uchar(rg * 255.0f), to_uchar(rr * 255.0f));
 
-      const float sa = src_bgr.at<uchar>(i, j) / 255.0f;
-      const float da = dst_bgr.at<uchar>(i, j) / 255.0f;
+      const float sa = src_a.at<uchar>(i, j) / 255.0f;
+      const float da = dst_a.at<uchar>(i, j) / 255.0f;
       out_a.at<uchar>(i, j) = to_uchar(alpha_blend(sa, da) * 255.0f);
     }
   });

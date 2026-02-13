@@ -6,11 +6,6 @@ inline float clampf(float v, float lo, float hi) {
   return std::min(std::max(v, lo), hi);
 }
 
-// FIXME: Use luma as a scalar value.
-inline float gray_channel(float v, float weight) {
-  return (v * weight) / 255.0f;
-}
-
 inline float saturate_value(float c, float val) {
   return val >= 0.0f ? c + val * (1.0f - c) * c : c + val * c;
 }
@@ -61,18 +56,10 @@ cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width,
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
-      const float r = v[2];
-      const float g = v[1];
-      const float b = v[0];
-      const float lr =
-          clampf(std::pow(gray_channel(r, 0.299f), inv_gamma), 0.0f, 1.0f);
-      const float lg =
-          clampf(std::pow(gray_channel(g, 0.587f), inv_gamma), 0.0f, 1.0f);
-      const float lb =
-          clampf(std::pow(gray_channel(b, 0.114f), inv_gamma), 0.0f, 1.0f);
-      const float out_r = ar * lr + br * (1.0f - lr);
-      const float out_g = ag * lg + bg * (1.0f - lg);
-      const float out_b = ab * lb + bb * (1.0f - lb);
+      const float grayf = clampf(std::pow(gray_value(v), inv_gamma), 0.0f, 1.0f);
+      const float out_r = ar * grayf + br * (1.0f - grayf);
+      const float out_g = ag * grayf + bg * (1.0f - grayf);
+      const float out_b = ab * grayf + bb * (1.0f - grayf);
       out.at<cv::Vec3b>(i, j) =
           cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
     }
@@ -165,15 +152,10 @@ cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width,
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
-      const float r = v[2];
-      const float g = v[1];
-      const float b = v[0];
-      const float lr = gray_channel(r, 0.299f) > threshold ? 1.0f : 0.0f;
-      const float lg = gray_channel(g, 0.587f) > threshold ? 1.0f : 0.0f;
-      const float lb = gray_channel(b, 0.114f) > threshold ? 1.0f : 0.0f;
-      const float out_r = pr * lr + ir * (1.0f - lr);
-      const float out_g = pg * lg + ig * (1.0f - lg);
-      const float out_b = pb * lb + ib * (1.0f - lb);
+      const float grayf = gray_value(v) > threshold ? 1.0f : 0.0f;
+      const float out_r = pr * grayf + ir * (1.0f - grayf);
+      const float out_g = pg * grayf + ig * (1.0f - grayf);
+      const float out_b = pb * grayf + ib * (1.0f - grayf);
       out.at<cv::Vec3b>(i, j) =
           cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
     }
