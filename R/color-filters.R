@@ -1,14 +1,3 @@
-#' Create color codes while premultiplying alpha
-#'
-#' @param r,g,b,a Numeric vectors.
-#' @param max An integer scalar. The maximum value of the color code.
-#' @returns Color codes.
-#' @export
-premul <- function(r, g, b, a, max = 255L) {
-  alpha <- a / max
-  grDevices::rgb(r * alpha, g * alpha, b * alpha, a, maxColorValue = max)
-}
-
 #' Apply predefined color filter
 #'
 #' Applies one of the predefined color filters
@@ -103,5 +92,5 @@ color_filter <- function(
     )
   ) -
     1L
-  as_nr(azny_color_filter(nr, nrow(nr), ncol(nr), filter_id))
+  as_nr(azny_color_filter(cast_nr(nr), nrow(nr), ncol(nr), filter_id))
 }

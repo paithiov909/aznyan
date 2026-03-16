@@ -26,6 +26,31 @@ cpp11::integers azny_brighten(const cpp11::integers& nr, int height, int width,
 }
 
 [[cpp11::register]]
+cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width,
+                               int mode, bool hsvmode, bool invmode) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  cv::Mat tmpB;
+  if (hsvmode) {
+    cv::Mat tmp;
+    std::vector<cv::Mat> hsv_ch;
+    cv::cvtColor(bgra[0], tmp, cv::COLOR_BGR2HSV_FULL);
+    cv::split(tmp, hsv_ch);
+    hsv_ch[0].convertTo(tmpB, CV_8UC1);
+  } else {
+    cv::cvtColor(bgra[0], tmpB, cv::COLOR_BGR2GRAY, 1);
+  }
+  if (invmode) {
+    cv::Mat tmp1 = cv::Mat::ones(tmpB.size(), CV_8UC1) * 255.0f;
+    cv::Mat tmp2 = cv::Mat::zeros(tmpB.size(), CV_8UC1);
+    cv::subtract(tmp1, tmpB, tmp2);
+    tmpB = tmp2.clone();
+  }
+  cv::applyColorMap(tmpB, tmpB, aznyan::cmmode[mode]);
+
+  return aznyan::encode_nr(tmpB, bgra[1]);
+}
+
+[[cpp11::register]]
 cpp11::integers azny_contrast(const cpp11::integers& nr, int height, int width,
                               double intensity) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
@@ -56,7 +81,8 @@ cpp11::integers azny_duotone(const cpp11::integers& nr, int height, int width,
   aznyan::parallel_for(0, height, [&](int i) {
     for (int j = 0; j < width; j++) {
       const cv::Vec3b& v = bgr.at<cv::Vec3b>(i, j);
-      const float grayf = clampf(std::pow(gray_value(v), inv_gamma), 0.0f, 1.0f);
+      const float grayf =
+          clampf(std::pow(gray_value(v), inv_gamma), 0.0f, 1.0f);
       const float out_r = ar * grayf + br * (1.0f - grayf);
       const float out_g = ag * grayf + bg * (1.0f - grayf);
       const float out_b = ab * grayf + bb * (1.0f - grayf);
@@ -160,6 +186,24 @@ cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width,
           cv::Vec3b(to_uchar(out_b), to_uchar(out_g), to_uchar(out_r));
     }
   });
+  return aznyan::encode_nr(out, bgra[1]);
+}
+
+[[cpp11::register]]
+cpp11::integers azny_lut1d(const cpp11::integers& nr, int height, int width,
+                           const cpp11::doubles_matrix<>& lut_mat) {
+  if (lut_mat.nrow() != 256 || lut_mat.ncol() != 3) {
+    cpp11::stop("lut must have 256 rows and 3 columns");
+  }
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  const cv::Mat& bgr = bgra[0];
+  cv::Mat out = bgr.clone();
+  cv::Mat lut = cv::Mat(1, 256, CV_8UC3);
+  for (int i = 0; i < 256; i++) {
+    lut.at<cv::Vec3b>(0, i) =
+        cv::Vec3b(lut_mat(i, 2), lut_mat(i, 1), lut_mat(i, 0));  // BGR
+  }
+  cv::LUT(bgr, lut, out);
   return aznyan::encode_nr(out, bgra[1]);
 }
 

@@ -124,6 +124,10 @@ azny_brighten <- function(nr, height, width, intensity) {
   .Call(`_aznyan_azny_brighten`, nr, height, width, intensity)
 }
 
+azny_color_map <- function(nr, height, width, mode, hsvmode, invmode) {
+  .Call(`_aznyan_azny_color_map`, nr, height, width, mode, hsvmode, invmode)
+}
+
 azny_contrast <- function(nr, height, width, intensity) {
   .Call(`_aznyan_azny_contrast`, nr, height, width, intensity)
 }
@@ -146,6 +150,10 @@ azny_invert <- function(nr, height, width) {
 
 azny_linocut <- function(nr, height, width, ink, paper, threshold) {
   .Call(`_aznyan_azny_linocut`, nr, height, width, ink, paper, threshold)
+}
+
+azny_lut1d <- function(nr, height, width, lut_mat) {
+  .Call(`_aznyan_azny_lut1d`, nr, height, width, lut_mat)
 }
 
 azny_posterize <- function(nr, height, width, shades) {
@@ -174,30 +182,6 @@ azny_solarize <- function(nr, height, width, threshold) {
 
 azny_unpremul <- function(nr, height, width, max) {
   .Call(`_aznyan_azny_unpremul`, nr, height, width, max)
-}
-
-azny_saturate_value <- function(in_vec, val) {
-  .Call(`_aznyan_azny_saturate_value`, in_vec, val)
-}
-
-azny_pack_integers <- function(rgb, a, height, width) {
-  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
-}
-
-azny_unpack_integers <- function(nr) {
-  .Call(`_aznyan_azny_unpack_integers`, nr)
-}
-
-azny_rgb_to_hls <- function(rgb) {
-  .Call(`_aznyan_azny_rgb_to_hls`, rgb)
-}
-
-azny_hls_to_rgb <- function(hls) {
-  .Call(`_aznyan_azny_hls_to_rgb`, hls)
-}
-
-azny_color_map <- function(nr, height, width, mode, hsvmode, invmode) {
-  .Call(`_aznyan_azny_color_map`, nr, height, width, mode, hsvmode, invmode)
 }
 
 azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
@@ -242,6 +226,22 @@ azny_write_animation <- function(frames, filename, duration, quality, loop_count
 
 azny_lineweave <- function(nr, height, width, omega, phase, dist1, dist2, dist3, invert, direction, fg, bg) {
   .Call(`_aznyan_azny_lineweave`, nr, height, width, omega, phase, dist1, dist2, dist3, invert, direction, fg, bg)
+}
+
+azny_pack_integers <- function(rgb, a, height, width) {
+  .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
+}
+
+azny_unpack_integers <- function(nr) {
+  .Call(`_aznyan_azny_unpack_integers`, nr)
+}
+
+azny_rgb_to_hls <- function(rgb) {
+  .Call(`_aznyan_azny_rgb_to_hls`, rgb)
+}
+
+azny_hls_to_rgb <- function(hls) {
+  .Call(`_aznyan_azny_hls_to_rgb`, hls)
 }
 
 azny_swap_channels <- function(nr, height, width, mapping) {

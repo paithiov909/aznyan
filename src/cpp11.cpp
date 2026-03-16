@@ -223,6 +223,13 @@ extern "C" SEXP _aznyan_azny_brighten(SEXP nr, SEXP height, SEXP width, SEXP int
   END_CPP11
 }
 // color-manip.cpp
+cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width, int mode, bool hsvmode, bool invmode);
+extern "C" SEXP _aznyan_azny_color_map(SEXP nr, SEXP height, SEXP width, SEXP mode, SEXP hsvmode, SEXP invmode) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_color_map(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(hsvmode), cpp11::as_cpp<cpp11::decay_t<bool>>(invmode)));
+  END_CPP11
+}
+// color-manip.cpp
 cpp11::integers azny_contrast(const cpp11::integers& nr, int height, int width, double intensity);
 extern "C" SEXP _aznyan_azny_contrast(SEXP nr, SEXP height, SEXP width, SEXP intensity) {
   BEGIN_CPP11
@@ -262,6 +269,13 @@ cpp11::integers azny_linocut(const cpp11::integers& nr, int height, int width, c
 extern "C" SEXP _aznyan_azny_linocut(SEXP nr, SEXP height, SEXP width, SEXP ink, SEXP paper, SEXP threshold) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_linocut(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(ink), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(paper), cpp11::as_cpp<cpp11::decay_t<double>>(threshold)));
+  END_CPP11
+}
+// color-manip.cpp
+cpp11::integers azny_lut1d(const cpp11::integers& nr, int height, int width, const cpp11::doubles_matrix<>& lut_mat);
+extern "C" SEXP _aznyan_azny_lut1d(SEXP nr, SEXP height, SEXP width, SEXP lut_mat) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_lut1d(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(lut_mat)));
   END_CPP11
 }
 // color-manip.cpp
@@ -311,48 +325,6 @@ cpp11::integers azny_unpremul(const cpp11::integers& nr, int height, int width, 
 extern "C" SEXP _aznyan_azny_unpremul(SEXP nr, SEXP height, SEXP width, SEXP max) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_unpremul(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(max)));
-  END_CPP11
-}
-// color.cpp
-cpp11::doubles azny_saturate_value(const cpp11::doubles& in_vec, double val);
-extern "C" SEXP _aznyan_azny_saturate_value(SEXP in_vec, SEXP val) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_saturate_value(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(in_vec), cpp11::as_cpp<cpp11::decay_t<double>>(val)));
-  END_CPP11
-}
-// color.cpp
-cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
-extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
-  END_CPP11
-}
-// color.cpp
-cpp11::integers azny_unpack_integers(const cpp11::integers& nr);
-extern "C" SEXP _aznyan_azny_unpack_integers(SEXP nr) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_unpack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr)));
-  END_CPP11
-}
-// color.cpp
-cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb);
-extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb)));
-  END_CPP11
-}
-// color.cpp
-cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls);
-extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(hls)));
-  END_CPP11
-}
-// color.cpp
-cpp11::integers azny_color_map(const cpp11::integers& nr, int height, int width, int mode, bool hsvmode, bool invmode);
-extern "C" SEXP _aznyan_azny_color_map(SEXP nr, SEXP height, SEXP width, SEXP mode, SEXP hsvmode, SEXP invmode) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_color_map(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<bool>>(hsvmode), cpp11::as_cpp<cpp11::decay_t<bool>>(invmode)));
   END_CPP11
 }
 // diffusion.cpp
@@ -430,6 +402,34 @@ cpp11::integers azny_lineweave(const cpp11::integers& nr, int height, int width,
 extern "C" SEXP _aznyan_azny_lineweave(SEXP nr, SEXP height, SEXP width, SEXP omega, SEXP phase, SEXP dist1, SEXP dist2, SEXP dist3, SEXP invert, SEXP direction, SEXP fg, SEXP bg) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_lineweave(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(omega), cpp11::as_cpp<cpp11::decay_t<double>>(phase), cpp11::as_cpp<cpp11::decay_t<int>>(dist1), cpp11::as_cpp<cpp11::decay_t<int>>(dist2), cpp11::as_cpp<cpp11::decay_t<int>>(dist3), cpp11::as_cpp<cpp11::decay_t<bool>>(invert), cpp11::as_cpp<cpp11::decay_t<int>>(direction), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(fg), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(bg)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
+extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_pack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles&>>(a), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::integers azny_unpack_integers(const cpp11::integers& nr);
+extern "C" SEXP _aznyan_azny_unpack_integers(SEXP nr) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_unpack_integers(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb);
+extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb)));
+  END_CPP11
+}
+// misc.cpp
+cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls);
+extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(hls)));
   END_CPP11
 }
 // misc.cpp
@@ -608,6 +608,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_laplacianrgb",      (DL_FUNC) &_aznyan_azny_laplacianrgb,       8},
     {"_aznyan_azny_lineweave",         (DL_FUNC) &_aznyan_azny_lineweave,         12},
     {"_aznyan_azny_linocut",           (DL_FUNC) &_aznyan_azny_linocut,            6},
+    {"_aznyan_azny_lut1d",             (DL_FUNC) &_aznyan_azny_lut1d,              4},
     {"_aznyan_azny_meanshift",         (DL_FUNC) &_aznyan_azny_meanshift,          6},
     {"_aznyan_azny_medianblur",        (DL_FUNC) &_aznyan_azny_medianblur,         4},
     {"_aznyan_azny_morphologyfilter",  (DL_FUNC) &_aznyan_azny_morphologyfilter,  10},
@@ -623,7 +624,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_resize",            (DL_FUNC) &_aznyan_azny_resize,             6},
     {"_aznyan_azny_rgb_to_hls",        (DL_FUNC) &_aznyan_azny_rgb_to_hls,         1},
     {"_aznyan_azny_saturate",          (DL_FUNC) &_aznyan_azny_saturate,           4},
-    {"_aznyan_azny_saturate_value",    (DL_FUNC) &_aznyan_azny_saturate_value,     2},
     {"_aznyan_azny_screen_tone",       (DL_FUNC) &_aznyan_azny_screen_tone,        7},
     {"_aznyan_azny_sepia",             (DL_FUNC) &_aznyan_azny_sepia,              5},
     {"_aznyan_azny_set_matte",         (DL_FUNC) &_aznyan_azny_set_matte,          4},

@@ -1,3 +1,57 @@
+#' Create a native raster filled with a color
+#'
+#' @param color Color name or hex code.
+#' @param width,height A positive integer scalar.
+#' @returns A `nativeRaster` object.
+#' @export
+fill_with <- function(color, width, height) {
+  packed_int <- colorfast::col_to_int(color[1])
+  out <- matrix(packed_int, nrow = height, ncol = width)
+  as_nr(out)
+}
+
+#' Pack and unpack RGBA values
+#'
+#' @param r,g,b,a Numeric vectors of equal length in range `[0, 255]`.
+#' @param x An integer vector that contains native packed integers.
+#' @returns Integers.
+#' @rdname pack-unpack
+#' @name pack-unpack
+NULL
+
+#' @rdname pack-unpack
+#' @export
+pack_color <- function(r, g, b, a) {
+  rgb <-
+    rbind(
+      floor(r),
+      floor(g),
+      floor(b)
+    )
+  a <- floor(a)
+  as.integer(azny_pack_integers(rgb, a, 1, length(a)))
+}
+
+#' @rdname pack-unpack
+#' @export
+unpack_color <- function(x) azny_unpack_integers(as.integer(x))
+
+#' Conversion between RGB and HLS color spaces
+#'
+#' @param x An integer matrix with 3 rows.
+#' @returns An integer matrix of the same size as `x`
+#' @rdname rgb-hls
+#' @name rgb-hls
+NULL
+
+#' @rdname rgb-hls
+#' @export
+rgb2hls <- function(x) azny_rgb_to_hls(floor(x))
+
+#' @rdname rgb-hls
+#' @export
+hls2rgb <- function(x) azny_hls_to_rgb(floor(x))
+
 #' Swap or remap image channels
 #'
 #' Remaps color or alpha channels of a `nativeRaster` image using arbitrary

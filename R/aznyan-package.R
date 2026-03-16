@@ -57,20 +57,6 @@ cast_nr <- function(nr, nm = "nr") {
   as.integer(nr)
 }
 
-#' Cast native raster into 4*(w*h)-dimensional integer matrix
-#'
-#' @param nr A `nativeRaster` object.
-#' @param nm Name of `nr`
-#' @returns integer matrix
-#' @noRd
-nr_to_rgba <- function(nr, nm) {
-  if (missing(nm)) {
-    nm <- deparse1(substitute(nr))
-  }
-  cast_nr(nr, nm) |>
-    azny_unpack_integers()
-}
-
 #' Check if two nativeRaster objects have the same dimensions
 #'
 #' @noRd
@@ -118,25 +104,4 @@ int_match <- function(x, arg, values) {
 #' @noRd
 clamp <- function(x, min, max) {
   pmin(pmax(x, min), max)
-}
-
-#' Lerp
-#'
-#' @param x,y numerics
-#' @param mask numeric scalar
-#' @returns numerics
-#' @noRd
-mix <- function(x, y, mask) {
-  mask <- clamp(mask, 0, 1)
-  x * mask + y * (1 - mask)
-}
-
-#' Step
-#'
-#' @param x,y numerics
-#' @param mask numeric scalar
-#' @returns numerics
-#' @noRd
-step <- function(x, mask) {
-  (x > mask) * 1
 }

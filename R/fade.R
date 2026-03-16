@@ -1,3 +1,17 @@
+#' Cast native raster into 4*(w*h)-dimensional integer matrix
+#'
+#' @param nr A `nativeRaster` object.
+#' @param nm Name of `nr`.
+#' @returns An integer matrix.
+#' @noRd
+nr_to_rgba <- function(nr, nm) {
+  if (missing(nm)) {
+    nm <- deparse1(substitute(nr))
+  }
+  cast_nr(nr, nm) |>
+    azny_unpack_integers()
+}
+
 #' Fade pixels based on a mask image
 #'
 #' @description

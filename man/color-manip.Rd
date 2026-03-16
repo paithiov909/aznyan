@@ -2,6 +2,7 @@
 % Please edit documentation in R/color-manip.R
 \name{color-manip}
 \alias{color-manip}
+\alias{apply_lut1d}
 \alias{brighten}
 \alias{contrast}
 \alias{duotone}
@@ -18,6 +19,8 @@
 \alias{unpremul}
 \title{Color manipulation}
 \usage{
+apply_lut1d(nr, lut)
+
 brighten(nr, intensity)
 
 contrast(nr, intensity)
@@ -48,6 +51,8 @@ unpremul(nr, max = 255L)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
+
+\item{lut}{A 256x3 double matrix in range \verb{[0, 255]}.}
 
 \item{intensity}{A numeric scalar.}
 
