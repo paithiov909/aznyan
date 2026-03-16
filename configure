@@ -1,53 +1,7 @@
 #!/bin/sh
 
-# SIMD detection for smol-cube
-echo "Running SIMD detection"
-
-CXX=${CXX:-g++}
-echo "Using compiler: $CXX"
-
-OS_TYPE=$(uname -s)
-ARCH=$(uname -m)
-SIMD_FLAGS=""
-
-if [ "$ARCH" = "x86_64" ]; then
-  echo "Detected x86_64 architecture"
-
-  TMPFILE=tmp_simd_check.cpp
-
-  cat <<EOF > $TMPFILE
-#include <smmintrin.h>
-
-int main() {
-  __m128i a = _mm_set1_epi32(42);  // SSE4.1 intrinsic
-  return 0;
-}
-EOF
-
-  if $CXX -msse4.1 $TMPFILE -o /dev/null 2>/dev/null; then
-    SIMD_FLAGS="-msse4.1"
-    echo "Compiler supports SSE4.1"
-  else
-    echo "Error: SSE4.1 support not available; cannot proceed"
-    rm -f $TMPFILE
-    exit 1
-  fi
-
-  rm -f $TMPFILE
-
-elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then
-  if [ "$OS_TYPE" = "Darwin" ]; then
-    SIMD_FLAGS=""  # Clang on macOS enables NEON by default
-    echo "Detected Apple Silicon (arm64 macOS); using default flags"
-  else
-    SIMD_FLAGS="-march=armv8-a"
-    echo "Detected ARM64 architecture; using $SIMD_FLAGS"
-  fi
-else
-  echo "Unsupported architecture: $ARCH"
-  exit 1
-fi
-
+# CXX=${CXX:-g++}
+# echo "Using compiler: $CXX"
 
 # Anticonf (tm) script by Jeroen Ooms (2020)
 PKG_CONFIG_NAME="opencv4"
