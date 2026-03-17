@@ -84,7 +84,7 @@ hist_eq <- function(
 #'
 #' @param nr A `nativeRaster` object.
 #' @param n_colors Maximum number of colors in the output image. Must be a
-#'   positive integer.
+#'  positive integer.
 #' @returns A `nativeRaster` object.
 #' @export
 median_cut <- function(nr, n_colors = 16) {
