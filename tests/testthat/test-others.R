@@ -29,7 +29,11 @@ test_that("mean-shift works", {
 
 test_that("median-cut works", {
   ret <- median_cut(png, 16)
-  expect_equal(length(unique(ret)), 16)
+  expect_lte(length(unique(ret)), 16)
+  # should keep the same size even if there are less than `4` colors
+  ret <- median_cut(fill_with("gray30", 64, 64), 4)
+  expect_lte(length(unique(ret)), 4)
+  expect_equal(dim(ret), c(64, 64))
 })
 
 test_that("oilpaint works", {

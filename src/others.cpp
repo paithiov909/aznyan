@@ -190,7 +190,7 @@ cpp11::integers azny_median_cut(const cpp11::integers& nr, int height,
   }
 
   if (static_cast<int>(counts.size()) <= n_colors) {
-    return nr;
+    return aznyan::encode_nr(bgr, bgra[1]);
   }
 
   std::vector<MedianCutColor> colors;
