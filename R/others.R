@@ -69,6 +69,33 @@ hist_eq <- function(
   as_nr(out)
 }
 
+#' Reduce the number of colors with median cut quantization
+#'
+#' @description
+#' Applies median cut color quantization to a `nativeRaster` image and returns
+#' a new `nativeRaster` with a reduced palette.
+#'
+#' This function groups similar colors into at most `n_colors` representative
+#' colors. The representative color of each group is computed from the weighted
+#' average of the original colors in that group.
+#'
+#' If the number of unique colors in `nr` is already less than or equal to
+#' `n_colors`, the input is returned unchanged.
+#'
+#' @param nr A `nativeRaster` object.
+#' @param n_colors Maximum number of colors in the output image. Must be a
+#'   positive integer.
+#' @returns A `nativeRaster` object.
+#' @export
+median_cut <- function(nr, n_colors = 16) {
+  n_colors <- as.integer(n_colors[1])
+  if (!is.finite(n_colors)) {
+    cli::cli_abort("`n_colors` must be a positive integer.")
+  }
+  out <- azny_median_cut(cast_nr(nr), nrow(nr), ncol(nr), n_colors)
+  as_nr(out)
+}
+
 #' Mean shift filtering
 #'
 #' Applies mean shift filtering to a `nativeRaster` image.

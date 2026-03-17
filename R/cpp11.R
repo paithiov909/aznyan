@@ -276,6 +276,10 @@ azny_meanshift <- function(nr, height, width, sp, sr, maxl) {
   .Call(`_aznyan_azny_meanshift`, nr, height, width, sp, sr, maxl)
 }
 
+azny_median_cut <- function(nr, height, width, n_colors) {
+  .Call(`_aznyan_azny_median_cut`, nr, height, width, n_colors)
+}
+
 azny_oilpaint <- function(nr, height, width, size, ratio) {
   .Call(`_aznyan_azny_oilpaint`, nr, height, width, size, ratio)
 }
