@@ -1,13 +1,6 @@
 #include "aznyan_types.h"
 #include <opencv2/xphoto.hpp>
 
-// #include <algorithm>
-// #include <array>
-// #include <cmath>
-// #include <cstdint>
-// #include <limits>
-// #include <unordered_map>
-
 namespace {
 
 struct MedianCutColor {
@@ -183,10 +176,6 @@ cpp11::integers azny_median_cut(const cpp11::integers& nr, int height,
   if (n_colors < 1) {
     cpp11::stop("`n_colors` must be at least 1.");
   }
-  if (nr.size() == 0 || height == 0 || width == 0) {
-    return nr;
-  }
-
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   const cv::Mat& bgr = bgra[0];
 
