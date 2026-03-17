@@ -27,6 +27,11 @@ test_that("mean-shift works", {
   )
 })
 
+test_that("median-cut works", {
+  ret <- median_cut(png, 16)
+  expect_equal(length(unique(ret)), 16)
+})
+
 test_that("oilpaint works", {
   vdiffr::expect_doppelganger(
     "oilpaint",
