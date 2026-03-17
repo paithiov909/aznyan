@@ -489,6 +489,13 @@ extern "C" SEXP _aznyan_azny_meanshift(SEXP nr, SEXP height, SEXP width, SEXP sp
   END_CPP11
 }
 // others.cpp
+cpp11::integers azny_median_cut(const cpp11::integers& nr, int height, int width, int n_colors);
+extern "C" SEXP _aznyan_azny_median_cut(SEXP nr, SEXP height, SEXP width, SEXP n_colors) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_median_cut(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(n_colors)));
+  END_CPP11
+}
+// others.cpp
 cpp11::integers azny_oilpaint(const cpp11::integers& nr, int height, int width, int size, int ratio);
 extern "C" SEXP _aznyan_azny_oilpaint(SEXP nr, SEXP height, SEXP width, SEXP size, SEXP ratio) {
   BEGIN_CPP11
@@ -610,6 +617,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_linocut",           (DL_FUNC) &_aznyan_azny_linocut,            6},
     {"_aznyan_azny_lut1d",             (DL_FUNC) &_aznyan_azny_lut1d,              4},
     {"_aznyan_azny_meanshift",         (DL_FUNC) &_aznyan_azny_meanshift,          6},
+    {"_aznyan_azny_median_cut",        (DL_FUNC) &_aznyan_azny_median_cut,         4},
     {"_aznyan_azny_medianblur",        (DL_FUNC) &_aznyan_azny_medianblur,         4},
     {"_aznyan_azny_morphologyfilter",  (DL_FUNC) &_aznyan_azny_morphologyfilter,  10},
     {"_aznyan_azny_morphologyrgb",     (DL_FUNC) &_aznyan_azny_morphologyrgb,     10},

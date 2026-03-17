@@ -54,6 +54,12 @@ cast_nr <- function(nr, nm = "nr") {
       call = rlang::caller_env()
     )
   }
+  if (length(nr) == 0) {
+    cli::cli_abort(
+      "`{nm}` must be a non-empty nativeRaster object.",
+      call = rlang::caller_env()
+    )
+  }
   as.integer(nr)
 }
 
