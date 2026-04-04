@@ -104,10 +104,15 @@ cpp11::integers azny_warp_perspective(const cpp11::integers& nr, int height,
       m.at<float>(i, j) = static_cast<float>(mat(i, j));
     }
   }
+  cv::Mat img;
+  cv::merge(bgra, img);
+
   cv::Mat out;
-  cv::warpPerspective(bgra[0], out, m, cv::Size(width, height),
+  cv::warpPerspective(img, out, m, cv::Size(width, height),
                       cv::INTER_LINEAR, aznyan::mode_b[border]);
-  return aznyan::encode_nr(out, bgra[1]);
+
+  auto [bgra_out, ch_out] = aznyan::split_bgra(out);
+  return aznyan::encode_nr(bgra_out[0], bgra_out[1]);
 }
 
 [[cpp11::register]]
