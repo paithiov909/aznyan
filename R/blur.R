@@ -121,11 +121,14 @@ convolve <- function(
   alphasync = FALSE
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
+  if (anyNA(kernel)) {
+    cli::cli_abort("kernel must not contain NAs")
+  }
   out <- azny_convolve(
     cast_nr(nr),
     nrow(nr),
     ncol(nr),
-    kernel,
+    as.matrix(kernel),
     border,
     alphasync
   )

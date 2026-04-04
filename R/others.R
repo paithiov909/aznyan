@@ -50,7 +50,7 @@ hist_eq <- function(
   limit = 40,
   grid = c(8, 8),
   adp = FALSE,
-  color = FALSE
+  color = TRUE
 ) {
   grid <- as.integer(grid)
   if (anyNA(grid)) {
@@ -176,7 +176,7 @@ pencil_sketch <- function(
   sgmS = 60, # nolint
   sgmR = 0.07, # nolint
   shade = 0.02,
-  color = FALSE
+  color = TRUE
 ) {
   out <- azny_pencilskc(
     cast_nr(nr),

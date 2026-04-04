@@ -182,6 +182,9 @@ warp_perspective <- function(
   border = c(3, 4, 0, 1, 2)
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
+  if (anyNA(mat)) {
+    cli::cli_abort("mat must not contain NAs")
+  }
   out <- azny_warp_perspective(
     cast_nr(nr),
     nrow(nr),
