@@ -4,7 +4,7 @@
 \alias{pencil_sketch}
 \title{Pencil sketch effect}
 \usage{
-pencil_sketch(nr, sgmS = 60, sgmR = 0.07, shade = 0.02, color = FALSE)
+pencil_sketch(nr, sgmS = 60, sgmR = 0.07, shade = 0.02, color = TRUE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}

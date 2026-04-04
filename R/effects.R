@@ -51,7 +51,7 @@ diffusion_filter <- function(
   nr,
   factor = 5,
   offset = 0.1,
-  iter = 3,
+  iter = 2,
   gamma = 1.3,
   sigma = 2
 ) {

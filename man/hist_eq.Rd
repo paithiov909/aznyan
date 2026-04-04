@@ -4,7 +4,7 @@
 \alias{hist_eq}
 \title{Histogram equalization}
 \usage{
-hist_eq(nr, limit = 40, grid = c(8, 8), adp = FALSE, color = FALSE)
+hist_eq(nr, limit = 40, grid = c(8, 8), adp = FALSE, color = TRUE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}

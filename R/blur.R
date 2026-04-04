@@ -121,11 +121,14 @@ convolve <- function(
   alphasync = FALSE
 ) {
   border <- int_match(border, "border", c(0, 1, 2, 3, 4))
+  if (anyNA(kernel)) {
+    cli::cli_abort("kernel must not contain NAs")
+  }
   out <- azny_convolve(
     cast_nr(nr),
     nrow(nr),
     ncol(nr),
-    kernel,
+    as.matrix(kernel),
     border,
     alphasync
   )
@@ -198,8 +201,8 @@ kuwahara_filter <- function(
 #' 0. cv::BORDER_CONSTANT
 #' 1. cv::BORDER_REPLICATE
 #' 2. cv::BORDER_REFLECT
-#' 3. cv::BORDER_REFLECT_101
-#' 4. cv::BORDER_ISOLATED
+#' 3. cv::BORDER_WRAP
+#' 4. cv::BORDER_REFLECT_101
 #'
 #' @param nr A `nativeRaster` object.
 #' @param d An integer scalar specifying the diameter of the pixel neighborhood

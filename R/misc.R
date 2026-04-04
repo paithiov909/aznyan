@@ -156,3 +156,41 @@ resample <- function(
   )
   as_nr(out)
 }
+
+#' Warp a `nativeRaster` image using perspective transformation
+#'
+#' Warps an image using a perspective transformation,
+#' keeping the same dimensions as the input image.
+#'
+#' @details
+#' `border` corresponds to the OpenCV extrapolation types:
+#'
+#' 0. cv::BORDER_CONSTANT
+#' 1. cv::BORDER_REPLICATE
+#' 2. cv::BORDER_REFLECT
+#' 3. cv::BORDER_WRAP
+#' 4. cv::BORDER_REFLECT_101
+#'
+#' @param nr A `nativeRaster` object.
+#' @param mat A 3x3 matrix specifying the perspective transformation.
+#' @param border An integer scalar selecting pixel extrapolation method.
+#' @returns A `nativeRaster` object.
+#' @export
+warp_perspective <- function(
+  nr,
+  mat = diag(1, 3),
+  border = c(3, 4, 0, 1, 2)
+) {
+  border <- int_match(border, "border", c(0, 1, 2, 3, 4))
+  if (anyNA(mat)) {
+    cli::cli_abort("mat must not contain NAs")
+  }
+  out <- azny_warp_perspective(
+    cast_nr(nr),
+    nrow(nr),
+    ncol(nr),
+    as.matrix(mat),
+    border
+  )
+  as_nr(out)
+}

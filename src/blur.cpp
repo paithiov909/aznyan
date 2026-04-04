@@ -58,8 +58,13 @@ cpp11::integers azny_convolve(const cpp11::integers& nr, int height, int width,
                               const cpp11::doubles_matrix<>& kernel, int border,
                               bool alphasync) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
-  cv::Mat filter(kernel.nrow(), kernel.ncol(), CV_64FC1, kernel.data());
-  filter.convertTo(filter, CV_32FC1);
+
+  cv::Mat filter(kernel.nrow(), kernel.ncol(), CV_32FC1);
+  for (int i = 0; i < kernel.nrow(); i++) {
+    for (int j = 0; j < kernel.ncol(); j++) {
+      filter.at<float>(i, j) = static_cast<float>(kernel(i, j));
+    }
+  }
 
   cv::Mat in1, in2, out1, out2;
 

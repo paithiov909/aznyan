@@ -31,3 +31,15 @@ test_that("resample works", {
       as_recordedplot()
   )
 })
+
+test_that("warp_perspective works", {
+  vdiffr::expect_doppelganger(
+    "warp_perspective",
+    warp_perspective(
+      png,
+      matrix(c(.7071068, -.7071068, 0, .7071068, .7071068, 0, 0, 0, 1), 3, 3),
+      3 # border: wrap
+    ) |>
+      as_recordedplot()
+  )
+})

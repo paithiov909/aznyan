@@ -50,7 +50,7 @@ by considering both spatial distance and color similarity.
 \item cv::BORDER_CONSTANT
 \item cv::BORDER_REPLICATE
 \item cv::BORDER_REFLECT
+\item cv::BORDER_WRAP
 \item cv::BORDER_REFLECT_101
-\item cv::BORDER_ISOLATED
 }
 }
