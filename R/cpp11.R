@@ -244,6 +244,10 @@ azny_hls_to_rgb <- function(hls) {
   .Call(`_aznyan_azny_hls_to_rgb`, hls)
 }
 
+azny_warp_perspective <- function(nr, height, width, mat, border) {
+  .Call(`_aznyan_azny_warp_perspective`, nr, height, width, mat, border)
+}
+
 azny_swap_channels <- function(nr, height, width, mapping) {
   .Call(`_aznyan_azny_swap_channels`, nr, height, width, mapping)
 }

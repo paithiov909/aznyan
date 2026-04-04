@@ -21,7 +21,7 @@ inline float gray_value(const cv::Vec3b& v) {
   return (r + g + b) / 255.0f;
 }
 
-}; // namespace
+};  // namespace
 
 namespace aznyan {
 
@@ -37,6 +37,7 @@ static const std::vector<int> mode_a{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
 static const std::vector<int> mode_b{cv::BORDER_CONSTANT, cv::BORDER_REPLICATE,
                                      cv::BORDER_REFLECT, cv::BORDER_WRAP,
                                      cv::BORDER_REFLECT_101};
+
 /**
  * 0-2
  */

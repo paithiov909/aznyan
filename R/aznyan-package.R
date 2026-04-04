@@ -90,6 +90,7 @@ as_nr <- function(x) {
 #' @param x Object to be matched.
 #' @param arg Argument name.
 #' @param values Possible values.
+#' @returns An integer scalar.
 #' @noRd
 int_match <- function(x, arg, values) {
   tmp <- match(x[1], values) - 1L

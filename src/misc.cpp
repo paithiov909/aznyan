@@ -89,6 +89,28 @@ cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls) {
 }
 
 [[cpp11::register]]
+cpp11::integers azny_warp_perspective(const cpp11::integers& nr, int height,
+                                      int width,
+                                      const cpp11::doubles_matrix<>& mat,
+                                      int border) {
+  if (mat.nrow() != 3 || mat.ncol() != 3) {
+    cpp11::stop("mat must have 3 rows and 3 columns");
+  }
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+
+  cv::Mat m(3, 3, CV_32F);
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      m.at<float>(i, j) = static_cast<float>(mat(i, j));
+    }
+  }
+  cv::Mat out;
+  cv::warpPerspective(bgra[0], out, m, cv::Size(width, height),
+                      cv::INTER_LINEAR, aznyan::mode_b[border]);
+  return aznyan::encode_nr(out, bgra[1]);
+}
+
+[[cpp11::register]]
 cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height,
                                    int width, const std::vector<int>& mapping) {
   const size_t npairs = mapping.size() / 2;

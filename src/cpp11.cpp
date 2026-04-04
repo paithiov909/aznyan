@@ -433,6 +433,13 @@ extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
   END_CPP11
 }
 // misc.cpp
+cpp11::integers azny_warp_perspective(const cpp11::integers& nr, int height, int width, const cpp11::doubles_matrix<>& mat, int border);
+extern "C" SEXP _aznyan_azny_warp_perspective(SEXP nr, SEXP height, SEXP width, SEXP mat, SEXP border) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_warp_perspective(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(mat), cpp11::as_cpp<cpp11::decay_t<int>>(border)));
+  END_CPP11
+}
+// misc.cpp
 cpp11::integers azny_swap_channels(const cpp11::integers& nr, int height, int width, const std::vector<int>& mapping);
 extern "C" SEXP _aznyan_azny_swap_channels(SEXP nr, SEXP height, SEXP width, SEXP mapping) {
   BEGIN_CPP11
@@ -643,6 +650,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_thres",             (DL_FUNC) &_aznyan_azny_thres,              6},
     {"_aznyan_azny_unpack_integers",   (DL_FUNC) &_aznyan_azny_unpack_integers,    1},
     {"_aznyan_azny_unpremul",          (DL_FUNC) &_aznyan_azny_unpremul,           4},
+    {"_aznyan_azny_warp_perspective",  (DL_FUNC) &_aznyan_azny_warp_perspective,   5},
     {"_aznyan_azny_write_animation",   (DL_FUNC) &_aznyan_azny_write_animation,    5},
     {"_aznyan_azny_write_still",       (DL_FUNC) &_aznyan_azny_write_still,        4},
     {"_aznyan_bayer_mat",              (DL_FUNC) &_aznyan_bayer_mat,               1},
