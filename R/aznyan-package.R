@@ -6,6 +6,8 @@
 ## usethis namespace: end
 NULL
 
+utils::globalVariables(c(".data"))
+
 #' Blue noise pattern
 #'
 #' @description
@@ -111,4 +113,14 @@ int_match <- function(x, arg, values) {
 #' @noRd
 clamp <- function(x, min, max) {
   pmin(pmax(x, min), max)
+}
+
+#' 'which' with 0-based indexing
+#'
+#' @param x Object to be matched.
+#' @param ... Arguments passed to `base::which`.
+#' @returns An integer vector.
+#' @noRd
+wh0 <- function(x, ...) {
+  which(x, ...) - 1L
 }

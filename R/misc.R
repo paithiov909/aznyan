@@ -10,6 +10,106 @@ fill_with <- function(color, width, height) {
   as_nr(out)
 }
 
+#' Select pixel positions from a nativeRaster object
+#'
+#' @description
+#' This function scans a `nativeRaster` image and returns the positions
+#' (row, column, and linear index) of pixels whose values fall within a given
+#' range.
+#'
+#' Optionally, pixels can be grouped into contiguous runs along rows or columns,
+#' and only runs of a minimum length can be retained.
+#' This makes it suitable as a building block for pixel sorting
+#' or other effects that operate on contiguous pixel segments.
+#'
+#' @details
+#' Pixel values are normalized to the range `[0, 1]` before comparison.
+#' For `"hue"`, `"luminance"`, and `"saturation"`, the image is
+#' internally converted to HLS color space using OpenCV.
+#'
+#' @param nr A `nativeRaster` object.
+#' @param range A numeric vector of length 2 specifying the lower and upper
+#'   bounds (in `[0, 1]`) used to select pixels.
+#' @param by A string specifying which pixel value to use for selection.
+#' @param direction Direction used to define contiguous runs when
+#'   `min_length > 1`. Either `"row"` (horizontal runs) or
+#'   `"col"` (vertical runs).
+#' @param min_length Minimum length of contiguous pixel runs to retain.
+#'   If `min_length <= 1`, all matching pixels are returned without
+#'   run grouping.
+#'
+#' @returns
+#' If `min_length <= 1`, a tibble with columns:
+#'   * row: Row index (1-based).
+#'   * col: Column index (1-based).
+#'   * index: Linear index in the nativeRaster vector (1-based).
+#'
+#' If `min_length > 1`, a tibble with columns:
+#'   * group: Row or column index defining the scan direction.
+#'   * pos: Position within each group.
+#'   * run: Contiguous run identifier.
+#'   * index: Linear index in the nativeRaster vector (1-based).
+#'
+#' @importFrom rlang .data
+#' @export
+pixel_positions <- function(
+  nr,
+  range = c(0, .5),
+  by = c("luma", "blue", "green", "red", "hue", "luminance", "saturation"),
+  direction = c("row", "col"),
+  min_length = 1
+) {
+  by <- rlang::arg_match(by)
+  mode <-
+    wh0(
+      c("luma", "blue", "green", "red", "hue", "luminance", "saturation") == by
+    )
+  range <- clamp(range, 0, 1)
+
+  ret <-
+    azny_pixel_positions(
+      cast_nr(nr),
+      nrow(nr),
+      ncol(nr),
+      mode,
+      min(range),
+      max(range)
+    ) |>
+    as.data.frame()
+
+  colnames(ret) <- c("row", "col", "index")
+  out <- structure(ret, class = c("tbl_df", "tbl", "data.frame"))
+
+  if (min_length <= 1) {
+    return(out)
+  }
+
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
+    cli::cli_abort("dplyr is required to filter pixels")
+  }
+  direction <- rlang::arg_match(direction, c("row", "col"))
+  out |>
+    dplyr::rename_with(
+      ~ if (direction == "row") {
+        c("group", "pos", "index")
+      } else {
+        c("pos", "group", "index")
+      }
+    ) |>
+    dplyr::arrange(.data$group, .data$pos) |>
+    dplyr::group_by(.data$group) |>
+    dplyr::mutate(
+      run = cumsum(
+        .data$pos != dplyr::lag(.data$pos, default = .data$pos[1] - 1L) + 1L
+      )
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::group_by(.data$group, .data$run) |>
+    dplyr::filter(dplyr::n() >= min_length) |>
+    dplyr::ungroup() |>
+    dplyr::select(c("group", "pos", "run", "index"))
+}
+
 #' Pack and unpack RGBA values
 #'
 #' @param r,g,b,a Numeric vectors of equal length in range `[0, 255]`.

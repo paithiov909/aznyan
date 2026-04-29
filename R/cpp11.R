@@ -300,6 +300,10 @@ azny_stylize <- function(nr, height, width, sgmS, sgmR) {
   .Call(`_aznyan_azny_stylize`, nr, height, width, sgmS, sgmR)
 }
 
+azny_pixel_positions <- function(nr, height, width, mode, lower, upper) {
+  .Call(`_aznyan_azny_pixel_positions`, nr, height, width, mode, lower, upper)
+}
+
 bayer_mat <- function(n) {
   .Call(`_aznyan_bayer_mat`, n)
 }
