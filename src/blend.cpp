@@ -8,10 +8,6 @@ inline float alpha_blend(float x1, float x2) {
   return clamp01(x1 + x2 * (1.0f - x1));
 }
 
-inline uchar to_uchar(float v) {
-  return static_cast<uchar>(std::min(std::max(v, 0.0f), 255.0f));
-}
-
 }  // namespace
 
 // interpolated alpha
