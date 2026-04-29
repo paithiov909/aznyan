@@ -1,5 +1,7 @@
 #include "aznyan_types.h"
 
+namespace {
+
 inline uint8_t bit_interleave(const uint64_t& x, const uint64_t& y) {
   uint64_t v = 0;
   for (int i = 0; i < 32; ++i) {
@@ -12,6 +14,8 @@ inline uint8_t bit_interleave(const uint64_t& x, const uint64_t& y) {
 inline uint8_t bit_reverse(const uint8_t& b) {
   return (b * 0x0202020202ULL & 0x010884422010ULL) % 1023;
 }
+
+}  // namespace
 
 [[cpp11::register]]
 cpp11::integers_matrix<> bayer_mat(const uint8_t& n) {
