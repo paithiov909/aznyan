@@ -80,7 +80,7 @@ pixel_positions <- function(
   colnames(ret) <- c("row", "col", "index")
   out <- structure(ret, class = c("tbl_df", "tbl", "data.frame"))
 
-  if (min_length <= 1) {
+  if (min_length <= 1 || rlang::is_empty(out)) {
     return(out)
   }
 
