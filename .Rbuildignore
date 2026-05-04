@@ -4,6 +4,7 @@
 ^\.github$
 ^\.vscode$
 ^\.imgbotconfig$
+^tools$
 ^LICENSE\.md$
 ^README\.qmd$
 ^renovate\.json$

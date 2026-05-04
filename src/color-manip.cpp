@@ -2,16 +2,8 @@
 
 namespace {
 
-inline float clampf(float v, float lo, float hi) {
-  return std::min(std::max(v, lo), hi);
-}
-
 inline float saturate_value(float c, float val) {
   return val >= 0.0f ? c + val * (1.0f - c) * c : c + val * c;
-}
-
-inline uchar to_uchar(float v) {
-  return static_cast<uchar>(clampf(v, 0.0f, 255.0f));
 }
 
 }  // namespace

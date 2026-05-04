@@ -2,10 +2,6 @@
 
 namespace {
 
-inline uchar to_uchar(float v) {
-  return static_cast<uchar>(std::min(std::max(v, 0.0f), 255.0f));
-}
-
 inline cpp11::integers solid_premul(int width, int height, int r, int g, int b,
                                     int a) {
   const float alpha = a / 255.0f;

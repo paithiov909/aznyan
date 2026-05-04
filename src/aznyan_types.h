@@ -4,6 +4,14 @@
 
 namespace {
 
+inline float clampf(float v, float lo, float hi) {
+  return std::min(std::max(v, lo), hi);
+}
+
+inline uchar to_uchar(float v) {
+  return static_cast<uchar>(clampf(v, 0.0f, 255.0f));
+}
+
 inline float srgb_to_linear(float x) {
   if (x <= 0.04045f) return x / 12.92f;
   return std::pow((x + 0.055f) / 1.055f, 2.4f);

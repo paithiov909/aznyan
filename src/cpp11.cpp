@@ -530,6 +530,13 @@ extern "C" SEXP _aznyan_azny_stylize(SEXP nr, SEXP height, SEXP width, SEXP sgmS
     return cpp11::as_sexp(azny_stylize(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(sgmS), cpp11::as_cpp<cpp11::decay_t<double>>(sgmR)));
   END_CPP11
 }
+// pixel-positions.cpp
+cpp11::list azny_pixel_positions(const cpp11::integers& nr, int height, int width, int mode, float lower, float upper);
+extern "C" SEXP _aznyan_azny_pixel_positions(SEXP nr, SEXP height, SEXP width, SEXP mode, SEXP lower, SEXP upper) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_pixel_positions(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<float>>(lower), cpp11::as_cpp<cpp11::decay_t<float>>(upper)));
+  END_CPP11
+}
 // screen-tone.cpp
 cpp11::integers_matrix<> bayer_mat(const uint8_t& n);
 extern "C" SEXP _aznyan_bayer_mat(SEXP n) {
@@ -631,6 +638,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_oilpaint",          (DL_FUNC) &_aznyan_azny_oilpaint,           5},
     {"_aznyan_azny_pack_integers",     (DL_FUNC) &_aznyan_azny_pack_integers,      4},
     {"_aznyan_azny_pencilskc",         (DL_FUNC) &_aznyan_azny_pencilskc,          7},
+    {"_aznyan_azny_pixel_positions",   (DL_FUNC) &_aznyan_azny_pixel_positions,    6},
     {"_aznyan_azny_posterize",         (DL_FUNC) &_aznyan_azny_posterize,          4},
     {"_aznyan_azny_preserving",        (DL_FUNC) &_aznyan_azny_preserving,         6},
     {"_aznyan_azny_read_still",        (DL_FUNC) &_aznyan_azny_read_still,         1},
