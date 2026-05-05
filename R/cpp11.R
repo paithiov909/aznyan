@@ -236,14 +236,6 @@ azny_unpack_integers <- function(nr) {
   .Call(`_aznyan_azny_unpack_integers`, nr)
 }
 
-azny_rgb_to_hls <- function(rgb) {
-  .Call(`_aznyan_azny_rgb_to_hls`, rgb)
-}
-
-azny_hls_to_rgb <- function(hls) {
-  .Call(`_aznyan_azny_hls_to_rgb`, hls)
-}
-
 azny_warp_perspective <- function(nr, height, width, mat, border) {
   .Call(`_aznyan_azny_warp_perspective`, nr, height, width, mat, border)
 }

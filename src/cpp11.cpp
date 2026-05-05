@@ -419,20 +419,6 @@ extern "C" SEXP _aznyan_azny_unpack_integers(SEXP nr) {
   END_CPP11
 }
 // misc.cpp
-cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb);
-extern "C" SEXP _aznyan_azny_rgb_to_hls(SEXP rgb) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_rgb_to_hls(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(rgb)));
-  END_CPP11
-}
-// misc.cpp
-cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls);
-extern "C" SEXP _aznyan_azny_hls_to_rgb(SEXP hls) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_hls_to_rgb(cpp11::as_cpp<cpp11::decay_t<const cpp11::doubles_matrix<>&>>(hls)));
-  END_CPP11
-}
-// misc.cpp
 cpp11::integers azny_warp_perspective(const cpp11::integers& nr, int height, int width, const cpp11::doubles_matrix<>& mat, int border);
 extern "C" SEXP _aznyan_azny_warp_perspective(SEXP nr, SEXP height, SEXP width, SEXP mat, SEXP border) {
   BEGIN_CPP11
@@ -621,7 +607,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_gaussianblur",      (DL_FUNC) &_aznyan_azny_gaussianblur,       8},
     {"_aznyan_azny_grayscale",         (DL_FUNC) &_aznyan_azny_grayscale,          3},
     {"_aznyan_azny_hist_eq",           (DL_FUNC) &_aznyan_azny_hist_eq,            8},
-    {"_aznyan_azny_hls_to_rgb",        (DL_FUNC) &_aznyan_azny_hls_to_rgb,         1},
     {"_aznyan_azny_hue_rotate",        (DL_FUNC) &_aznyan_azny_hue_rotate,         4},
     {"_aznyan_azny_invert",            (DL_FUNC) &_aznyan_azny_invert,             3},
     {"_aznyan_azny_kuwahara",          (DL_FUNC) &_aznyan_azny_kuwahara,           7},
@@ -645,7 +630,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_resample",          (DL_FUNC) &_aznyan_azny_resample,           6},
     {"_aznyan_azny_reset_alpha",       (DL_FUNC) &_aznyan_azny_reset_alpha,        4},
     {"_aznyan_azny_resize",            (DL_FUNC) &_aznyan_azny_resize,             6},
-    {"_aznyan_azny_rgb_to_hls",        (DL_FUNC) &_aznyan_azny_rgb_to_hls,         1},
     {"_aznyan_azny_saturate",          (DL_FUNC) &_aznyan_azny_saturate,           4},
     {"_aznyan_azny_screen_tone",       (DL_FUNC) &_aznyan_azny_screen_tone,        7},
     {"_aznyan_azny_sepia",             (DL_FUNC) &_aznyan_azny_sepia,              5},

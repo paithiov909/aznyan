@@ -10,7 +10,7 @@ fill_with <- function(color, width, height) {
   as_nr(out)
 }
 
-#' Select pixel positions from a nativeRaster object
+#' Select pixel positions from a native raster object
 #'
 #' @description
 #' This function scans a `nativeRaster` image and returns the positions
@@ -135,22 +135,6 @@ pack_color <- function(r, g, b, a) {
 #' @rdname pack-unpack
 #' @export
 unpack_color <- function(x) azny_unpack_integers(as.integer(x))
-
-#' Conversion between RGB and HLS color spaces
-#'
-#' @param x An integer matrix with 3 rows.
-#' @returns An integer matrix of the same size as `x`
-#' @rdname rgb-hls
-#' @name rgb-hls
-NULL
-
-#' @rdname rgb-hls
-#' @export
-rgb2hls <- function(x) azny_rgb_to_hls(floor(x))
-
-#' @rdname rgb-hls
-#' @export
-hls2rgb <- function(x) azny_hls_to_rgb(floor(x))
 
 #' Swap or remap image channels
 #'

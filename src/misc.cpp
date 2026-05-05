@@ -39,56 +39,6 @@ cpp11::integers azny_unpack_integers(const cpp11::integers& nr) {
 }
 
 [[cpp11::register]]
-cpp11::integers azny_rgb_to_hls(const cpp11::doubles_matrix<>& rgb) {
-  if (rgb.nrow() != 3) {
-    cpp11::stop("RGB must have 3 rows.");
-  }
-  cv::Mat tmp(1, rgb.ncol(), CV_8UC3);
-  aznyan::parallel_for(0, rgb.ncol(), [&](int i) {
-    tmp.at<cv::Vec3b>(0, i) =
-        cv::Vec3b(static_cast<uchar>(rgb(0, i)), static_cast<uchar>(rgb(1, i)),
-                  static_cast<uchar>(rgb(2, i)));
-  });
-  cv::cvtColor(tmp, tmp, cv::COLOR_RGB2HLS);
-
-  std::vector<uchar> ret(3 * rgb.ncol());
-  aznyan::parallel_for(0, rgb.ncol(), [&](int i) {
-    const cv::Vec3b& hls = tmp.at<cv::Vec3b>(0, i);
-    ret[i * 3 + 0] = hls[0];
-    ret[i * 3 + 1] = hls[1];
-    ret[i * 3 + 2] = hls[2];
-  });
-  cpp11::writable::integers out = cpp11::as_sexp(ret);
-  out.attr("dim") = cpp11::as_sexp({3, rgb.ncol()});
-  return out;
-}
-
-[[cpp11::register]]
-cpp11::integers azny_hls_to_rgb(const cpp11::doubles_matrix<>& hls) {
-  if (hls.nrow() != 3) {
-    cpp11::stop("HLS must have 3 rows.");
-  }
-  cv::Mat tmp(1, hls.ncol(), CV_8UC3);
-  aznyan::parallel_for(0, hls.ncol(), [&](int i) {
-    tmp.at<cv::Vec3b>(0, i) =
-        cv::Vec3b(static_cast<uchar>(hls(0, i)), static_cast<uchar>(hls(1, i)),
-                  static_cast<uchar>(hls(2, i)));
-  });
-  cv::cvtColor(tmp, tmp, cv::COLOR_HLS2RGB);
-
-  std::vector<uchar> ret(3 * hls.ncol());
-  aznyan::parallel_for(0, hls.ncol(), [&](int i) {
-    const cv::Vec3b& rgb = tmp.at<cv::Vec3b>(0, i);
-    ret[i * 3 + 0] = rgb[0];
-    ret[i * 3 + 1] = rgb[1];
-    ret[i * 3 + 2] = rgb[2];
-  });
-  cpp11::writable::integers out = cpp11::as_sexp(ret);
-  out.attr("dim") = cpp11::as_sexp({3, hls.ncol()});
-  return out;
-}
-
-[[cpp11::register]]
 cpp11::integers azny_warp_perspective(const cpp11::integers& nr, int height,
                                       int width,
                                       const cpp11::doubles_matrix<>& mat,
