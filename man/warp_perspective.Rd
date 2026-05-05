@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{warp_perspective}
 \alias{warp_perspective}
-\title{Warp a \code{nativeRaster} image using perspective transformation}
+\title{Warp an image using perspective transformation}
 \usage{
 warp_perspective(nr, mat = diag(1, 3), border = c(3, 4, 0, 1, 2))
 }

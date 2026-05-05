@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{pixel_positions}
 \alias{pixel_positions}
-\title{Select pixel positions from a nativeRaster object}
+\title{Select pixel positions from a native raster object}
 \usage{
 pixel_positions(
   nr,

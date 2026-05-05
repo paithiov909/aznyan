@@ -296,6 +296,10 @@ azny_pixel_positions <- function(nr, height, width, mode, lower, upper) {
   .Call(`_aznyan_azny_pixel_positions`, nr, height, width, mode, lower, upper)
 }
 
+azny_sort_index <- function(nr, height, width, mode, decending) {
+  .Call(`_aznyan_azny_sort_index`, nr, height, width, mode, decending)
+}
+
 bayer_mat <- function(n) {
   .Call(`_aznyan_bayer_mat`, n)
 }

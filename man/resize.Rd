@@ -3,7 +3,7 @@
 \name{resize}
 \alias{resize}
 \alias{resample}
-\title{Resize or resample a \code{nativeRaster} image}
+\title{Resize or resample a native raster image}
 \usage{
 resize(
   nr,

@@ -10,6 +10,36 @@ fill_with <- function(color, width, height) {
   as_nr(out)
 }
 
+#' Sort method for native raster images
+#'
+#' @inheritParams base::sort
+#' @param na.last
+#'  This argument is ignored because `NA_integer_` is a valid pixel value
+#'  in native raster images.
+#' @param by A string specifying the property to sort by.
+#' @exportS3Method
+#' @keywords internal
+sort.nativeRaster <- function(
+  x,
+  decreasing = FALSE,
+  na.last = FALSE,
+  by = c("luma", "blue", "green", "red", "hue", "luminance", "saturation", "value"),
+  ...
+) {
+  by <- rlang::arg_match(by)
+  mode <-
+    wh0(
+      c("luma", "blue", "green", "red", "hue", "luminance", "saturation", "value") == by
+    )
+
+  idx <- azny_sort_index(cast_nr(x), nrow(x), ncol(x), mode, decreasing)
+  structure(
+    x[idx + 1],
+    class = "nativeRaster",
+    dim = dim(x)
+  )
+}
+
 #' Select pixel positions from a native raster object
 #'
 #' @description
@@ -162,7 +192,7 @@ swap_channels <- function(nr, from = c(0, 1, 2, 3), to = c(1, 2, 0, 3)) {
   as_nr(out)
 }
 
-#' Resize or resample a `nativeRaster` image
+#' Resize or resample a native raster image
 #'
 #' These functions provide flexible image scaling based on OpenCV's
 #' `resize`, supporting both direct resizing and two-stage
@@ -241,7 +271,7 @@ resample <- function(
   as_nr(out)
 }
 
-#' Warp a `nativeRaster` image using perspective transformation
+#' Warp an image using perspective transformation
 #'
 #' Warps an image using a perspective transformation,
 #' keeping the same dimensions as the input image.

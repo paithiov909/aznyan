@@ -168,7 +168,7 @@ kernel_stripe <- function(n, mod, step = 1) {
   k / sum(k)
 }
 
-#' Tile a numeric matrix to a nativeRaster pattern
+#' Tile a numeric matrix into a pattern
 #'
 #' @description
 #' Repeats a numeric matrix `x` to fill an image of size

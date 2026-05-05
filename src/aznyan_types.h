@@ -116,12 +116,12 @@ inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
   return std::make_tuple(bgra, ch);
 }
 
-inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(uint32_t icol) {
+inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(uint32_t icol) noexcept {
   return std::make_tuple(icol & 0xFF, (icol >> 8) & 0xFF, (icol >> 16) & 0xFF,
                          (icol >> 24) & 0xFF);
 }
 
-inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) {
+inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) noexcept {
   return r | (g << 8) | (b << 16) | (a << 24);
 }
 

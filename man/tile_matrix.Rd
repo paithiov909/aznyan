@@ -2,7 +2,7 @@
 % Please edit documentation in R/kernels.R
 \name{tile_matrix}
 \alias{tile_matrix}
-\title{Tile a numeric matrix to a nativeRaster pattern}
+\title{Tile a numeric matrix into a pattern}
 \usage{
 tile_matrix(x, width, height)
 }
