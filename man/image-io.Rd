@@ -3,13 +3,19 @@
 \name{image-io}
 \alias{image-io}
 \alias{read_still}
+\alias{read_data}
 \alias{write_still}
+\alias{write_data}
 \alias{write_animation}
 \title{Read and write images}
 \usage{
 read_still(filename)
 
+read_data(x)
+
 write_still(nr, filename = "azny-still.png")
+
+write_data(nr, ext = ".jpeg", quality = 80)
 
 write_animation(
   frames,
@@ -24,35 +30,49 @@ write_animation(
 For \code{read_still()}, the path to the input image file.
 For \code{write_still()} and \code{write_animation()}, the output file name.}
 
+\item{x}{A raw vector containing image data.}
+
 \item{nr}{A \code{nativeRaster} object.}
+
+\item{ext}{File extension (e.g., ".jpg", ".png")
+to specify the output format.}
+
+\item{quality}{Image quality.
+For \code{write_animation()}, when the output format is not WebP,
+this parameter is ignored.}
 
 \item{frames}{A character vector of file names representing animation frames.}
 
 \item{delay}{Frame delay in seconds.
 Internally converted to milliseconds, with a minimum of 10ms.}
 
-\item{quality}{Image quality for WebP animation.
-For other image formats, this argument is ignored.}
-
 \item{loop_count}{Number of animation loops.
 A value of \code{0} means infinite looping.}
 }
 \value{
 \itemize{
-\item \code{read_still()} returns a \code{nativeRaster} object.
-\item \code{write_still()} and \code{write_animation()} invisibly returns \code{filename}.
+\item \code{read_still()} and \code{read_data()} return a \code{nativeRaster} object.
+\item \code{write_still()} and \code{write_animation()} invisibly return \code{filename}.
+\item \code{write_data()} returns a raw vector containing the image data.
 }
 }
 \description{
 These functions provide convenient helpers for reading still images,
 writing still images, and creating animated image files.
+
+Since the underlying image writers always treat the input as 4 channels images,
+writing with some formats would fail even if the linked 'OpenCV' library supports it.
 }
 \details{
 \itemize{
 \item \code{read_still()}:
 Reads a still image file and converts it into a \code{nativeRaster}.
+\item \code{read_data()}:
+Reads image data from a raw vector and converts it into a \code{nativeRaster}.
 \item \code{write_still()}:
 Writes a still image file from a \code{nativeRaster}.
+\item \code{write_data()}:
+Writes and returns the image data as a raw vector.
 \item \code{write_animation()}:
 Writes an animated image file from a sequence of image files.
 }

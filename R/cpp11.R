@@ -216,8 +216,16 @@ azny_read_still <- function(filename) {
   .Call(`_aznyan_azny_read_still`, filename)
 }
 
+azny_read_data <- function(data) {
+  .Call(`_aznyan_azny_read_data`, data)
+}
+
 azny_write_still <- function(filename, nr, height, width) {
   .Call(`_aznyan_azny_write_still`, filename, nr, height, width)
+}
+
+azny_write_data <- function(ext, nr, height, width, quality) {
+  .Call(`_aznyan_azny_write_data`, ext, nr, height, width, quality)
 }
 
 azny_write_animation <- function(frames, filename, duration, quality, loop_count) {

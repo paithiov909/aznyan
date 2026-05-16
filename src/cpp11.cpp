@@ -384,10 +384,24 @@ extern "C" SEXP _aznyan_azny_read_still(SEXP filename) {
   END_CPP11
 }
 // image-io.cpp
+cpp11::integers azny_read_data(const cpp11::raws& data);
+extern "C" SEXP _aznyan_azny_read_data(SEXP data) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_read_data(cpp11::as_cpp<cpp11::decay_t<const cpp11::raws&>>(data)));
+  END_CPP11
+}
+// image-io.cpp
 std::string azny_write_still(const std::string& filename, const cpp11::integers& nr, int height, int width);
 extern "C" SEXP _aznyan_azny_write_still(SEXP filename, SEXP nr, SEXP height, SEXP width) {
   BEGIN_CPP11
     return cpp11::as_sexp(azny_write_still(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(filename), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width)));
+  END_CPP11
+}
+// image-io.cpp
+cpp11::raws azny_write_data(const std::string& ext, const cpp11::integers& nr, int height, int width, int quality);
+extern "C" SEXP _aznyan_azny_write_data(SEXP ext, SEXP nr, SEXP height, SEXP width, SEXP quality) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_write_data(cpp11::as_cpp<cpp11::decay_t<const std::string&>>(ext), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(quality)));
   END_CPP11
 }
 // image-io.cpp
@@ -633,6 +647,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_pixel_positions",   (DL_FUNC) &_aznyan_azny_pixel_positions,    6},
     {"_aznyan_azny_posterize",         (DL_FUNC) &_aznyan_azny_posterize,          4},
     {"_aznyan_azny_preserving",        (DL_FUNC) &_aznyan_azny_preserving,         6},
+    {"_aznyan_azny_read_data",         (DL_FUNC) &_aznyan_azny_read_data,          1},
     {"_aznyan_azny_read_still",        (DL_FUNC) &_aznyan_azny_read_still,         1},
     {"_aznyan_azny_resample",          (DL_FUNC) &_aznyan_azny_resample,           6},
     {"_aznyan_azny_reset_alpha",       (DL_FUNC) &_aznyan_azny_reset_alpha,        4},
@@ -652,6 +667,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_unpremul",          (DL_FUNC) &_aznyan_azny_unpremul,           4},
     {"_aznyan_azny_warp_perspective",  (DL_FUNC) &_aznyan_azny_warp_perspective,   5},
     {"_aznyan_azny_write_animation",   (DL_FUNC) &_aznyan_azny_write_animation,    5},
+    {"_aznyan_azny_write_data",        (DL_FUNC) &_aznyan_azny_write_data,         5},
     {"_aznyan_azny_write_still",       (DL_FUNC) &_aznyan_azny_write_still,        4},
     {"_aznyan_bayer_mat",              (DL_FUNC) &_aznyan_bayer_mat,               1},
     {"_aznyan_get_num_threads",        (DL_FUNC) &_aznyan_get_num_threads,         0},
