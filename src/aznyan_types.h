@@ -116,7 +116,8 @@ inline std::tuple<std::vector<cv::Mat>, std::vector<int>> split_bgra(
   return std::make_tuple(bgra, ch);
 }
 
-inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(uint32_t icol) noexcept {
+inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(
+    uint32_t icol) noexcept {
   return std::make_tuple(icol & 0xFF, (icol >> 8) & 0xFF, (icol >> 16) & 0xFF,
                          (icol >> 24) & 0xFF);
 }
@@ -168,4 +169,9 @@ inline cpp11::integers encode_nr(const cv::Mat& bgr, const cv::Mat& alpha) {
     (CV_VERSION_MAJOR > 4 ||      \
      (CV_VERSION_MAJOR == 4 && CV_VERSION_MINOR >= 11))
 #define HAVE_ANIMATION
+#endif
+
+#if !defined(CV_VERSION_EPOCH) && \
+    (CV_VERSION_MAJOR > 4 || (CV_VERSION_MAJOR == 4 && CV_VERSION_MINOR >= 8))
+#define HAVE_AVIF
 #endif

@@ -63,13 +63,15 @@ cpp11::raws azny_write_data(const std::string& ext, const cpp11::integers& nr,
   std::vector<int> params;
   if (ext == ".jpg" || ext == ".jpeg") {
     params = {cv::IMWRITE_JPEG_QUALITY, std::clamp(quality, 0, 100)};  // 0-100
+#ifdef HAVE_AVIF
+  } else if (ext == ".avif") {
+    params = {cv::IMWRITE_AVIF_QUALITY, std::clamp(quality, 0, 100)};  // 0-100
+#endif
   } else if (ext == ".webp") {
     params = {cv::IMWRITE_WEBP_QUALITY, std::clamp(quality, 1, 100)};  // 1-100
   } else if (ext == ".png") {
     params = {cv::IMWRITE_PNG_COMPRESSION,
               std::clamp(quality / 11, 0, 9)};  // 0-9
-  } else if (ext == ".avif") {
-    params = {cv::IMWRITE_AVIF_QUALITY, std::clamp(quality, 0, 100)};  // 0-100
   }
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   std::vector<uchar> out;
