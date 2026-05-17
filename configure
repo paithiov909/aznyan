@@ -54,8 +54,12 @@ elif [ `uname` = "Darwin" ]; then
   fi
 fi
 
+# NOTE: Already fixed in https://github.com/opencv/opencv/pull/26590, however it requires OpenCV 4.11.0 or later.
+PKG_CXXFLAGS="-Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion"
+
 # For debugging
 echo "Using PKG_CFLAGS=$PKG_CFLAGS"
+echo "Using PKG_CXXFLAGS=$PKG_CXXFLAGS"
 echo "Using PKG_LIBS=$PKG_LIBS"
 
 # Use CXX20 if available
@@ -77,7 +81,7 @@ CPPFLAGS="$($R_HOME/bin/R CMD config CPPFLAGS)"
 CXXCPP="$CXX $CXXSTD -E"
 
 # Test configuration
-echo "#include $PKG_TEST_HEADER" | ${CXXCPP} ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} -xc++ - >/dev/null 2>configure.log
+echo "#include $PKG_TEST_HEADER" | ${CXXCPP} ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} ${PKG_CXXFLAGS} -xc++ - >/dev/null 2>configure.log
 
 if [ $? -ne 0 ]; then
   echo "-----------------------------[ ANTICONF ]-------------------------------"
@@ -101,7 +105,7 @@ else
 fi
 
 # Write to Makevars
-sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" -e "s|@simdflags@|$SIMD_FLAGS|" src/Makevars.in > src/Makevars
+sed -e "s|@cflags@|$PKG_CFLAGS|" -e "s|@libs@|$PKG_LIBS|" -e "s|@cxxflags@|$PKG_CXXFLAGS|" src/Makevars.in > src/Makevars
 
 # Success
 exit 0
