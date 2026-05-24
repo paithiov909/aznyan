@@ -27,6 +27,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Jeroen Ooms [copyright holder]
+  \item Rui. (Author of ray-cast/lut) [copyright holder]
 }
 
 }

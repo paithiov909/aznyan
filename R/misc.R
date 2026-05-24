@@ -23,13 +23,32 @@ sort.nativeRaster <- function(
   x,
   decreasing = FALSE,
   na.last = FALSE,
-  by = c("luma", "blue", "green", "red", "hue", "luminance", "saturation", "value"),
+  by = c(
+    "luma",
+    "blue",
+    "green",
+    "red",
+    "hue",
+    "luminance",
+    "saturation",
+    "value"
+  ),
   ...
 ) {
   by <- rlang::arg_match(by)
   mode <-
     wh0(
-      c("luma", "blue", "green", "red", "hue", "luminance", "saturation", "value") == by
+      c(
+        "luma",
+        "blue",
+        "green",
+        "red",
+        "hue",
+        "luminance",
+        "saturation",
+        "value"
+      ) ==
+        by
     )
 
   idx <- azny_sort_index(cast_nr(x), nrow(x), ncol(x), mode, decreasing)

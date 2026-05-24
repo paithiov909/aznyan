@@ -279,6 +279,13 @@ extern "C" SEXP _aznyan_azny_lut1d(SEXP nr, SEXP height, SEXP width, SEXP lut_ma
   END_CPP11
 }
 // color-manip.cpp
+cpp11::integers azny_lut3d(const cpp11::integers& nr, int height, int width, const std::string& cubefile);
+extern "C" SEXP _aznyan_azny_lut3d(SEXP nr, SEXP height, SEXP width, SEXP cubefile) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_lut3d(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const std::string&>>(cubefile)));
+  END_CPP11
+}
+// color-manip.cpp
 cpp11::integers azny_posterize(const cpp11::integers& nr, int height, int width, int shades);
 extern "C" SEXP _aznyan_azny_posterize(SEXP nr, SEXP height, SEXP width, SEXP shades) {
   BEGIN_CPP11
@@ -636,6 +643,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_lineweave",         (DL_FUNC) &_aznyan_azny_lineweave,         12},
     {"_aznyan_azny_linocut",           (DL_FUNC) &_aznyan_azny_linocut,            6},
     {"_aznyan_azny_lut1d",             (DL_FUNC) &_aznyan_azny_lut1d,              4},
+    {"_aznyan_azny_lut3d",             (DL_FUNC) &_aznyan_azny_lut3d,              4},
     {"_aznyan_azny_meanshift",         (DL_FUNC) &_aznyan_azny_meanshift,          6},
     {"_aznyan_azny_median_cut",        (DL_FUNC) &_aznyan_azny_median_cut,         4},
     {"_aznyan_azny_medianblur",        (DL_FUNC) &_aznyan_azny_medianblur,         4},
