@@ -278,6 +278,8 @@ class basic_lut {
   std::uint32_t width;
   std::uint32_t height;
   std::uint8_t channel;
+  Vector3<float> domain_min = Vector3<float>(0.0f, 0.0f, 0.0f);
+  Vector3<float> domain_max = Vector3<float>(1.0f, 1.0f, 1.0f);
 
   basic_lut() noexcept {};
 
@@ -341,6 +343,8 @@ class basic_lut {
     width = size * size;
     height = size;
     channel = channel_;
+    domain_min = Vector3<float>(0.0f, 0.0f, 0.0f);
+    domain_max = Vector3<float>(1.0f, 1.0f, 1.0f);
     data = std::make_unique<float[]>(width * height * channel);
 
     for (std::uint32_t x = 0; x < width; x++) {
@@ -375,6 +379,8 @@ class basic_lut {
 
     std::string line;
     std::uint32_t size = 0;
+    domain_min = Vector3<float>(0.0f, 0.0f, 0.0f);
+    domain_max = Vector3<float>(1.0f, 1.0f, 1.0f);
 
     std::vector<float> values;
 
@@ -385,34 +391,48 @@ class basic_lut {
       std::size_t firstChar = line.find_first_not_of(" \t\r\n");
       if (line[firstChar] == '#') continue;
 
-      if (line.compare(0, 5, "TITLE") == 0) {
-        std::string token;
-        std::istringstream sin(line);
+      std::string token;
+      std::istringstream sin(line);
+      sin >> token;
 
-        sin >> token >> name;
+      if (token == "TITLE") {
+        sin >> name;
         continue;
       }
 
-      if (line.compare(0, 10, "DOMAIN_MIN") == 0 ||
-          line.compare(0, 10, "DOMAIN_MAX") == 0)
+      if (token == "DOMAIN_MIN") {
+        if (!(sin >> domain_min.x >> domain_min.y >> domain_min.z)) {
+          throw parse_error::create(0, 0, "Invalid DOMAIN_MIN");
+        }
         continue;
+      }
 
-      if (line.compare(0, 11, "LUT_3D_SIZE") == 0) {
-        std::string token;
-        std::istringstream sin(line);
+      if (token == "DOMAIN_MAX") {
+        if (!(sin >> domain_max.x >> domain_max.y >> domain_max.z)) {
+          throw parse_error::create(0, 0, "Invalid DOMAIN_MAX");
+        }
+        continue;
+      }
 
-        sin >> token >> size;
+      if (token == "LUT_3D_SIZE") {
+        sin >> size;
         continue;
       }
 
       float r, g, b;
 
-      std::istringstream sin(line);
+      sin.clear();
+      sin.str(line);
       sin >> r >> g >> b;
 
       values.push_back(cast<float>(r));
       values.push_back(cast<float>(g));
       values.push_back(cast<float>(b));
+    }
+
+    if (domain_min.x == domain_max.x || domain_min.y == domain_max.y ||
+        domain_min.z == domain_max.z) {
+      throw parse_error::create(0, 0, "DOMAIN_MIN and DOMAIN_MAX must differ");
     }
 
     if (values.size() == size * size * size * 3) {
@@ -570,19 +590,19 @@ class basic_lut {
   template <typename _Elem>
   std::enable_if_t<std::is_floating_point<_Elem>::value, Vector3<_Elem>> lookup(
       const _Elem u, const _Elem v, const _Elem w) {
-    assert(u >= 0.0f && u <= 1.0f);
-    assert(v >= 0.0f && v <= 1.0f);
-    assert(w >= 0.0f && w <= 1.0f);
     assert(this->data);
     assert(this->channel == 3 || this->channel == 4);
     assert(this->width == this->height * this->height);
 
     const _Elem size = static_cast<_Elem>(this->height);
+    const _Elem uu = normalize_domain(u, domain_min.x, domain_max.x);
+    const _Elem vv = normalize_domain(v, domain_min.y, domain_max.y);
+    const _Elem ww = normalize_domain(w, domain_min.z, domain_max.z);
 
     _Elem c[3];
-    c[0] = u * ((size - 1.0f) / size);
-    c[1] = v * ((size - 1.0f) / size);
-    c[2] = w * (size - 1.0f);
+    c[0] = uu * ((size - 1.0f) / size);
+    c[1] = vv * ((size - 1.0f) / size);
+    c[2] = ww * (size - 1.0f);
 
     _Elem slice0 = std::floor(c[2]);
     _Elem slice1 = std::min(slice0 + 1.0f, size - 1.0f);
@@ -738,8 +758,10 @@ class basic_lut {
     stream << "LUT_3D_SIZE " << this->height << std::endl;
     stream << std::endl;
 
-    stream << "DOMAIN_MIN 0.0 0.0 0.0" << std::endl;
-    stream << "DOMAIN_MAX 1.0 1.0 1.0" << std::endl;
+    stream << "DOMAIN_MIN " << domain_min.x << " " << domain_min.y << " "
+           << domain_min.z << std::endl;
+    stream << "DOMAIN_MAX " << domain_max.x << " " << domain_max.y << " "
+           << domain_max.z << std::endl;
     stream << std::endl;
 
     for (std::size_t y = 0; y < this->height; y++) {
@@ -837,6 +859,13 @@ class basic_lut {
   template <typename _Tx>
   static _Tx frac(const _Tx x) noexcept {
     return x - std::floor(x);
+  }
+
+  template <typename _Tx>
+  static _Tx normalize_domain(_Tx x, float min, float max) noexcept {
+    _Tx normalized = (x - static_cast<_Tx>(min)) / static_cast<_Tx>(max - min);
+    return std::min(std::max(static_cast<_Tx>(0.0f), normalized),
+                    static_cast<_Tx>(1.0f));
   }
 
   /*
