@@ -577,20 +577,19 @@ class basic_lut {
     assert(this->channel == 3 || this->channel == 4);
     assert(this->width == this->height * this->height);
 
+    const _Elem size = static_cast<_Elem>(this->height);
+
     _Elem c[3];
-    c[0] = u * ((this->height - 1.0f) / this->height);
-    c[1] = v * ((this->height - 1.0f) / this->height);
-    c[2] = w * ((this->height - 1.0f) / this->height);
+    c[0] = u * ((size - 1.0f) / size);
+    c[1] = v * ((size - 1.0f) / size);
+    c[2] = w * (size - 1.0f);
 
-    _Elem slice = c[2] * this->height - 0.5f / this->height;
-    _Elem s = frac(slice);
-    slice -= s;
+    _Elem slice0 = std::floor(c[2]);
+    _Elem slice1 = std::min(slice0 + 1.0f, size - 1.0f);
+    _Elem s = c[2] - slice0;
 
-    _Elem uu = std::max<_Elem>(0.0f, c[0] + slice) / this->height;
-    _Elem vv = std::max<_Elem>(0.0f, c[1]);
-
-    _Elem uv0[] = {uu, vv};
-    _Elem uv1[] = {uu + 1.0f / this->height, vv};
+    _Elem uv0[] = {(c[0] + slice0) / size, c[1]};
+    _Elem uv1[] = {(c[0] + slice1) / size, c[1]};
 
     auto col0 = lookup(uv0[0], uv0[1]);
     auto col1 = lookup(uv1[0], uv1[1]);
