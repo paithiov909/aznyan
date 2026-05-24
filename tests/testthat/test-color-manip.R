@@ -3,6 +3,20 @@ skip_on_ci()
 
 png <- read_still(system.file("images/painting.png", package = "aznyan"))
 
+test_that("apply_lut1d works", {
+  ret <- apply_lut1d(png, matrix(runif(256 * 3, 0, 255), ncol = 3))
+  expect_s3_class(ret, "nativeRaster")
+})
+
+test_that("apply_lut3d works", {
+  cubefile <- write_cubelut(
+    test_cubelut,
+    filename = tempfile(fileext = ".cube")
+  )
+  ret <- apply_lut3d(png, cubefile)
+  expect_s3_class(ret, "nativeRaster")
+})
+
 test_that("brigten works", {
   vdiffr::expect_doppelganger(
     "brighten",
