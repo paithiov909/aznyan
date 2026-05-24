@@ -13,8 +13,11 @@ test_that("apply_lut3d works", {
     test_cubelut,
     filename = tempfile(fileext = ".cube")
   )
-  ret <- apply_lut3d(png, cubefile)
-  expect_s3_class(ret, "nativeRaster")
+  vdiffr::expect_doppelganger(
+    "apply_lut3d",
+    apply_lut3d(png, cubefile) |>
+      as_recordedplot()
+  )
 })
 
 test_that("brigten works", {
