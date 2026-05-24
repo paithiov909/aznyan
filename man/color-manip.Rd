@@ -3,6 +3,7 @@
 \name{color-manip}
 \alias{color-manip}
 \alias{apply_lut1d}
+\alias{apply_lut3d}
 \alias{brighten}
 \alias{contrast}
 \alias{duotone}
@@ -20,6 +21,8 @@
 \title{Color manipulation}
 \usage{
 apply_lut1d(nr, lut)
+
+apply_lut3d(nr, cubefile)
 
 brighten(nr, intensity)
 
@@ -53,6 +56,8 @@ unpremul(nr, max = 255L)
 \item{nr}{A \code{nativeRaster} object.}
 
 \item{lut}{A 256x3 double matrix in range \verb{[0, 255]}.}
+
+\item{cubefile}{A character string specifying the path to the \code{.cube} file.}
 
 \item{intensity}{A numeric scalar.}
 

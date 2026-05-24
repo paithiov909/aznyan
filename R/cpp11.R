@@ -156,6 +156,10 @@ azny_lut1d <- function(nr, height, width, lut_mat) {
   .Call(`_aznyan_azny_lut1d`, nr, height, width, lut_mat)
 }
 
+azny_lut3d <- function(nr, height, width, cubefile) {
+  .Call(`_aznyan_azny_lut3d`, nr, height, width, cubefile)
+}
+
 azny_posterize <- function(nr, height, width, shades) {
   .Call(`_aznyan_azny_posterize`, nr, height, width, shades)
 }

@@ -2,6 +2,7 @@
 #'
 #' @param nr A `nativeRaster` object.
 #' @param lut A 256x3 double matrix in range `[0, 255]`.
+#' @param cubefile A character string specifying the path to the `.cube` file.
 #' @param intensity A numeric scalar.
 #' @param depth,shades A positive integer scalar.
 #' @param gamma A numeric scalar. The gamma exponent.
@@ -22,6 +23,16 @@ apply_lut1d <- function(nr, lut) {
     cli::cli_abort("`lut` must be a double matrix in range [0, 255].")
   }
   as_nr(azny_lut1d(cast_nr(nr), nrow(nr), ncol(nr), lut))
+}
+
+#' @rdname color-manip
+#' @export
+apply_lut3d <- function(nr, cubefile) {
+  cubefile <- path.expand(cubefile)
+  if (!file.exists(cubefile)) {
+    cli::cli_abort("The specified cube file does not exist.")
+  }
+  as_nr(azny_lut3d(cast_nr(nr), nrow(nr), ncol(nr), cubefile))
 }
 
 #' @rdname color-manip

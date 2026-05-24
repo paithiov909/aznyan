@@ -1,3 +1,4 @@
+#include "thirdparty/lut/lut.hpp"
 #include "aznyan_types.h"
 
 namespace {
@@ -197,6 +198,29 @@ cpp11::integers azny_lut1d(const cpp11::integers& nr, int height, int width,
   }
   cv::LUT(bgr, lut, out);
   return aznyan::encode_nr(out, bgra[1]);
+}
+
+[[cpp11::register]]
+cpp11::integers azny_lut3d(const cpp11::integers& nr, int height, int width,
+                           const std::string& cubefile) {
+  auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
+  auto lut = octoon::image::detail::basic_lut::parse(cubefile);
+
+  aznyan::parallel_for(0, height, [&](int y) {
+    for (int x = 0; x < width; x++) {
+      auto& bgr = bgra[0].at<cv::Vec3b>(y, x);
+
+      auto data = lut.lookup(
+        bgr[2] / 255.0f, // ->R
+        bgr[1] / 255.0f, // ->G
+        bgr[0] / 255.0f  // ->B
+      );
+      bgr[2] = cv::saturate_cast<uchar>(data[0] * 255.0f);
+      bgr[1] = cv::saturate_cast<uchar>(data[1] * 255.0f);
+      bgr[0] = cv::saturate_cast<uchar>(data[2] * 255.0f);
+    }
+  });
+  return aznyan::encode_nr(bgra[0], bgra[1]);
 }
 
 [[cpp11::register]]

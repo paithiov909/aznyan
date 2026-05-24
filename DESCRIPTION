@@ -1,10 +1,12 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 26.05.16
+Version: 26.05.24
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
-    person("Jeroen", "Ooms", role = "cph")
+    person("Jeroen", "Ooms", role = "cph"),
+    person("Rui.", role = "cph",
+           comment = "Author of ray-cast/lut")
   )
 Maintainer: Akiru Kato <paithiov909@gmail.com>
 Description: Offers image filters wrapping 'OpenCV' <https://opencv.org/>,
