@@ -211,7 +211,7 @@ laplacian_filter <- function(
 canny_filter <- function(
   nr,
   asize = 2,
-  balp = FALSE,
+  balp = TRUE,
   use_rgb = TRUE,
   thres1 = 100.0,
   thres2 = 200.0,

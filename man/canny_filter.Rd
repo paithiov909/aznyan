@@ -7,7 +7,7 @@
 canny_filter(
   nr,
   asize = 2,
-  balp = FALSE,
+  balp = TRUE,
   use_rgb = TRUE,
   thres1 = 100,
   thres2 = 200,
