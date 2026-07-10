@@ -5,7 +5,7 @@
 
 # Anticonf (tm) script by Jeroen Ooms (2020)
 PKG_CONFIG_NAME="opencv5"
-PKG_CONFIG_NAME_ALT="opencv"
+PKG_CONFIG_NAME_ALT="opencv4"
 PKG_DEB_NAME="libopencv-dev"
 PKG_RPM_NAME="opencv-devel"
 PKG_BREW_NAME="opencv"
@@ -49,6 +49,9 @@ elif [ `uname` = "Darwin" ]; then
     . ./autobrew
   fi
 fi
+
+# NOTE: Already fixed in https://github.com/opencv/opencv/pull/26590, however it requires OpenCV 4.11.0 or later.
+PKG_CXXFLAGS="-Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion"
 
 # For debugging
 echo "Using PKG_CFLAGS=$PKG_CFLAGS"
