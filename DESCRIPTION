@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 26.05.24
+Version: 26.07.10
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph"),
@@ -34,4 +34,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-SystemRequirements: OpenCV 4 or newer: libopencv-dev (Debian, Ubuntu) or opencv-devel (Fedora)
+SystemRequirements: OpenCV 5 or newer: libopencv-dev (Debian, Ubuntu) or opencv-devel (Fedora)

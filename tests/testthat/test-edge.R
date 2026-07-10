@@ -32,12 +32,12 @@ test_that("laplacian_filter works", {
 test_that("canny_filter works", {
   vdiffr::expect_doppelganger(
     "canny_filter",
-    canny_filter(png, use_rgb = FALSE) |>
+    canny_filter(png, balp = FALSE, use_rgb = FALSE) |>
       as_recordedplot()
   )
   vdiffr::expect_doppelganger(
     "canny_rgb",
-    canny_filter(png, use_rgb = TRUE) |>
+    canny_filter(png, balp = FALSE, use_rgb = TRUE) |>
       as_recordedplot()
   )
 })

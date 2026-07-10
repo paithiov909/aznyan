@@ -19,8 +19,9 @@ cpp11::integers azny_cannyfilter(const cpp11::integers& nr, int height,
 }
 
 [[cpp11::register]]
-cpp11::integers azny_cannyrgb(const cpp11::integers& nr, int height, int width, int asize, bool balp, bool gradient,
-                          double thres1, double thres2) {
+cpp11::integers azny_cannyrgb(const cpp11::integers& nr, int height, int width,
+                              int asize, bool balp, bool gradient,
+                              double thres1, double thres2) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
 
   std::vector<cv::Mat> ch_col;

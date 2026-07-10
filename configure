@@ -4,20 +4,16 @@
 # echo "Using compiler: $CXX"
 
 # Anticonf (tm) script by Jeroen Ooms (2020)
-PKG_CONFIG_NAME="opencv4"
+PKG_CONFIG_NAME="opencv5"
 PKG_CONFIG_NAME_ALT="opencv"
 PKG_DEB_NAME="libopencv-dev"
 PKG_RPM_NAME="opencv-devel"
 PKG_BREW_NAME="opencv"
 PKG_TEST_HEADER="<opencv2/opencv.hpp>"
-PKG_TEST_HEADER_XFEATURES2D="<opencv2/xfeatures2d.hpp>"
 PKG_LIBS="-lopencv_{stitching,superres,videostab,aruco,bgsegm,bioinspired,ccalib,dnn_objdetect,\
 dpm,face,photo,fuzzy,hfs,img_hash,line_descriptor,optflow,reg,rgbd,saliency,stereo,structured_light,\
 phase_unwrapping,surface_matching,tracking,datasets,dnn,plot,xfeatures2d,shape,video,ml,ximgproc,\
-calib3d,features2d,highgui,videoio,flann,xobjdetect,imgcodecs,objdetect,xphoto,imgproc,core}"
-
-# For debugging opencv3 in macos:
-#export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
+calib3d,features,highgui,videoio,flann,xobjdetect,imgcodecs,objdetect,xphoto,imgproc,core}"
 
 # Use pkg-config if available
 PCVERSION=`pkg-config --version 2>/dev/null`
@@ -53,9 +49,6 @@ elif [ `uname` = "Darwin" ]; then
     . ./autobrew
   fi
 fi
-
-# NOTE: Already fixed in https://github.com/opencv/opencv/pull/26590, however it requires OpenCV 4.11.0 or later.
-PKG_CXXFLAGS="-Wno-deprecated-enum-enum-conversion -Wno-deprecated-anon-enum-enum-conversion"
 
 # For debugging
 echo "Using PKG_CFLAGS=$PKG_CFLAGS"
@@ -95,13 +88,6 @@ if [ $? -ne 0 ]; then
   cat configure.log
   echo "------------------------------------------------------------------------"
   exit 1
-fi
-
-echo "#include $PKG_TEST_HEADER_XFEATURES2D" | ${CXXCPP} ${CPPFLAGS} ${PKG_CFLAGS} ${CXXFLAGS} ${PKG_CXXFLAGS} -xc++ - >/dev/null 2>>configure.log
-if [ $? -ne 0 ]; then
-  echo "Module $PKG_TEST_HEADER_XFEATURES2D has not been found on your system, disabling keypoint detection."
-else
-  PKG_CFLAGS="$PKG_CFLAGS -DHAVE_XFEATURES2D"
 fi
 
 # Write to Makevars
