@@ -335,10 +335,10 @@ extern "C" SEXP _aznyan_azny_unpremul(SEXP nr, SEXP height, SEXP width, SEXP max
   END_CPP11
 }
 // diffusion.cpp
-cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, int iter, double decay_factor, double decay_offset, double gamma, int sigma);
-extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP iter, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
+cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width, double decay_factor, double decay_offset, double gamma, int sigma);
+extern "C" SEXP _aznyan_azny_diffusion(SEXP nr, SEXP height, SEXP width, SEXP decay_factor, SEXP decay_offset, SEXP gamma, SEXP sigma) {
   BEGIN_CPP11
-    return cpp11::as_sexp(azny_diffusion(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(iter), cpp11::as_cpp<cpp11::decay_t<double>>(decay_factor), cpp11::as_cpp<cpp11::decay_t<double>>(decay_offset), cpp11::as_cpp<cpp11::decay_t<double>>(gamma), cpp11::as_cpp<cpp11::decay_t<int>>(sigma)));
+    return cpp11::as_sexp(azny_diffusion(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(decay_factor), cpp11::as_cpp<cpp11::decay_t<double>>(decay_offset), cpp11::as_cpp<cpp11::decay_t<double>>(gamma), cpp11::as_cpp<cpp11::decay_t<int>>(sigma)));
   END_CPP11
 }
 // edge-canny.cpp
@@ -630,7 +630,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_contrast",          (DL_FUNC) &_aznyan_azny_contrast,           4},
     {"_aznyan_azny_convolve",          (DL_FUNC) &_aznyan_azny_convolve,           6},
     {"_aznyan_azny_det_enhance",       (DL_FUNC) &_aznyan_azny_det_enhance,        5},
-    {"_aznyan_azny_diffusion",         (DL_FUNC) &_aznyan_azny_diffusion,          8},
+    {"_aznyan_azny_diffusion",         (DL_FUNC) &_aznyan_azny_diffusion,          7},
     {"_aznyan_azny_duotone",           (DL_FUNC) &_aznyan_azny_duotone,            6},
     {"_aznyan_azny_gaussianblur",      (DL_FUNC) &_aznyan_azny_gaussianblur,       8},
     {"_aznyan_azny_grayscale",         (DL_FUNC) &_aznyan_azny_grayscale,          3},

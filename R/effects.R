@@ -37,8 +37,6 @@ blurhash <- function(nr, x_comps = 6, y_comps = 6) {
 #'  iteration. Larger values reduce the contribution of later diffusion steps.
 #' @param offset A numeric scalar added to the iteration index when computing
 #'  the decaying gain. Helps adjust the early-iteration weighting.
-#' @param iter An integer scalar giving the number of diffusion iterations to
-#'  perform. More iterations strengthen the smoothing and glow effects.
 #' @param gamma A numeric scalar specifying the gamma exponent applied before
 #'  diffusion (and inverted afterward). Values greater than `1` emphasize
 #'  bright regions.
@@ -51,7 +49,6 @@ diffusion_filter <- function(
   nr,
   factor = 5,
   offset = 0.1,
-  iter = 2,
   gamma = 1.3,
   sigma = 2
 ) {
@@ -59,7 +56,6 @@ diffusion_filter <- function(
     cast_nr(nr),
     nrow(nr),
     ncol(nr),
-    iter,
     factor,
     offset,
     gamma,

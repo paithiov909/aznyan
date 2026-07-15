@@ -188,8 +188,8 @@ azny_unpremul <- function(nr, height, width, max) {
   .Call(`_aznyan_azny_unpremul`, nr, height, width, max)
 }
 
-azny_diffusion <- function(nr, height, width, iter, decay_factor, decay_offset, gamma, sigma) {
-  .Call(`_aznyan_azny_diffusion`, nr, height, width, iter, decay_factor, decay_offset, gamma, sigma)
+azny_diffusion <- function(nr, height, width, decay_factor, decay_offset, gamma, sigma) {
+  .Call(`_aznyan_azny_diffusion`, nr, height, width, decay_factor, decay_offset, gamma, sigma)
 }
 
 azny_cannyfilter <- function(nr, height, width, asize, balp, gradient, thres1, thres2) {

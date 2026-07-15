@@ -4,14 +4,7 @@
 \alias{diffusion_filter}
 \title{Diffusion-based smoothing and enhancement}
 \usage{
-diffusion_filter(
-  nr,
-  factor = 5,
-  offset = 0.1,
-  iter = 2,
-  gamma = 1.3,
-  sigma = 2
-)
+diffusion_filter(nr, factor = 5, offset = 0.1, gamma = 1.3, sigma = 2)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
@@ -21,9 +14,6 @@ iteration. Larger values reduce the contribution of later diffusion steps.}
 
 \item{offset}{A numeric scalar added to the iteration index when computing
 the decaying gain. Helps adjust the early-iteration weighting.}
-
-\item{iter}{An integer scalar giving the number of diffusion iterations to
-perform. More iterations strengthen the smoothing and glow effects.}
 
 \item{gamma}{A numeric scalar specifying the gamma exponent applied before
 diffusion (and inverted afterward). Values greater than \code{1} emphasize

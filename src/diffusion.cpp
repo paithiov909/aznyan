@@ -2,7 +2,7 @@
 
 [[cpp11::register]]
 cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width,
-                               int iter, double decay_factor,
+                               double decay_factor,
                                double decay_offset, double gamma, int sigma) {
   auto [bgra, ch] = aznyan::decode_nr(nr, height, width);
   cv::Mat tmpB;
@@ -20,7 +20,7 @@ cpp11::integers azny_diffusion(const cpp11::integers& nr, int height, int width,
   });
 
   cv::Mat tmpE = tmpC.clone();
-  for (int i = 0; i < iter; ++i) {
+  for (int i = 0; i < 2; ++i) {
     const float gain = std::pow(decay_factor, -((float)i + decay_offset));
     sigma *= sigma;
     cv::Mat tmpD;
