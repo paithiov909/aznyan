@@ -37,12 +37,12 @@
 #' @param use_hsv A logical scalar.
 #'  If `TRUE`, the hue channel (HSV_FULL) is used as the input to the colormap;
 #'  if `FALSE`, a grayscale conversion is used instead.
-#' @param inverse A logical scalar. If `TRUE`, the input channel is inverted
+#' @param invert A logical scalar. If `TRUE`, the input channel is inverted
 #'  (`255 - value`) before applying the colormap.
 #' @returns A `nativeRaster` object.
 #' @export
-color_map <- function(nr, map = 0, use_hsv = FALSE, inverse = FALSE) {
+color_map <- function(nr, map = 0, use_hsv = FALSE, invert = FALSE) {
   map <- int_match(map, "map", seq_len(22) - 1)
-  out <- azny_color_map(cast_nr(nr), nrow(nr), ncol(nr), map, use_hsv, inverse)
+  out <- azny_color_map(cast_nr(nr), nrow(nr), ncol(nr), map, use_hsv, invert)
   as_nr(out)
 }

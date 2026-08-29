@@ -123,7 +123,8 @@ inline std::tuple<uchar, uchar, uchar, uchar> int_to_rgba(
 }
 
 inline uint32_t pack_into_int(uchar r, uchar g, uchar b, uchar a) noexcept {
-  return r | (g << 8) | (b << 16) | (a << 24);
+  return static_cast<uint32_t>(r) | (static_cast<uint32_t>(g) << 8) |
+         (static_cast<uint32_t>(b) << 16) | (static_cast<uint32_t>(a) << 24);
 }
 
 inline std::tuple<std::vector<cv::Mat>, std::vector<int>> decode_nr(

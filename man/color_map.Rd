@@ -4,7 +4,7 @@
 \alias{color_map}
 \title{Apply a color map}
 \usage{
-color_map(nr, map = 0, use_hsv = FALSE, inverse = FALSE)
+color_map(nr, map = 0, use_hsv = FALSE, invert = FALSE)
 }
 \arguments{
 \item{nr}{A \code{nativeRaster} object.}
@@ -16,7 +16,7 @@ Must be one of \verb{0–21}, corresponding to OpenCV's built-in color maps.}
 If \code{TRUE}, the hue channel (HSV_FULL) is used as the input to the colormap;
 if \code{FALSE}, a grayscale conversion is used instead.}
 
-\item{inverse}{A logical scalar. If \code{TRUE}, the input channel is inverted
+\item{invert}{A logical scalar. If \code{TRUE}, the input channel is inverted
 (\code{255 - value}) before applying the colormap.}
 }
 \value{

@@ -27,6 +27,14 @@ test_that("lineweave works", {
   )
 })
 
+test_that("luma_gate works", {
+  vdiffr::expect_doppelganger(
+    "luma_gate",
+    luma_gate(png) |>
+      as_recordedplot()
+  )
+})
+
 test_that("screen_tone works", {
   texture <- tile_matrix(blue_noise_64x64 * 255, ncol(png), nrow(png))
   vdiffr::expect_doppelganger(

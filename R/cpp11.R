@@ -240,6 +240,18 @@ azny_lineweave <- function(nr, height, width, omega, phase, dist1, dist2, dist3,
   .Call(`_aznyan_azny_lineweave`, nr, height, width, omega, phase, dist1, dist2, dist3, invert, direction, fg, bg)
 }
 
+bayer_mat <- function(n) {
+  .Call(`_aznyan_bayer_mat`, n)
+}
+
+azny_screen_tone <- function(nr, height, width, cutoff, lift, bias, pattern) {
+  .Call(`_aznyan_azny_screen_tone`, nr, height, width, cutoff, lift, bias, pattern)
+}
+
+azny_luma_gate_add <- function(src, dst, height, width, mask, gamma) {
+  .Call(`_aznyan_azny_luma_gate_add`, src, dst, height, width, mask, gamma)
+}
+
 azny_pack_integers <- function(rgb, a, height, width) {
   .Call(`_aznyan_azny_pack_integers`, rgb, a, height, width)
 }
@@ -310,14 +322,6 @@ azny_pixel_positions <- function(nr, height, width, mode, lower, upper) {
 
 azny_sort_index <- function(nr, height, width, mode, decending) {
   .Call(`_aznyan_azny_sort_index`, nr, height, width, mode, decending)
-}
-
-bayer_mat <- function(n) {
-  .Call(`_aznyan_bayer_mat`, n)
-}
-
-azny_screen_tone <- function(nr, height, width, cutoff, lift, bias, pattern) {
-  .Call(`_aznyan_azny_screen_tone`, nr, height, width, cutoff, lift, bias, pattern)
 }
 
 get_num_threads <- function() {

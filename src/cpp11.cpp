@@ -425,6 +425,27 @@ extern "C" SEXP _aznyan_azny_lineweave(SEXP nr, SEXP height, SEXP width, SEXP om
     return cpp11::as_sexp(azny_lineweave(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<double>>(omega), cpp11::as_cpp<cpp11::decay_t<double>>(phase), cpp11::as_cpp<cpp11::decay_t<int>>(dist1), cpp11::as_cpp<cpp11::decay_t<int>>(dist2), cpp11::as_cpp<cpp11::decay_t<int>>(dist3), cpp11::as_cpp<cpp11::decay_t<bool>>(invert), cpp11::as_cpp<cpp11::decay_t<int>>(direction), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(fg), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(bg)));
   END_CPP11
 }
+// mask.cpp
+cpp11::integers_matrix<> bayer_mat(const uint8_t& n);
+extern "C" SEXP _aznyan_bayer_mat(SEXP n) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(bayer_mat(cpp11::as_cpp<cpp11::decay_t<const uint8_t&>>(n)));
+  END_CPP11
+}
+// mask.cpp
+cpp11::integers azny_screen_tone(const cpp11::integers& nr, int height, int width, int cutoff, int lift, int bias, const cpp11::integers& pattern);
+extern "C" SEXP _aznyan_azny_screen_tone(SEXP nr, SEXP height, SEXP width, SEXP cutoff, SEXP lift, SEXP bias, SEXP pattern) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_screen_tone(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(cutoff), cpp11::as_cpp<cpp11::decay_t<int>>(lift), cpp11::as_cpp<cpp11::decay_t<int>>(bias), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(pattern)));
+  END_CPP11
+}
+// mask.cpp
+cpp11::integers azny_luma_gate_add(const cpp11::integers& src, const cpp11::integers& dst, int height, int width, const cpp11::integers& mask, float gamma);
+extern "C" SEXP _aznyan_azny_luma_gate_add(SEXP src, SEXP dst, SEXP height, SEXP width, SEXP mask, SEXP gamma) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(azny_luma_gate_add(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(src), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(dst), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(mask), cpp11::as_cpp<cpp11::decay_t<float>>(gamma)));
+  END_CPP11
+}
 // misc.cpp
 cpp11::integers azny_pack_integers(const cpp11::doubles_matrix<>& rgb, const cpp11::doubles& a, int height, int width);
 extern "C" SEXP _aznyan_azny_pack_integers(SEXP rgb, SEXP a, SEXP height, SEXP width) {
@@ -551,20 +572,6 @@ extern "C" SEXP _aznyan_azny_sort_index(SEXP nr, SEXP height, SEXP width, SEXP m
     return cpp11::as_sexp(azny_sort_index(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(mode), cpp11::as_cpp<cpp11::decay_t<const cpp11::logicals&>>(decending)));
   END_CPP11
 }
-// screen-tone.cpp
-cpp11::integers_matrix<> bayer_mat(const uint8_t& n);
-extern "C" SEXP _aznyan_bayer_mat(SEXP n) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(bayer_mat(cpp11::as_cpp<cpp11::decay_t<const uint8_t&>>(n)));
-  END_CPP11
-}
-// screen-tone.cpp
-cpp11::integers azny_screen_tone(const cpp11::integers& nr, int height, int width, int cutoff, int lift, int bias, const cpp11::integers& pattern);
-extern "C" SEXP _aznyan_azny_screen_tone(SEXP nr, SEXP height, SEXP width, SEXP cutoff, SEXP lift, SEXP bias, SEXP pattern) {
-  BEGIN_CPP11
-    return cpp11::as_sexp(azny_screen_tone(cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(nr), cpp11::as_cpp<cpp11::decay_t<int>>(height), cpp11::as_cpp<cpp11::decay_t<int>>(width), cpp11::as_cpp<cpp11::decay_t<int>>(cutoff), cpp11::as_cpp<cpp11::decay_t<int>>(lift), cpp11::as_cpp<cpp11::decay_t<int>>(bias), cpp11::as_cpp<cpp11::decay_t<const cpp11::integers&>>(pattern)));
-  END_CPP11
-}
 // threads.cpp
 int get_num_threads();
 extern "C" SEXP _aznyan_get_num_threads() {
@@ -642,6 +649,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_aznyan_azny_laplacianrgb",      (DL_FUNC) &_aznyan_azny_laplacianrgb,       8},
     {"_aznyan_azny_lineweave",         (DL_FUNC) &_aznyan_azny_lineweave,         12},
     {"_aznyan_azny_linocut",           (DL_FUNC) &_aznyan_azny_linocut,            6},
+    {"_aznyan_azny_luma_gate_add",     (DL_FUNC) &_aznyan_azny_luma_gate_add,      6},
     {"_aznyan_azny_lut1d",             (DL_FUNC) &_aznyan_azny_lut1d,              4},
     {"_aznyan_azny_lut3d",             (DL_FUNC) &_aznyan_azny_lut3d,              4},
     {"_aznyan_azny_meanshift",         (DL_FUNC) &_aznyan_azny_meanshift,          6},

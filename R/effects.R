@@ -138,6 +138,64 @@ lineweave <- function(
   as_nr(out)
 }
 
+#' Luminance-gated additive blending
+#'
+#' @description
+#' Adds `fg` to `bg` through `mask`, with the contribution modulated by
+#' the luminance of `bg`. Brighter regions of `bg` receive a stronger
+#' contribution from `fg`, while darker regions receive less.
+#'
+#' The blend strength is controlled by `gamma`: values greater than 1
+#' concentrate the effect in brighter regions, while values between 0 and 1
+#' spread the effect into darker regions.
+#'
+#' @details
+#' For each color channel, the output is approximately computed as
+#'
+#' \deqn{
+#'   \mathrm{out} =
+#'   \mathrm{bg} +
+#'   \mathrm{fg} \times \mathrm{mask} \times
+#'   \mathrm{luma}(\mathrm{bg})^\gamma
+#' }
+#'
+#' with the resulting values clamped to the valid image range.
+#'
+#' The alpha channel of `mask` is used as the alpha channel of the returned
+#' image.
+#'
+#' @param fg A `nativeRaster` image to add to `bg`.
+#' @param bg A `nativeRaster` image used as the destination and as the
+#'  luminance gate. By default, `hist_eq(fg)` is used.
+#' @param mask A `nativeRaster` image controlling the per-channel amount of
+#'  `fg` added to `bg`. By default, `blurhash(fg, 3, 3)` is used.
+#' @param gamma A finite numeric value controlling the luminance response.
+#'  The default is `1`.
+#' @returns A `nativeRaster` object.
+#' @export
+luma_gate <- function(
+  fg,
+  bg = hist_eq(fg),
+  mask = blurhash(fg, 3, 3),
+  gamma = 1
+) {
+  check_nr_dim(fg, bg)
+  check_nr_dim(fg, mask)
+  if (!is.finite(gamma[1])) {
+    cli::cli_abort("`gamma` must be a finite number.")
+  }
+  out <-
+    azny_luma_gate_add(
+      cast_nr(fg),
+      cast_nr(bg),
+      nrow(fg),
+      ncol(fg),
+      cast_nr(mask),
+      gamma[1]
+    )
+  as_nr(out)
+}
+
 #' Apply a screen-tone texture using a threshold map
 #'
 #' @description

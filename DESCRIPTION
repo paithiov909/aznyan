@@ -1,7 +1,7 @@
 Type: Package
 Package: aznyan
 Title: Image Filters with 'OpenCV'
-Version: 26.07.15
+Version: 26.08.29
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Jeroen", "Ooms", role = "cph"),
@@ -28,7 +28,7 @@ Suggests:
     vdiffr
 LinkingTo:
     cpp11
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
